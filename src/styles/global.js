@@ -80,6 +80,8 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        line-height: 1.4;
+        letter-spacing: 1px;
         background-color: #fff;
         color: #000;
     }

@@ -1,0 +1,34 @@
+{
+    "work": [
+        {
+            "client": "DB손해보험",
+            "name": "적응형 웹 사이트 리뉴얼",
+            "period": "23.05 ~ 24.02",
+            "thumbImg": "main_thumb_01.jpg"
+        },
+        {
+            "client": "하나증권",
+            "name": "WTS 고도화 작업",
+            "period": "22.11 ~ 23.01",
+            "thumbImg": "main_thumb_02.jpg"
+        },
+        {
+            "client": "하나증권",
+            "name": "WTS 고도화 작업",
+            "period": "22.11 ~ 23.01",
+            "thumbImg": "main_thumb_02.jpg"
+        },
+        {
+            "client": "하나증권",
+            "name": "WTS 고도화 작업",
+            "period": "22.11 ~ 23.01",
+            "thumbImg": "main_thumb_02.jpg"
+        }
+    ],
+    "personal": [
+        {
+            "name": "",
+            "period": ""
+        }
+    ]
+}

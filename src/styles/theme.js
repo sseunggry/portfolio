@@ -8,14 +8,14 @@ const color = {
 
 const font = {
     headLine1: {
-        size: '',
+        size: '120px',
         color: `${color.black}`,
         weight: 700,
     },
     headLine2: {
-        size: '',
+        size: '60px',
         color: `${color.black}`,
-        weight: 500,
+        weight: 200,
     },
     headLine3: {
         size: '',

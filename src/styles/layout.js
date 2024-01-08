@@ -2,6 +2,14 @@ import styled from "styled-components";
 import {img} from "../recoil/atoms";
 import theme from "./theme";
 
+const Wrapper = styled.div`
+    
+`;
+
+const Container = styled.div`
+
+`;
+
 const HeaderTag = styled.header`
     display: flex;
     align-items: center;
@@ -70,4 +78,4 @@ const Menu = styled.button`
     }
 `;
 
-export {HeaderTag, Logo, Nav, Menu};
+export {Wrapper, Container, HeaderTag, Logo, Nav, Menu};
