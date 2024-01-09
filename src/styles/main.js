@@ -16,10 +16,12 @@ const SecKv = styled.section`
 `;
 
 const Sec01 = styled.section`
+    position: relative;
     display: flex;
-    padding: 120px 0;
+    margin: 120px 0;
   
     .swiper{
+        position: static;
         padding-right: 60px;
       
         .swiper-slide{
@@ -53,6 +55,25 @@ const Sec01 = styled.section`
                 object-fit: cover;
             }
         }
+        .swiper-button-prev{
+          
+        }
+        .swiper-button-next{
+        
+        }
+        .swiper-pagination{
+            &-fraction{
+                left: 12.5%;
+                bottom: 10px;
+                width: fit-content;
+                font-size: 20px;
+                color: ${theme.color.gray3};
+
+                .swiper-pagination-current{
+                    color: ${theme.color.black};
+                }
+            }
+        }
     }
 `;
 
@@ -65,21 +86,154 @@ const Tab = styled.ul`
         font-weight: 700;
         color: ${theme.color.gray3};
         text-transform: uppercase;
+        cursor: pointer;
       
         &:last-of-type{
             margin-bottom: 0;
         }
       
-        &:hover, .active{
+        &:hover, &.active{
             color: ${theme.color.black};
         }
     }
 `;
 
 const TxtBox = styled.div`
-    padding: 40px 60px 40px 240px;
+    padding: 40px 60px 40px 12.5%;
     width: 40%;
     flex-shrink: 0;
+`;
+
+const Sec02 = styled.section`
+    display: flex;
+    height: 100vh;
+    
+    .left{
+        padding: 140px;
+        flex-shrink: 0;
+        width: 43%;
+        background-color: ${theme.color.black};
+        
+        h3{
+            color: ${theme.color.white};
+        }
+        
+        dl{
+            margin-top: 40px;
+            color: ${theme.color.white};
+          
+            dt{
+                margin-bottom: 8px;
+                font-size: 24px;
+            }
+            dd{
+                font-size: 18px;
+            }
+            
+            &:last-of-type{
+                opacity: 0.5;
+            }
+        }
+    }
+    .right{
+        overflow: hidden auto;
+        width: 100%;
+        padding: 80px 90px;
+      
+        dl{
+            display: flex;
+            margin-bottom: 100px;
+          
+            dt{
+                padding-right: 40px;
+                flex-shrink: 0;
+                width: 280px;
+                font-size: 28px;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            dd{
+                font-size: 18px;
+                
+                p{
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 40px;
+                    
+                    .period{
+                        margin-bottom: 10px;
+                        color: ${theme.color.gray2};
+                    }
+                    strong{
+                        font-weight: 700;
+                    }
+                  
+                    &:last-of-type{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+          
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+        }
+        
+    }
+`;
+
+const Sec03 = styled.section`
+    margin: 0 auto;
+    padding-top: 120px;
+    max-width: 1440px;
+  
+    .txt-box{
+        display: flex;
+        justify-content: space-between;
+        padding: 130px 0;
+      
+        p{
+            margin-right: 50px;
+            flex-shrink: 0;
+            width: 360px;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+      
+        .info{
+            .txt{
+                
+                margin-bottom: 30px;
+                font-size: 80px;
+                font-weight: 500;
+              
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+                
+                a{
+                  &:hover{
+                    text-decoration: underline;
+                  }
+                }
+            }
+          
+            .link{
+                display: flex;
+                margin-top: 50px;
+                font-size: 30px;
+                font-weight: 500;
+              
+                li{
+                    margin-right: 40px;
+                  
+                    &:last-of-type{
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
 `;
 
 const Title1 = styled.h2`
@@ -95,4 +249,4 @@ const Title2 = styled.h3`
     text-transform: uppercase;
 `;
 
-export {SecKv, Sec01, Title1, Title2, TxtBox, Tab};
+export {SecKv, Sec01, Sec02, Sec03, Title1, Title2, TxtBox, Tab};
