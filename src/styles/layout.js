@@ -7,7 +7,8 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-
+    overflow: hidden;
+    position: relative;
 `;
 
 const HeaderTag = styled.header`

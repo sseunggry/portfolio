@@ -5,6 +5,7 @@ import Main from "./pages/Main";
 import {ThemeProvider} from "styled-components";
 import GlobalStyle from "./styles/global";
 import theme from "./styles/theme";
+import Project from "./pages/Project";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <BrowserRouter basename={process.env.PUBLIC_URL}>
                     <Routes>
                         <Route path="/" element={<Main />}/>
+                        <Route path="/project" element={<Project />}/>
                     </Routes>
                 </BrowserRouter>
             </RecoilRoot>

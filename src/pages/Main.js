@@ -2,7 +2,7 @@ import {useState} from "react";
 import Layout from "../components/_inc/Layout";
 
 import {SecKv, Sec01, TxtBox, Title2, Tab, Sec02, Sec03} from "../styles/main";
-import {img, projectList} from "../recoil/atoms";
+import {design, img, personal, projectWork, work} from "../recoil/atoms";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper/modules";
 
@@ -10,12 +10,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import 'swiper/css/navigation';
 import {Link} from "react-router-dom";
+import project from "../data/project_list.json";
 
 function Main(){
-    const work = projectList.work;
-    const projectWork = Object.values(work).filter((el, idx) => el.thumbImg);
-    const personal = projectList.personal;
-    const design = projectList.design;
+    // const work = project.work;
+    // const personal = project.personal;
+    // const projectWork = Object.values(work).filter((el, idx) => el.thumbImg);
+    // const design = project.design;
     const [data, setData] = useState(projectWork);
 
     const onClick = (e) => {
@@ -146,6 +147,10 @@ function Main(){
                             </ul>
                         </div>
                     </div>
+                    <p className="deco-txt">
+                        <span>CHOI SEUNG YEON</span>
+                        <span>CHOI SEUNG YEON</span>
+                    </p>
                 </Sec03>
             </Layout>
         </>

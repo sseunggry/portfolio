@@ -16,6 +16,7 @@ const SecKv = styled.section`
 `;
 
 const Sec01 = styled.section`
+    overflow: hidden;
     position: relative;
     display: flex;
     margin: 120px 0;
@@ -190,7 +191,7 @@ const Sec03 = styled.section`
     .txt-box{
         display: flex;
         justify-content: space-between;
-        padding: 130px 0;
+        padding: 130px 0 250px;
       
         p{
             margin-right: 50px;
@@ -234,13 +235,24 @@ const Sec03 = styled.section`
             }
         }
     }
+  
+    .deco-txt{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 0 40px;
+        font-size: 120px;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 6px;
+        text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
+      
+        span{
+            white-space: nowrap;
+        }
+    }
 `;
 
-const Title1 = styled.h2`
-    font-size: ${theme.font.headLine1.size};
-    color: ${theme.font.headLine1.color};
-    font-weight: ${theme.font.headLine1.weight};
-`;
 
 const Title2 = styled.h3`
     font-size: ${theme.font.headLine2.size};
@@ -249,4 +261,4 @@ const Title2 = styled.h3`
     text-transform: uppercase;
 `;
 
-export {SecKv, Sec01, Sec02, Sec03, Title1, Title2, TxtBox, Tab};
+export {SecKv, Sec01, Sec02, Sec03, Title2, TxtBox, Tab};
