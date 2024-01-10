@@ -26,10 +26,49 @@ const SecKv = styled.section`
 `;
 
 const Sec01 = styled.section`
-    overflow: hidden;
+    //overflow: hidden;
     position: relative;
     display: flex;
-    margin: 120px 0;
+    padding: 120px 0;
+    min-height: 100vh;
+  
+    .list{
+        display: flex;
+        padding-right: 60px;
+      
+        li{
+            position: relative;
+            margin-right: 30px;
+            flex-shrink: 0;
+            width: 720px;
+            height: fit-content;
+
+            &:last-child{
+              margin-right: 0;
+            }
+
+            .txt{
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                padding: 0 60px 60px;
+                color: ${theme.color.white};
+            
+                h4{
+                    font-size: 32px;
+                }
+                p{
+                    margin-top: 16px;
+                    font-size: 18px;
+                }
+            }
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
   
     .swiper{
         position: static;
@@ -117,9 +156,13 @@ const TxtBox = styled.div`
 
 const Sec02 = styled.section`
     display: flex;
+    overflow: hidden;
     height: 100vh;
     
     .left{
+        position: fixed;
+        height: 100%;
+      
         padding: 140px;
         flex-shrink: 0;
         width: 43%;
@@ -147,9 +190,10 @@ const Sec02 = styled.section`
         }
     }
     .right{
-        overflow: hidden auto;
+        padding: 80px 90px 80px calc(43% + 90px);
+        //overflow: hidden auto;
         width: 100%;
-        padding: 80px 90px;
+        //padding: 80px 90px;
       
         dl{
             display: flex;
@@ -201,7 +245,7 @@ const Sec03 = styled.section`
     .txt-box{
         display: flex;
         justify-content: space-between;
-        padding: 130px 0 250px;
+        padding: 130px 0 320px;
       
         p{
             margin-right: 50px;

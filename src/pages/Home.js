@@ -38,35 +38,132 @@ function Home(){
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
+        const h2 = ".sec-kv h2";
+        const img = ".sec-kv img";
+        const sec03Tit = ".sec-03 h3";
+        const sec03Txt = ".sec-03 .txt-box";
+        const sec03Info = ".sec-03 .info";
+        const decoTxt = ".sec-03 .deco-txt";
+        // const sec01Width = document.querySelector(".sec-01 .list").clientWidth;
+        const sec01Width = document.querySelector(".sec-01").clientWidth;
+        const sec01TotalWidth = document.querySelector(".sec-01 .txt-box").clientWidth + document.querySelector(".sec-01 .list").clientWidth;
+
+        gsap.set(h2, {scale: 1.5, yPercent: 50, opacity: 1});
+        gsap.set(img, {scale: 0.5, top: "30%", opacity: 1});
+        gsap.set(".sec-01", {translateX : 0});
+        gsap.set(".sec-02", {});
+        gsap.set(sec03Tit, {opacity : 0});
+        gsap.set(sec03Txt, {opacity : 0, yPercent: 20});
+        gsap.set(sec03Info, {opacity : 0, yPercent: 20});
+        // gsap.set(decoTxt, {translateX: 50});
+
         let ctx = gsap.context(() => {
             gsap.timeline({
                 scrollTrigger: {
                     trigger: ".sec-kv",
                     start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0.5,
+                    end: "bottom+=100%",
+                    scrub: 2,
                     pin: true,
                 }
             })
-                .fromTo(".sec-kv h2", {
-                    scale: 1.5, yPercent: 20, opacity: 0.1
-                }, {
-                    scale: 1, yPercent: 0, opacity: 1, color: "#fff",
-                    scrollTrigger: {
-                        trigger: ".sec-kv",
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 0.5,
-                        pin: true,
-                    }
+                .to(h2, {
+                    scale: 1, yPercent: 0, opacity: 1
                 })
+                .to(img, {
+                    scale: 1, top: 0, opacity: 1,
+                })
+                .to(h2, {
+                    color: "#fff",
+                });
+            // gsap.to(img, {
+            //     scale: 1, top: 0, opacity: 1,
+            // })
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".sec-01",
+                    start: "top top",
+                    end: `bottom+=${sec01TotalWidth}`,
+                    scrub: 2,
+                    pin: true,
+                }
+            })
+                .to(".sec-01", {
+                    translateX : -sec01Width-600
+                });
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".sec-02",
+                    start: "top top",
+                    end: "bottom+=100%",
+                    scrub: 2,
+                    pin: true,
+                }
+            })
+                .to(".sec-02", {
+
+                });
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".sec-03",
+                    start: "top center",
+                    end: "center center",
+                    scrub: 2,
+                }
+            })
+                .to(sec03Tit, {
+                    opacity: 1,
+                })
+                .to(sec03Txt, {
+                    opacity: 1, yPercent: 0
+                })
+                .to(sec03Info, {
+                    opacity: 1, yPercent: 0
+                })
+
         }, appRef);
 
         return () => ctx.revert();
+        // motionSec1();
         // motionSeckv();
 
     }, []);
 
+    // const motionSec = () => {
+    //     const h2 = ".sec-kv h2";
+    //     const img = ".sec-kv img";
+    //     gsap.set(h2, {scale: 1.5, yPercent: 50, opacity: 0});
+    //     gsap.set(img, {scale: 0.5, top: "30%", opacity: 0});
+    //
+    //     let ctx = gsap.context(() => {
+    //         gsap.timeline({
+    //             scrollTrigger: {
+    //                 trigger: ".sec-kv",
+    //                 start: "top top",
+    //                 end: "bottom+=100%",
+    //                 scrub: 2,
+    //                 pin: true,
+    //             }
+    //         })
+    //             .to(h2, {
+    //                 scale: 1, yPercent: 0, opacity: 1
+    //             })
+    //             .to(img, {
+    //                 scale: 1, top: 0, opacity: 1,
+    //             })
+    //             .to(h2, {
+    //                 color: "#fff",
+    //             })
+    //     }, appRef);
+    //
+    //     return () => ctx.revert();
+    // }
+    // const motionSec1 = () => {
+    //
+    // }
     const motionSeckv = () => {
         const el = secKvRef.current;
         const $h2 = el.querySelector('h2');
@@ -87,9 +184,6 @@ function Home(){
             .to($h2, {scale: 1, yPercent: 0, opacity: 1, color: "#fff",})
             .to($img, {scale: 1, top: 0, opacity: 1})
     }
-    const motionSec1 = () => {
-        const el = secKvRef.current;
-    }
 
     return(
         <div ref={appRef}>
@@ -99,33 +193,29 @@ function Home(){
                     <img src={`${img}/main_visual.jpg`} alt="" />
                 </SecKv>
 
-                <Sec01>
-                    <TxtBox>
+                <Sec01 className="sec-01">
+                    <TxtBox className="txt-box">
                         <Title2>Project</Title2>
                         <Tab onClick={onClick}>
                             <li className="active">work</li>
                             <li>personal</li>
                         </Tab>
                     </TxtBox>
-                    <Swiper
-                        slidesPerView={'auto'}
-                        modules={[Navigation,  Pagination]}
-                        // navigation={true}
-                        pagination={{type: 'fraction'}}
-                    >
+                    <ul className="list">
                         {data && Object.values(data).map(({client, name, period, thumbImg}, idx) => (
-                            <SwiperSlide key={idx}>
+                            <li key={idx}>
                                 <div className="txt">
                                     <h4>[{client}] <br/>{name}</h4>
                                     <p>{period}</p>
                                 </div>
                                 <img src={`${img}/${thumbImg}`} alt="" />
-                            </SwiperSlide>
+                            </li>
                         ))}
-                    </Swiper>
+                    </ul>
+
                 </Sec01>
 
-                <Sec02>
+                <Sec02 className="sec-02">
                     <div className="left">
                         <Title2>career</Title2>
                         <dl>
@@ -172,7 +262,7 @@ function Home(){
                     </div>
                 </Sec02>
 
-                <Sec03>
+                <Sec03 className="sec-03">
                     <Title2>Contact</Title2>
                     <div className="txt-box">
                         <p>
@@ -205,7 +295,7 @@ function Home(){
                         </div>
                     </div>
                     <p className="deco-txt">
-                        <span>CHOI SEUNG YEON</span>
+                        <span>CHOI SEUNG YEON  </span>
                         <span>CHOI SEUNG YEON</span>
                     </p>
                 </Sec03>
