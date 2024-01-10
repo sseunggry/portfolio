@@ -1,4 +1,5 @@
-import {ProjectCon, Tab, Thumb, Title1} from "../styles/project";
+import {ProjectCon, Tab, Thumb} from "../styles/project";
+import {Title1} from "../styles/common";
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useState} from "react";
 import project from "../data/project_list.json";

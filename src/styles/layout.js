@@ -43,7 +43,7 @@ const Nav = styled.nav`
         letter-spacing: 1px;
         text-transform: uppercase;
       
-        &:hover{
+        &:hover, &.active{
             color: ${theme.color.black};
         }
         

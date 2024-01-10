@@ -3,15 +3,8 @@ import theme from "./theme";
 
 const ProjectCon = styled.div`
     margin: 0 auto;
-    padding: 200px 0;
+    padding: 150px 0;
     max-width: 1440px;
-`;
-
-const Title1 = styled.h2`
-    font-size: ${theme.font.headLine1.size};
-    color: ${theme.font.headLine1.color};
-    font-weight: ${theme.font.headLine1.weight};
-    text-transform: uppercase;
 `;
 
 const Tab = styled.ul`
@@ -76,4 +69,7 @@ const Thumb = styled.div`
     }
 `;
 
-export {ProjectCon, Title1, Tab, Thumb};
+export {ProjectCon, Tab, Thumb};
+
+export class Title1 {
+}

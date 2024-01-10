@@ -2,16 +2,26 @@ import styled from "styled-components";
 import theme from "./theme";
 
 const SecKv = styled.section`
+    position: relative;
+    padding-top: 100px;
+    height: 100vh;
+  
     h2{
-        padding: 120px 0 60px;
+        position: relative;
+        padding-bottom: 60px;
         text-align: center;
-        font-size: 100px;
+        font-size: 60px;
         font-weight: 100;
+        z-index: 1;
     }
     img{
+        position: absolute;
         display: block;
         margin: 0 auto;
-        width: 1200px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        //width: 1200px;
     }
 `;
 
@@ -253,12 +263,4 @@ const Sec03 = styled.section`
     }
 `;
 
-
-const Title2 = styled.h3`
-    font-size: ${theme.font.headLine2.size};
-    color: ${theme.font.headLine2.color};
-    font-weight: ${theme.font.headLine2.weight};
-    text-transform: uppercase;
-`;
-
-export {SecKv, Sec01, Sec02, Sec03, Title2, TxtBox, Tab};
+export {SecKv, Sec01, Sec02, Sec03, TxtBox, Tab};

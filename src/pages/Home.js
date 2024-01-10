@@ -1,7 +1,9 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Layout from "../components/_inc/Layout";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
-import {SecKv, Sec01, TxtBox, Title2, Tab, Sec02, Sec03} from "../styles/main";
+import {SecKv, Sec01, TxtBox, Tab, Sec02, Sec03} from "../styles/home";
 import {design, img, personal, projectWork, work} from "../recoil/atoms";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper/modules";
@@ -11,13 +13,12 @@ import "swiper/css/pagination";
 import 'swiper/css/navigation';
 import {Link} from "react-router-dom";
 import project from "../data/project_list.json";
+import {Title2} from "../styles/common";
 
-function Main(){
-    // const work = project.work;
-    // const personal = project.personal;
-    // const projectWork = Object.values(work).filter((el, idx) => el.thumbImg);
-    // const design = project.design;
+function Home(){
     const [data, setData] = useState(projectWork);
+    const secKvRef = useRef(null);
+    const appRef = useRef();
 
     const onClick = (e) => {
         const $target = e.target;
@@ -34,10 +35,66 @@ function Main(){
         }
     }
 
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        let ctx = gsap.context(() => {
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".sec-kv",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.5,
+                    pin: true,
+                }
+            })
+                .fromTo(".sec-kv h2", {
+                    scale: 1.5, yPercent: 20, opacity: 0.1
+                }, {
+                    scale: 1, yPercent: 0, opacity: 1, color: "#fff",
+                    scrollTrigger: {
+                        trigger: ".sec-kv",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 0.5,
+                        pin: true,
+                    }
+                })
+        }, appRef);
+
+        return () => ctx.revert();
+        // motionSeckv();
+
+    }, []);
+
+    const motionSeckv = () => {
+        const el = secKvRef.current;
+        const $h2 = el.querySelector('h2');
+        const $img = el.querySelector('img');
+
+        gsap.set($h2, {scale: 1.5, yPercent: 20, opacity: 0.1});
+        gsap.set($img, {scale: 0.5, top: "20%", opacity: 0.1});
+
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: el,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.5,
+                pin: true,
+            }
+        })
+            .to($h2, {scale: 1, yPercent: 0, opacity: 1, color: "#fff",})
+            .to($img, {scale: 1, top: 0, opacity: 1})
+    }
+    const motionSec1 = () => {
+        const el = secKvRef.current;
+    }
+
     return(
-        <>
-            <Layout header={{active: -1}}>
-                <SecKv>
+        <div ref={appRef}>
+            <Layout header={{active: -1}} >
+                <SecKv ref={secKvRef} className="sec-kv">
                     <h2>안녕하세요. <br/> 프론트엔드 개발자 <br/> 최승연 입니다</h2>
                     <img src={`${img}/main_visual.jpg`} alt="" />
                 </SecKv>
@@ -153,8 +210,8 @@ function Main(){
                     </p>
                 </Sec03>
             </Layout>
-        </>
+        </div>
     )
 }
 
-export default Main;
+export default Home;
