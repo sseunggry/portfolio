@@ -1,11 +1,20 @@
 {
+    "contact": [
+        {"phone": "010.3030.1734"},
+        {"email": "sseung0000@naver.com"}
+    ],
+    "infoLink": [
+        {"notion": "https://seunggry.notion.site/seunggry/Seung-Yeon-Choi-0ed5ec339a5e4d1fbdc8ff958980072c"},
+        {"github": "https://github.com/sseunggry"}
+    ],
     "work": [
         {
             "client": "DB손해보험",
             "name": "적응형 웹 사이트 리뉴얼",
             "period": "23.04 ~ 24.02",
             "thumbImg": "main_thumb_01.jpg",
-            "desc": "DB손해보험 보험 상품(자동차, 장기, 일반)\n 전체 페이지를 리뉴얼 작업을 진행합니다."
+            "desc": "DB손해보험 보험 상품(자동차, 장기, 일반) 전체 페이지를 리뉴얼 작업을 진행합니다.",
+            "link": "www"
         },
         {
             "client": "하나증권",
@@ -43,25 +52,29 @@
             "client": "넥플릭스",
             "name": "리액트 웹사이트 퍼블리싱",
             "period": "24.01 ~ 24.02",
-            "thumbImg": "main_thumb_01.jpg"
+            "thumbImg": "main_thumb_01.jpg",
+            "link": "www"
         },
         {
             "client": "피자알볼로",
             "name": "리액트 모바일웹 퍼블리싱",
             "period": "23.11 ~ 24.01",
-            "thumbImg": "main_thumb_01.jpg"
+            "thumbImg": "main_thumb_01.jpg",
+            "link": "https://sseunggry.github.io/pizzahut/"
         },
         {
             "client": "워크위즈",
             "name": "반응형 퍼블리싱",
             "period": "22.06 ~ 22.08",
-            "thumbImg": "main_thumb_02.jpg"
+            "thumbImg": "main_thumb_02.jpg",
+            "link": "www"
         },
         {
             "client": "한화케미칼",
             "name": "반응형 퍼블리싱",
             "period": "21.04 ~ 21.07",
-            "thumbImg": "main_thumb_02.jpg"
+            "thumbImg": "main_thumb_02.jpg",
+            "link": "www"
         }
     ],
     "design": [

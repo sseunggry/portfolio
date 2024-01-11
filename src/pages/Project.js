@@ -2,14 +2,9 @@ import {ProjectCon, Tab, Thumb} from "../styles/project";
 import {Title1} from "../styles/common";
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useState} from "react";
-import project from "../data/project_list.json";
 import Layout from "../components/_inc/Layout";
 
 function Project(){
-    // const work = project.work;
-    // const personal = project.personal;
-    // const projectWork = Object.values(work).filter((el, idx) => el.thumbImg);
-    // const projectPersonal = Object.values(personal).filter((el, idx) => el.thumbImg);
     const [projectData, setProjectData] = useState(projectWork);
 
     const onClick = (e) => {

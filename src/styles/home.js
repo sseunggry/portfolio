@@ -28,13 +28,18 @@ const SecKv = styled.section`
 const Sec01 = styled.section`
     //overflow: hidden;
     position: relative;
-    display: flex;
-    padding: 120px 0;
+    //display: flex;
+    padding: 120px 240px;
     min-height: 100vh;
+  
+    h3{
+        margin-bottom: 40px;
+        //padding-left: 240px;
+    }
   
     .list{
         display: flex;
-        padding-right: 60px;
+        //padding: 0 240px;
       
         li{
             position: relative;
@@ -149,9 +154,9 @@ const Tab = styled.ul`
 `;
 
 const TxtBox = styled.div`
-    padding: 40px 60px 40px 12.5%;
-    width: 40%;
-    flex-shrink: 0;
+    //padding: 40px 60px 40px 12.5%;
+    //width: 40%;
+    //flex-shrink: 0;
 `;
 
 const Sec02 = styled.section`
@@ -160,7 +165,7 @@ const Sec02 = styled.section`
     height: 100vh;
     
     .left{
-        position: fixed;
+        //position: fixed;
         height: 100%;
       
         padding: 140px;
@@ -190,14 +195,14 @@ const Sec02 = styled.section`
         }
     }
     .right{
-        padding: 80px 90px 80px calc(43% + 90px);
+        padding: 80px 90px;
         //overflow: hidden auto;
         width: 100%;
         //padding: 80px 90px;
       
         dl{
             display: flex;
-            margin-bottom: 100px;
+            padding-bottom: 100px;
           
             dt{
                 padding-right: 40px;
@@ -230,7 +235,7 @@ const Sec02 = styled.section`
             }
           
             &:last-of-type{
-                margin-bottom: 0;
+                padding-bottom: 0;
             }
         }
         
@@ -241,6 +246,7 @@ const Sec03 = styled.section`
     margin: 0 auto;
     padding-top: 120px;
     max-width: 1440px;
+    min-height: 100vh;
   
     .txt-box{
         display: flex;
@@ -257,7 +263,6 @@ const Sec03 = styled.section`
       
         .info{
             .txt{
-                
                 margin-bottom: 30px;
                 font-size: 80px;
                 font-weight: 500;
@@ -267,9 +272,24 @@ const Sec03 = styled.section`
                 }
                 
                 a{
-                  &:hover{
-                    text-decoration: underline;
-                  }
+                    position: relative;
+                  
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        display: block;
+                        width: 0;
+                        height: 6px;
+                        background-color: #000;
+                        transition: width 0.4s;
+                    }
+                  
+                    &:hover{
+                        &::after{
+                            width: 100%;
+                        }
+                        //text-decoration: underline;
+                    }
                 }
             }
           
