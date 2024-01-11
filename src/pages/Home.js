@@ -21,6 +21,7 @@ function Home(){
         gsap.registerPlugin(ScrollTrigger);
 
         const h2 = ".sec-kv h2";
+        const desc = ".sec-kv .txt-box .desc";
         const img = ".sec-kv img";
         const sec03Tit = ".sec-03 h3";
         const sec03Txt = ".sec-03 .txt-box";
@@ -39,8 +40,9 @@ function Home(){
         // console.log(sec02Height, totalHeight, totalHeight-sec02Height);
 
 
-        gsap.set(h2, {scale: 1.5, yPercent: 50, opacity: 1});
+        gsap.set(h2, {scale: 1.5, yPercent: 20, opacity: 1});
         gsap.set(img, {scale: 0.5, top: "30%", opacity: 1});
+        gsap.set(desc, {yPercent: 20, opacity: 0});
         // gsap.set(".sec-01", {translateX : 0});
         // gsap.set(".sec-02", {});
         gsap.set(sec03Tit, {opacity : 0, yPercent: 30});
@@ -56,31 +58,36 @@ function Home(){
                     end: "bottom+=100%",
                     scrub: 2,
                     pin: true,
+                    anticipatePin: 1,
                 }
             })
                 .to(h2, {
                     scale: 1, yPercent: 0, opacity: 1
                 })
-                .to(img, {
-                    scrollTrigger: {
-                        trigger: img,
-                        start: "top center",
-                        scrub: 2,
-                    },
-                    scale: 1, top: 0, opacity: 1,
-                })
                 .to(h2, {
                     color: "#fff",
-                });
+                })
+                .to(desc, {
+                    yPercent: 0, opacity: 1
+                })
+
+            gsap.to(img, {
+                scrollTrigger: {
+                    trigger: img,
+                    start: "10% top",
+                    scrub: 2,
+                },
+                scale: 1, top: 0, opacity: 1,
+            })
 
             gsap.timeline({
                 scrollTrigger: {
                     trigger: ".sec-01",
                     start: "top top",
-                    // end: "bottom bottom",
-                    end: `bottom+=${totalWidth-sec01Width}`,
+                    end: `bottom+=${totalWidth}`,
                     scrub: 2,
                     pin: true,
+                    anticipatePin: 1,
                 }
             })
                 .to(".sec-01", {
@@ -94,10 +101,11 @@ function Home(){
                     end: `bottom+=${sec02Height}`,
                     scrub: 2,
                     pin: true,
+                    anticipatePin: 1,
                 }
             })
                 .to(".sec-02 .right", {
-                    y: -(totalHeight-sec02Height)
+                    y: -(totalHeight-sec02Height)-150
                 });
 
             gsap.timeline({
@@ -106,6 +114,7 @@ function Home(){
                     start: "top center",
                     end: "50% center",
                     scrub: 2,
+                    anticipatePin: 1,
                 }
             })
                 .to(sec03Tit, {
@@ -128,7 +137,13 @@ function Home(){
         <div ref={appRef}>
             <Layout header={{active: -1}} >
                 <SecKv className="sec-kv">
-                    <h2>안녕하세요. <br/> 프론트엔드 개발자 <br/> 최승연 입니다</h2>
+                    <div className="txt-box">
+                        <h2>안녕하세요. <br/> 프론트엔드 개발자 <br/> 최승연 입니다</h2>
+                        <p className="desc">
+                            현재 퍼블리셔 3년차이며, 다양한 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
+                            프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
+                        </p>
+                    </div>
                     <img src={`${img}/main_visual.jpg`} alt="" />
                 </SecKv>
 
@@ -145,7 +160,6 @@ function Home(){
                             </li>
                         ))}
                     </ul>
-
                 </Sec01>
 
                 <Sec02 className="sec-02">
@@ -213,9 +227,7 @@ function Home(){
                                         {github && <Link to={github}>Github</Link>}
                                     </li>
                                 ))}
-                                <li>
-                                    <Link to="">Resume</Link>
-                                </li>
+                                <li><Link to="">Resume</Link></li>
                             </ul>
                         </div>
                     </div>

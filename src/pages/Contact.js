@@ -2,6 +2,7 @@ import Layout from "../components/_inc/Layout";
 import {ContactCon, Info, LinkList, TxtBox} from "../styles/contact";
 import {Title1} from "../styles/common";
 import {Link} from "react-router-dom";
+import {contactInfo, infoLink} from "../recoil/atoms";
 
 function Contact() {
     return (
@@ -10,12 +11,20 @@ function Contact() {
                 <Title1>Contact</Title1>
                 <Info>
                     <TxtBox>
-                        <li><Link to="tel:010-3030-1734">+010.3030.1734</Link></li>
-                        <li><Link to="mailto:sseung0000@naver.com">sseung0000@naver.com</Link></li>
+                        {contactInfo && contactInfo.map(({phone, email}, idx) => (
+                            <li key={idx}>
+                                {phone && <Link to={`tel:${phone}`}>+{phone}</Link>}
+                                {email && <Link to={`mailto:${email}`}>{email}</Link>}
+                            </li>
+                        ))}
                     </TxtBox>
                     <LinkList>
-                        <li><Link to="https://seunggry.notion.site/seunggry/Seung-Yeon-Choi-0ed5ec339a5e4d1fbdc8ff958980072c">Notion</Link></li>
-                        <li><Link to="https://github.com/sseunggry">Github</Link></li>
+                        {infoLink && infoLink.map(({notion, github}, idx) => (
+                            <li key={idx}>
+                                {notion && <Link to={notion}>Notion</Link>}
+                                {github && <Link to={github}>Github</Link>}
+                            </li>
+                        ))}
                         <li><Link to="">Resume</Link></li>
                     </LinkList>
                 </Info>

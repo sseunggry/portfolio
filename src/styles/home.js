@@ -3,17 +3,27 @@ import theme from "./theme";
 
 const SecKv = styled.section`
     position: relative;
-    padding-top: 100px;
+    padding-top: 200px;
     height: 100vh;
   
-    h2{
+    .txt-box{
         position: relative;
-        padding-bottom: 60px;
         text-align: center;
-        font-size: 60px;
-        font-weight: 100;
         z-index: 1;
+      
+        h2{
+            padding-bottom: 60px;
+            font-size: 60px;
+            font-weight: 100;
+        }
+        .desc{
+            font-size: 18px;
+            font-weight: 100;
+            line-height: 1.5;
+            color: #fff;
+        }
     }
+  
     img{
         position: absolute;
         display: block;
@@ -45,7 +55,8 @@ const Sec01 = styled.section`
             position: relative;
             margin-right: 30px;
             flex-shrink: 0;
-            width: 720px;
+            width: 640px;
+            //width: 720px;
             height: fit-content;
 
             &:last-child{
