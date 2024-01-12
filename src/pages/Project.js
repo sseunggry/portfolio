@@ -1,8 +1,73 @@
-import {ProjectCon, Tab, Thumb} from "../styles/project";
 import {Title1} from "../styles/common";
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useState} from "react";
 import Layout from "../components/_inc/Layout";
+import styled from "styled-components";
+import theme from "../styles/theme";
+
+const ProjectCon = styled.div`
+    margin: 0 auto;
+    padding: 150px 0;
+    max-width: 1440px;
+`;
+const Tab = styled.ul`
+    display: flex;
+    margin: 20px 0 50px;
+    
+    li{
+        margin-right: 80px;
+        font-size: 28px;
+        font-weight: 700;
+        color: ${theme.color.gray3};
+        text-transform: uppercase;
+      
+        &:last-of-type{
+            margin-right: 0;
+        }
+      
+        &:hover, &.active{
+            color: ${theme.color.black};
+        }
+    }
+`;
+const Thumb = styled.div`
+    display: flex;
+    &:nth-of-type(2n){
+        flex-direction: row-reverse;
+    }
+`;
+const ImgBox = styled.div`
+    flex-shrink: 0;
+    width: 720px;
+
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`;
+const TxtBox = styled.div`
+    padding: 60px;
+    width: 100%;
+    font-size: 20px;
+    color: ${theme.color.black};
+
+    strong{
+        font-weight: 700;
+    }
+    h3{
+        margin-top: 10px;
+        font-size: 48px;
+        font-weight: 300;
+        word-break: keep-all;
+    }
+    .desc{
+        margin: 20px 0 40px;
+        width: 70%;
+        line-height: 1.5;
+        color: ${theme.color.gray2};
+    }
+`;
 
 function Project(){
     const [projectData, setProjectData] = useState(projectWork);
@@ -32,15 +97,15 @@ function Project(){
                 </Tab>
                 {projectData.map(({client, name, period, thumbImg, desc}, idx) => (
                     <Thumb key={idx}>
-                        <div className="img-box">
+                        <ImgBox>
                             <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
-                        </div>
-                        <div className="txt-box">
+                        </ImgBox>
+                        <TxtBox>
                             <strong>{client}</strong>
                             <h3>[{client}] <br/> {name}</h3>
                             <p className="desc">{desc}</p>
                             <p className="period">{period}</p>
-                        </div>
+                        </TxtBox>
                     </Thumb>
                 ))}
             </ProjectCon>

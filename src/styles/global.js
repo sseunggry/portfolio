@@ -91,15 +91,20 @@ const GlobalStyle = createGlobalStyle`
         color: inherit;
     }
     .blind{
-      display: none;
-      overflow: hidden;
-      border: 0;
-      position: relative;
-      z-index: -1;
-      width: 1px;
-      height: 1px;
-      clip: rect(1px, 1px, 1px, 1px);
-      clip-path: inset(50%);
+        display: none;
+        overflow: hidden;
+        border: 0;
+        position: relative;
+        z-index: -1;
+        width: 1px;
+        height: 1px;
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(50%);
+    }
+    
+    section{
+        //overflow: hidden;
+        min-height: 100vh;
     }
 `;
 

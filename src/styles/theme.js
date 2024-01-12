@@ -18,8 +18,19 @@ const font = {
         weight: 200,
     },
     headLine3: {
-        size: '',
+        size: '40px',
         color: `${color.black}`,
+        weight: 500,
+    },
+    headLine4: {
+        size: '32px',
+        color: `${color.black}`,
+        weight: 700
+    },
+    headLine5: {
+        size: '28px',
+        color: `${color.black}`,
+        weight: 700,
     },
     display1: {
         size: '20px',

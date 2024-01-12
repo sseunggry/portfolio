@@ -1,7 +1,14 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import {Wrapper, Container} from "../../styles/layout";
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+    
+`;
+const Container = styled.div`
+    overflow: hidden;
+    position: relative;
+`;
 
 function Layout({header, footer = false, children}){
     return (
