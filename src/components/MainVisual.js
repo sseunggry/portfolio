@@ -1,5 +1,9 @@
 import {img} from "../recoil/atoms";
 import styled from "styled-components";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {useEffect, useRef} from "react";
+import theme from "../styles/theme";
 
 const Section = styled.section`
     position: relative;
@@ -24,6 +28,7 @@ const TxtBox = styled.div`
     }
 `;
 const Img = styled.img`
+    //position: relative;
     position: absolute;
     display: block;
     //margin: 0 auto;
@@ -34,8 +39,56 @@ const Img = styled.img`
 `;
 
 function MainVisual(){
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const section = sectionRef.current;
+        const h2 = section.querySelector("h2");
+        const desc = section.querySelector("p");
+        const img = section.querySelector("img");
+
+        gsap.set(h2, {scale: 1.5, yPercent: 20});
+        gsap.set(desc, {yPercent: 20, opacity: 0});
+        gsap.set(img, {scale: 0.5, top: "30%"});
+
+        const ani = gsap.timeline();
+        ani.to(h2, {scale: 1, yPercent: 0})
+            .to(h2, { color: theme.color.white})
+            .to(desc,{yPercent: 0, opacity: 1});
+
+        ScrollTrigger.create({
+            animation: ani,
+            trigger: section,
+            start: "top top",
+            end: `+=${section.offsetWidth}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            // invalidateOnRefresh: true,
+            // pinSpacing: true,
+            // markers: true
+        });
+
+        const ani2 = gsap.to(img, {
+            scale: 1, top: 0, opacity: 1,
+            scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                scrub: 1,
+                // endTrigger: $img,
+            }
+        });
+
+        return () => {
+            ani.kill();
+            ani2.kill();
+        };
+    }, []);
+
     return (
-        <Section className="sec-kv">
+        <Section className="sec-kv" ref={sectionRef}>
             <TxtBox>
                 <h2>안녕하세요. <br/> 프론트엔드 개발자 <br/> 최승연 입니다</h2>
                 <p>

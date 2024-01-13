@@ -1,20 +1,24 @@
 import {design, work} from "../recoil/atoms";
 import styled from "styled-components";
-import {Title2} from "../styles/common";
 import theme from "../styles/theme";
 import {Link} from "react-router-dom";
 import Text from "../styles/Text";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {useEffect, useRef} from "react";
 
 const Section = styled.section`
     display: flex;
-    overflow: hidden;
-    height: 100vh;
+    //overflow: hidden;
+    //height: 100vh;
 `;
 const LeftCon = styled.div`
+    position: sticky;
+    top: 0;
     padding: 140px;
     flex-shrink: 0;
     width: 43%;
-    height: 100%;
+    //height: 100vh;
     background-color: ${theme.color.black};
     
     dl{
@@ -36,10 +40,9 @@ const LeftCon = styled.div`
 `;
 const RightCon = styled.div`
     padding: 80px 90px;
-    //overflow: hidden auto;
     width: 100%;
-    //padding: 80px 90px;
-
+    background-color: ${theme.color.white};
+    
     dl{
         display: flex;
         padding-bottom: 100px;
@@ -81,8 +84,37 @@ const RightCon = styled.div`
 `;
 
 function MainCareer(){
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const section = sectionRef.current;
+        const leftCon =section.querySelector(".left");
+        const rightCon = section.querySelector(".right");
+
+        const ani = gsap.timeline();
+        ani.to(section, {});
+
+        ScrollTrigger.create({
+            animation: ani,
+            trigger: section,
+            start: "top top",
+            end: `+=${section.offsetHeight}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            markers: true
+        })
+
+        return () => {
+            ani.kill();
+        }
+
+    }, []);
+
     return (
-        <Section className="sec-02">
+        <Section className="sec-02" ref={sectionRef}>
             <LeftCon>
                 <Text name="tit2" color={theme.color.white}>career</Text>
                 <dl>
