@@ -9,9 +9,11 @@ import {useEffect, useRef} from "react";
 
 const Section = styled.section`
     position: relative;
-    padding: 120px 0;
-    min-height: 100vh;
-    background-color: ${theme.color.black};
+    padding: 120px 0 0;
+    //height: 100vh;
+    //box-sizing: border-box;
+     background-color: ${theme.color.black};
+    //background-color: ${theme.color.white};
 `;
 const Inner = styled.div`
     max-width: 1440px;
@@ -29,6 +31,10 @@ const TxtDesc = styled.div`
         width: 360px;
         font-size: 20px;
         line-height: 1.6;
+        
+        span{
+            display: block;
+        }
     }
 `;
 const InfoCon = styled.div`
@@ -56,13 +62,14 @@ const ContactTxt = styled.ul`
             height: 6px;
             background-color: #000;
             transition: width 0.4s;
+            
         }
 
         &:hover{
             &::after{
                 width: 100%;
             }
-            //text-decoration: underline;
+            text-decoration: underline;
         }
     }
 `;
@@ -81,13 +88,13 @@ const LinkTxt = styled.ul`
     }
 `;
 const DecoTxt = styled.p`
-    //position: absolute;
-    //left: 0;
-    //bottom: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     padding: 0 40px;
     font-size: 120px;
     font-weight: 900;
-    color: #fff;
+    color: ${theme.color.black};
     letter-spacing: 6px;
     text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
 
@@ -100,6 +107,7 @@ function MainContact(){
     const sectionRef = useRef(null);
     const descRef = useRef(null);
     const infoRef = useRef(null);
+    const decoRef = useRef(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -107,47 +115,76 @@ function MainContact(){
         const section = sectionRef.current;
         const desc = descRef.current;
         const info = infoRef.current;
+        const deco = decoRef.current;
         const h3 = section.querySelector("h3");
-        const descList = desc.querySelectorAll("p");
+        // const descList = desc.querySelectorAll("p span");
         const infoList = info.querySelectorAll("ul li");
+        // Object.values(descList).map((el) => el.style.height = `${el.clientHeight}px`);
 
-        Object.values(descList).map((el, idx) => el.style.height = `${el.clientHeight}px`);
-
-        gsap.set(h3, {yPercent: 30, opacity: 0});
-        gsap.set(descList, {yPercent: 100, opacity: 0});
-        gsap.set(infoList, {xPercent: -100, opacity: 0});
+        gsap.set(h3, {yPercent: 20, opacity: 0,});
+        gsap.set(desc, {yPercent: 20, opacity: 0});
+        gsap.set(infoList, {xPercent: 20, opacity: 0});
 
         const ani = gsap.timeline();
         ani.to(section, {backgroundColor: theme.color.white})
-            .to(h3, {yPercent: 0, opacity: 1})
-            .to(descList, {yPercent: 0, opacity: 1, stagger: 1})
-            .to(infoList, {xPercent: 0, opacity: 1, stagger: 1});
-
         ScrollTrigger.create({
             animation: ani,
             trigger: section,
             start: "top top",
-            end: "center center",
+            end: "bottom bottom",
             scrub: 1,
             pin: true,
-            markers: true
+            anticipatePin: 1,
+            // markers: true
+        });
+
+        const ani2 = gsap.timeline();
+        ani2.to(h3, {yPercent: 0, opacity: 1})
+            .to(desc, {yPercent: 0, opacity: 1})
+            .to(infoList, {xPercent: 0, opacity: 1});
+
+        ScrollTrigger.create({
+            animation: ani2,
+            trigger: section,
+            start: "top top",
+            end: "center center",
+            scrub: 1,
+        });
+
+        gsap.set(deco, {opacity: 0});
+        gsap.to(deco, {
+            xPercent: -20,
+            opacity: 1,
+            color: theme.color.white,
+            scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                end: "center center",
+                scrub: 1,
+            }
         });
 
         return () => {
             ani.kill();
+            // ani2.kill();
         }
     }, []);
+
+    let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
+    phraseTxt= phraseTxt.split("\n");
 
     return (
         <Section className="sec-03" ref={sectionRef}>
             <Inner>
                 <Title2>Contact</Title2>
                 <TxtBox>
-                    <TxtDesc ref={descRef}>
-                        <p>안녕하세요.</p>
-                        <p>프론트엔드 개발자 최승연입니다.</p>
-                        <p>좋은 동료들과 재미있게 일하고 싶습니다. </p>
-                        <p>연락주세요!</p>
+                    <TxtDesc ref={descRef} className="desc">
+                        {
+                            phraseTxt.map((txt, idx) => (
+                            <p key={idx}>
+                                <span>{txt}</span>
+                            </p>
+                        ))}
                     </TxtDesc>
                     <InfoCon ref={infoRef}>
                         <ContactTxt>
@@ -170,7 +207,7 @@ function MainContact(){
                     </InfoCon>
                 </TxtBox>
             </Inner>
-            <DecoTxt>
+            <DecoTxt ref={decoRef}>
                 <span>CHOI SEUNG YEON  </span>
                 <span>CHOI SEUNG YEON</span>
             </DecoTxt>

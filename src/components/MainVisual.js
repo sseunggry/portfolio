@@ -21,9 +21,9 @@ const TxtBox = styled.div`
         font-weight: 100;
     }
     p{
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 100;
-        line-height: 1.5;
+        line-height: 1.6;
         color: #fff;
     }
 `;
@@ -92,8 +92,8 @@ function MainVisual(){
             <TxtBox>
                 <h2>안녕하세요. <br/> 프론트엔드 개발자 <br/> 최승연 입니다</h2>
                 <p>
-                    현재 퍼블리셔 3년차이며, 다양한 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
-                    프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
+                    현재 퍼블리셔 3년차이며, 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
+                    프론트엔드 개발자로 성장하기위해 리액트를 공부하고 있습니다.
                 </p>
             </TxtBox>
             <Img src={`${img}/main_visual.jpg`} alt="" />

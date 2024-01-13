@@ -10,10 +10,10 @@ const Container = styled.div`
     position: relative;
 `;
 
-function Layout({header, footer = false, children}){
+function Layout({footer = false, children}){
     return (
         <Wrapper>
-            <Header active={header.active} />
+            <Header />
 
             <Container>
                 {children}

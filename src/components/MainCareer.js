@@ -34,7 +34,8 @@ const LeftCon = styled.div`
         }
 
         &:last-of-type{
-            opacity: 0.5;
+            //opacity: 0.5;
+            color: ${theme.color.gray2};
         }
     }
 `;
@@ -85,17 +86,27 @@ const RightCon = styled.div`
 
 function MainCareer(){
     const sectionRef = useRef(null);
+    const leftRef = useRef(null);
+    const rightRef = useRef(null);
+
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const leftCon =section.querySelector(".left");
-        const rightCon = section.querySelector(".right");
+        const leftCon = leftRef.current;
+        const rightCon = rightRef.current;
+
+        const leftTit = leftCon.querySelector("h3");
+        const leftTxt = leftCon.querySelectorAll("dl");
+
 
         const ani = gsap.timeline();
-        ani.to(section, {});
+        gsap.set(leftCon, {width: "100vw"});
+        gsap.set(leftTit, {opacity: 0});
+        gsap.set(leftTxt, {opacity: 0});
 
+        ani.to(leftCon, {width: "43%"});
         ScrollTrigger.create({
             animation: ani,
             trigger: section,
@@ -104,18 +115,29 @@ function MainCareer(){
             scrub: 1,
             pin: true,
             anticipatePin: 1,
-            markers: true
+        })
+
+        const ani2 = gsap.timeline();
+        ani2.to(leftTit, {opacity: 1})
+            .to(leftTxt, {opacity: 1});
+        ScrollTrigger.create({
+            animation: ani2,
+            trigger: section,
+            start: "top top",
+            end: "center center",
+            scrub: 1,
         })
 
         return () => {
             ani.kill();
+            ani2.kill();
         }
 
     }, []);
 
     return (
         <Section className="sec-02" ref={sectionRef}>
-            <LeftCon>
+            <LeftCon ref={leftRef}>
                 <Text name="tit2" color={theme.color.white}>career</Text>
                 <dl>
                     <dt>Publisher</dt>
@@ -126,7 +148,7 @@ function MainCareer(){
                     <dd>21.05 ~ 23.01 (2년 9개월)</dd>
                 </dl>
             </LeftCon>
-            <RightCon>
+            <RightCon ref={rightRef}>
                 <dl>
                     <dt>Publishing</dt>
                     <dd>

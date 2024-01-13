@@ -16,61 +16,6 @@ const Section = styled.section`
         margin-bottom: 40px;
         //padding-left: 240px;
     }
-    .swiper{
-        position: static;
-        padding-right: 60px;
-
-        .swiper-slide{
-            position: relative;
-            margin-right: 30px;
-            width: 720px;
-            height: auto;
-
-            &:last-child{
-                margin-right: 0;
-            }
-
-            .txt{
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                padding: 0 60px 60px;
-                color: ${theme.color.white};
-
-                h4{
-                    font-size: 32px;
-                }
-                p{
-                    margin-top: 16px;
-                    font-size: 18px;
-                }
-            }
-            img{
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-        .swiper-button-prev{
-
-        }
-        .swiper-button-next{
-
-        }
-        .swiper-pagination{
-            &-fraction{
-                left: 12.5%;
-                bottom: 10px;
-                width: fit-content;
-                font-size: 20px;
-                color: ${theme.color.gray3};
-
-                .swiper-pagination-current{
-                    color: ${theme.color.black};
-                }
-            }
-        }
-    }
 `;
 const List = styled.ul`
     display: flex;
@@ -122,7 +67,7 @@ function MainProject(){
         listLi.forEach((el) => listWidth += el.offsetWidth);
 
         const ani = gsap.to(section, {
-            x: -( listWidth - (list.offsetWidth/2) ),
+            x: -( listWidth - list.offsetWidth/2 ),
             ease: "none",
             scrollTrigger: {
                 trigger: section,
@@ -134,22 +79,22 @@ function MainProject(){
             }
         });
 
-        gsap.set(listLi, {xPercent: 20, opacity: 0});
-        const ani2 = gsap.to(listLi, {
-            stagger: 0.5,
-            xPercent: 0,
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: listLi,
-                start: "top 50%",
-                scrub: 1,
-            }
-        });
+        // gsap.set(listLi, {xPercent: 20, opacity: 0});
+        // const ani2 = gsap.to(listLi, {
+        //     stagger: 0.5,
+        //     xPercent: 0,
+        //     opacity: 1,
+        //     ease: "none",
+        //     scrollTrigger: {
+        //         trigger: listLi,
+        //         start: "top top",
+        //         scrub: 1,
+        //     }
+        // });
 
         return () => {
             ani.kill();
-            ani2.kill();
+            // ani2.kill();
         };
     })
 

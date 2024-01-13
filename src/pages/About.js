@@ -53,7 +53,7 @@ const Intro = styled.div`
 
 function About(){
     return (
-        <Layout header={{active: 0}}>
+        <Layout>
             <AboutCon>
                 <Title1>About</Title1>
                 <InfoTxt>

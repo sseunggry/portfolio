@@ -11,3 +11,5 @@ export const personal = project.personal;
 export const projectWork = Object.values(work).filter((el, idx) => el.thumbImg);
 export const projectPersonal = Object.values(personal).filter((el, idx) => el.thumbImg);
 export const design = project.design;
+
+export const navList = ['About', 'Project', 'Project2', 'Contact'];

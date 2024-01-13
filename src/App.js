@@ -10,6 +10,7 @@ import Project from "./pages/Project";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import smooth from "./utils/smooth";
+import Project2 from "./pages/Project2";
 
 function App() {
     useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/" element={<Home />}/>
                         <Route path="/about" element={<About />}/>
                         <Route path="/project" element={<Project />}/>
+                        <Route path="/project2" element={<Project2 />}/>
                         <Route path="/contact" element={<Contact />}/>
                     </Routes>
                 </BrowserRouter>

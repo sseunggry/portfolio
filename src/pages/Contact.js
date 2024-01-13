@@ -3,6 +3,9 @@ import {Title1} from "../styles/common";
 import {Link} from "react-router-dom";
 import {contactInfo, infoLink} from "../recoil/atoms";
 import styled from "styled-components";
+import {gsap} from "gsap";
+import {useEffect, useRef} from "react";
+import Text from "../styles/Text";
 
 const ContactCon = styled.div`
     margin: 0 auto;
@@ -37,10 +40,20 @@ const LinkList = styled.ul`
 `;
 
 function Contact() {
+    const conRef = useRef(null);
+
+    useEffect(() => {
+        const con = conRef.current;
+
+        gsap.set(con, {opacity: 0, yPercent: 40});
+        gsap.to(con, {opacity: 1, yPercent: 0});
+
+    }, []);
+
     return (
-        <Layout header={{active: 2}}>
-            <ContactCon>
-                <Title1>Contact</Title1>
+        <Layout>
+            <ContactCon ref={conRef}>
+                <Text name="tit1">Contact</Text>
                 <Info>
                     <TxtBox>
                         {contactInfo && contactInfo.map(({phone, email}, idx) => (

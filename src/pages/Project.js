@@ -1,9 +1,9 @@
-import {Title1} from "../styles/common";
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useState} from "react";
 import Layout from "../components/_inc/Layout";
 import styled from "styled-components";
 import theme from "../styles/theme";
+import Text from "../styles/Text";
 
 const ProjectCon = styled.div`
     margin: 0 auto;
@@ -20,6 +20,7 @@ const Tab = styled.ul`
         font-weight: 700;
         color: ${theme.color.gray3};
         text-transform: uppercase;
+        cursor: pointer;
       
         &:last-of-type{
             margin-right: 0;
@@ -88,9 +89,9 @@ function Project(){
     }
 
     return (
-        <Layout header={{active: 1}}>
+        <Layout>
             <ProjectCon>
-                <Title1>Project</Title1>
+                <Text name="tit1">Project</Text>
                 <Tab onClick={onClick}>
                     <li className="active">work ({projectWork.length})</li>
                     <li>personal ({projectPersonal.length})</li>
