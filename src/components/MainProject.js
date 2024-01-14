@@ -8,7 +8,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 const Section = styled.section`
     //overflow: hidden;
-    position: relative;
+    //position: relative;
     //display: flex;
     padding: 120px 240px;
 
@@ -25,7 +25,6 @@ const List = styled.ul`
         margin-right: 30px;
         flex-shrink: 0;
         width: 640px;
-        //width: 720px;
         height: fit-content;
 
         &:last-child{
@@ -38,6 +37,7 @@ const TxtBox = styled.div`
     left: 0;
     bottom: 0;
     padding: 0 60px 60px;
+    width: 100%;
     color: ${theme.color.white};
     
     p{
@@ -66,37 +66,39 @@ function MainProject(){
         let listWidth = 0;
         listLi.forEach((el) => listWidth += el.offsetWidth);
 
-        const ani = gsap.to(section, {
-            x: -( listWidth - list.offsetWidth/2 ),
-            ease: "none",
-            scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: `bottom+=${listWidth}`,
-                scrub: 1,
-                pin: true,
-                anticipatePin: 1,
-            }
-        });
+        let ctx = gsap.context(() => {
+            gsap.set(section, {x: 0});
+            gsap.to(section, {
+                x: -( listWidth - list.offsetWidth/2 ),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: `bottom+=${listWidth}`,
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1,
+                }
+            });
 
-        // gsap.set(listLi, {xPercent: 20, opacity: 0});
-        // const ani2 = gsap.to(listLi, {
-        //     stagger: 0.5,
-        //     xPercent: 0,
-        //     opacity: 1,
-        //     ease: "none",
-        //     scrollTrigger: {
-        //         trigger: listLi,
-        //         start: "top top",
-        //         scrub: 1,
-        //     }
-        // });
+            // gsap.set(listLi, {xPercent: 20, opacity: 0});
+            // const ani2 = gsap.to(listLi, {
+            //     stagger: 0.5,
+            //     xPercent: 0,
+            //     opacity: 1,
+            //     ease: "none",
+            //     scrollTrigger: {
+            //         trigger: listLi,
+            //         start: "top top",
+            //         scrub: 1,
+            //     }
+            // });
 
-        return () => {
-            ani.kill();
-            // ani2.kill();
-        };
-    })
+        }, sectionRef);
+
+        return () => ctx.revert();
+
+    }, []);
 
     return (
         <Section className="sec-01" ref={sectionRef}>

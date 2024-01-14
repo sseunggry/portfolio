@@ -1,5 +1,4 @@
 import Layout from "../components/_inc/Layout";
-import {Title1} from "../styles/common";
 import {Link} from "react-router-dom";
 import {contactInfo, infoLink} from "../recoil/atoms";
 import styled from "styled-components";

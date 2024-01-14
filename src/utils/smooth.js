@@ -1,9 +1,9 @@
 import Lenis from "@studio-freight/lenis";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {ScrollTrigger, ScrollSmoother} from "gsap/ScrollTrigger";
 
 function smooth() {
     const lenis = new Lenis({
-        duration: 1.5,
+        duration: 2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
     });
 
@@ -13,8 +13,15 @@ function smooth() {
     }
 
     requestAnimationFrame(raf);
-
     lenis.on("scroll", ScrollTrigger.update);
+
+
+    // ScrollSmoother.normalizeScroll(true);
+    // let smoother = ScrollSmoother.create({
+    //    smooth: 2,
+    //    effect: true,
+    //    normalizeScroll: true
+    // });
 }
 
 export default smooth;

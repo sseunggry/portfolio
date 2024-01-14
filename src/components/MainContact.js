@@ -1,7 +1,7 @@
 import {Title2} from "../styles/common";
 import {contactInfo, infoLink} from "../recoil/atoms";
 import {Link} from "react-router-dom";
-import styled from "styled-components";
+import {css, styled} from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -18,11 +18,33 @@ const Section = styled.section`
 const Inner = styled.div`
     max-width: 1440px;
     margin: 0 auto;
+
+    ${({ theme }) => theme.xLarge`
+        padding-left: 60px; 
+        padding-right: 60px; 
+    `};
+
+    @media screen and (max-width: 1500px) {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
 `;
 const TxtBox = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 130px 0 320px;
+
+    ${({ theme }) => theme.xLarge`
+        flex-direction: column;
+    `};
+
+    @media screen and (max-width: 1500px) {
+        flex-direction: column;
+        
+        .desc{
+            margin-bottom: 40px;
+        }
+    }
 `;
 const TxtDesc = styled.div`
     p{
@@ -125,6 +147,14 @@ function MainContact(){
         gsap.set(desc, {yPercent: 20, opacity: 0});
         gsap.set(infoList, {xPercent: 20, opacity: 0});
 
+        let mm = gsap.matchMedia();
+        mm.add("(min-width: 1280px", () => {
+
+        });
+        mm.add("(max-width: 1179px)", () => {
+
+        });
+
         const ani = gsap.timeline();
         ani.to(section, {backgroundColor: theme.color.white})
         ScrollTrigger.create({
@@ -165,8 +195,7 @@ function MainContact(){
         });
 
         return () => {
-            ani.kill();
-            // ani2.kill();
+            ani.revert();
         }
     }, []);
 

@@ -11,13 +11,14 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import smooth from "./utils/smooth";
 import Project2 from "./pages/Project2";
+import media from "./styles/base/media";
 
 function App() {
     useEffect(() => {
         smooth();
     }, []);
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={{...theme, ...media}}>
             <GlobalStyle />
             <RecoilRoot>
                 <BrowserRouter basename={process.env.PUBLIC_URL}>

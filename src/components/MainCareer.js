@@ -13,11 +13,11 @@ const Section = styled.section`
     //height: 100vh;
 `;
 const LeftCon = styled.div`
-    position: sticky;
-    top: 0;
+    //position: sticky;
+    //top: 0;
     padding: 140px;
     flex-shrink: 0;
-    width: 43%;
+    width: 100vw;
     //height: 100vh;
     background-color: ${theme.color.black};
     
@@ -41,7 +41,8 @@ const LeftCon = styled.div`
 `;
 const RightCon = styled.div`
     padding: 80px 90px;
-    width: 100%;
+    flex-shrink: 0;
+    width: 57%;
     background-color: ${theme.color.white};
     
     dl{
@@ -82,13 +83,22 @@ const RightCon = styled.div`
             padding-bottom: 0;
         }
     }
+
+    @media screen and (max-width: 1500px) {
+        dl{
+            flex-direction: column;
+            
+            dt{
+                margin-bottom: 40px;
+            }
+        }
+    }
 `;
 
 function MainCareer(){
     const sectionRef = useRef(null);
     const leftRef = useRef(null);
     const rightRef = useRef(null);
-
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -100,38 +110,37 @@ function MainCareer(){
         const leftTit = leftCon.querySelector("h3");
         const leftTxt = leftCon.querySelectorAll("dl");
 
+        let ctx = gsap.context(() => {
+            const ani = gsap.timeline();
+            // gsap.set(leftCon, {width: "100vw"});
+            gsap.set(leftTit, {opacity: 0});
+            gsap.set(leftTxt, {opacity: 0});
 
-        const ani = gsap.timeline();
-        gsap.set(leftCon, {width: "100vw"});
-        gsap.set(leftTit, {opacity: 0});
-        gsap.set(leftTxt, {opacity: 0});
+            ani.to(leftCon, {width: "43%"});
+            // ani.to(rightCon, {xPercent: -100});
+            ScrollTrigger.create({
+                animation: ani,
+                trigger: section,
+                start: "top top",
+                end: `+=${section.offsetHeight}`,
+                scrub: 1,
+                pin: true,
+                anticipatePin: 1,
+            })
 
-        ani.to(leftCon, {width: "43%"});
-        ScrollTrigger.create({
-            animation: ani,
-            trigger: section,
-            start: "top top",
-            end: `+=${section.offsetHeight}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-        })
+            const ani2 = gsap.timeline();
+            ani2.to(leftTit, {opacity: 1})
+                .to(leftTxt, {opacity: 1});
+            ScrollTrigger.create({
+                animation: ani2,
+                trigger: section,
+                start: "top top",
+                end: "center center",
+                scrub: 1,
+            })
+        }, sectionRef);
 
-        const ani2 = gsap.timeline();
-        ani2.to(leftTit, {opacity: 1})
-            .to(leftTxt, {opacity: 1});
-        ScrollTrigger.create({
-            animation: ani2,
-            trigger: section,
-            start: "top top",
-            end: "center center",
-            scrub: 1,
-        })
-
-        return () => {
-            ani.kill();
-            ani2.kill();
-        }
+        return () => ctx.revert();
 
     }, []);
 
@@ -156,7 +165,7 @@ function MainCareer(){
                             <p key={idx}>
                                 <span className="period">{period}</span>
                                 <span><strong>[{client}]</strong> {name}</span>
-                                {link && <Link to={link} target="_blank">{link}</Link>}
+                                {/*{link && <Link to={link} target="_blank">{link}</Link>}*/}
                             </p>
                         ))}
                     </dd>
@@ -168,7 +177,7 @@ function MainCareer(){
                             <p key={idx}>
                                 <span className="period">{period}</span>
                                 <span><strong>[{client}]</strong> {name}</span>
-                                {link && <Link to={link} target="_blank">{link}</Link>}
+                                {/*{link && <Link to={link} target="_blank">{link}</Link>}*/}
                             </p>
                         ))}
                     </dd>

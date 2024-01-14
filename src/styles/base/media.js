@@ -4,6 +4,7 @@ const breakpoints = {
     small: '720px',
     medium: '1080px',
     large: '1200px',
+    xLarge: '1500px'
 };
 
 const media = Object.keys(breakpoints).reduce((acc, label) => {
