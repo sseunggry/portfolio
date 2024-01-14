@@ -9,6 +9,11 @@ const ProjectCon = styled.div`
     margin: 0 auto;
     padding: 150px 0;
     max-width: 1440px;
+
+    @media screen and (max-width: 1500px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
 `;
 const Tab = styled.ul`
     display: flex;
@@ -38,8 +43,9 @@ const Thumb = styled.div`
     }
 `;
 const ImgBox = styled.div`
-    flex-shrink: 0;
-    width: 720px;
+    //flex-shrink: 0;
+    //width: 720px;
+    flex: 1;
 
     img{
         width: 100%;
@@ -49,7 +55,8 @@ const ImgBox = styled.div`
 `;
 const TxtBox = styled.div`
     padding: 60px;
-    width: 100%;
+    flex: 1;
+    //width: 100%;
     font-size: 20px;
     color: ${theme.color.black};
 
