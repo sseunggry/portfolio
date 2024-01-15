@@ -17,24 +17,23 @@ const HeaderTag = styled.header`
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
-    background-color: ${({bgColor}) => bgColor};
-    border-bottom: 1px solid ${theme.color.gray5};
+    background-color: ${(props) => props.bgColor || theme.color.white};
+    //border-bottom: 1px solid ${theme.color.gray5};
     z-index: 1;
+    
+    ${(props) => (
+            (props.bgColor !== theme.color.black) && css`
+            border-bottom: 1px solid ${theme.color.gray5};
+        `
+    )};
 
     Nav{
         a{
             &:hover, &.active{
-                color: ${theme.color.black};
+                color: ${({bgColor}) => theme.color.white || theme.color.black};
             }
         }
     }
-    
-    ${(bgColor) => (
-        (bgColor === '') && css`
-            border-bottom-color: transparent;
-        `
-    )};
-    
 
     ${({theme}) => theme.medium`
         padding-left: 40px;
@@ -111,7 +110,7 @@ const Nav = styled.nav`
         text-transform: uppercase;
       
         &:hover, &.active{
-            color: ${theme.color.white};
+            color: ${theme.color.black};
         }
         
         &:last-child{
