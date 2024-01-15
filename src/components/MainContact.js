@@ -1,11 +1,11 @@
-import {Title2} from "../styles/common";
 import {contactInfo, infoLink} from "../recoil/atoms";
 import {Link} from "react-router-dom";
-import {css, styled} from "styled-components";
+import styled from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
+import Text from "../styles/Text";
 
 const Section = styled.section`
     position: relative;
@@ -205,7 +205,7 @@ function MainContact(){
     return (
         <Section className="sec-03" ref={sectionRef}>
             <Inner>
-                <Title2>Contact</Title2>
+                <Text name="tit1">Contact</Text>
                 <TxtBox>
                     <TxtDesc ref={descRef} className="desc">
                         {

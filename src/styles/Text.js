@@ -1,11 +1,16 @@
 import styled, {css} from "styled-components";
 import theme from "./theme";
+import {vw} from "../utils/common";
 
 const Tit1 = styled.h2`
     color: ${({color}) => color || theme.font.headLine1.color };
     font-size: ${({fontSize}) => fontSize || theme.font.headLine1.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine1.weight };
     text-transform: ${({textTransform}) => textTransform || 'uppercase' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine1.mobSize)};
+    `};
 `;
 
 const Tit2 = styled.h3`
@@ -13,6 +18,10 @@ const Tit2 = styled.h3`
     font-size: ${({fontSize}) => fontSize || theme.font.headLine2.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine2.weight };
     text-transform: ${({textTransform}) => textTransform || 'uppercase' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine2.mobSize)};
+    `};
 `;
 
 const Tit3 = styled.h4`
@@ -20,6 +29,10 @@ const Tit3 = styled.h4`
     font-size: ${({fontSize}) => fontSize || theme.font.headLine3.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine3.weight };
     text-transform: ${({textTransform}) => textTransform || 'uppercase' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine3.mobSize)};
+    `};
 `;
 
 const Tit4 = styled.h5`
@@ -27,12 +40,21 @@ const Tit4 = styled.h5`
     font-size: ${({fontSize}) => fontSize || theme.font.headLine4.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine4.weight };
     text-transform: ${({textTransform}) => textTransform || '' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine4.mobSize)};
+    `};
 `;
 const Tit5 = styled.h6`
     color: ${({color}) => color || theme.font.headLine5.color };
     font-size: ${({fontSize}) => fontSize || theme.font.headLine5.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine5.weight };
     text-transform: ${({textTransform}) => textTransform || '' };
+    
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine5.mobSize)};
+    `};
+    
 `;
 
 const Desc1 = styled.p`
@@ -40,18 +62,30 @@ const Desc1 = styled.p`
     font-size: ${({fontSize}) => fontSize || theme.font.display1.size };
     font-weight: ${({fontWeight}) => fontWeight || ''};
     text-transform: ${({textTransform}) => textTransform || '' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.display1.mobSize)};
+    `};
 `;
 const Desc2 = styled.p`
     color: ${({color}) => color || theme.font.display2.color };
     font-size: ${({fontSize}) => fontSize || theme.font.display2.size };
     font-weight: ${({fontWeight}) => fontWeight || ''};
     text-transform: ${({textTransform}) => textTransform || '' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.display2.mobSize)};
+    `};
 `;
 const Desc3 = styled.p`
     color: ${({color}) => color || theme.font.display3.color };
     font-size: ${({fontSize}) => fontSize || theme.font.display3.size };
     font-weight: ${({fontWeight}) => fontWeight || ''};
     text-transform: ${({textTransform}) => textTransform || '' };
+
+    ${({theme}) => theme.small`
+        font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.display3.mobSize)};
+    `};
 `;
 
 function Text({ children, ...props }){

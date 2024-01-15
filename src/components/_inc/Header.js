@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom";
 import {img, navList} from "../../recoil/atoms";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import theme from "../../styles/theme";
 import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
+import {vw} from "../../utils/common";
 
 const HeaderTag = styled.header`
     position: absolute;
@@ -14,28 +15,57 @@ const HeaderTag = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 40px;
-    
+    padding: 0 60px;
+    height: 80px;
+    background-color: ${({bgColor}) => bgColor};
+    border-bottom: 1px solid ${theme.color.gray5};
     z-index: 1;
-    //border-bottom: 1px solid #ddd;
+
+    Nav{
+        a{
+            &:hover, &.active{
+                color: ${theme.color.black};
+            }
+        }
+    }
+    
+    ${(bgColor) => (
+        (bgColor === '') && css`
+            border-bottom-color: transparent;
+        `
+    )};
+    
+
+    ${({theme}) => theme.medium`
+        padding-left: 40px;
+        padding-right: 40px;
+    `};
+
+    ${({theme}) => theme.small`
+        padding-left: ${vw(40)};
+        padding-right: ${vw(40)};
+        height: ${vw(120)};
+    `};
 `;
 const Logo = styled.h1`
     a{
         display: block;
         width: 51px;
-        height: 40px;
         background-color: #fff;
       
         img{
             width: 100%;
+            vertical-align: middle;
         }
+
+        ${({theme}) => theme.small`
+            width: ${vw(100)};
+        `};
     }
 `;
 const Menu = styled.button`
+    display: none;
     padding: 8px 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     width: 40px;
     height: 40px;
 
@@ -54,7 +84,20 @@ const Menu = styled.button`
         &:first-of-type{
             width: 100%;
         }
+
     }
+    ${({theme}) => theme.small`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: ${vw(16)} ${vw(10)};
+        width: ${vw(80)};
+        height: ${vw(80)};
+    
+        span{
+            height: ${vw(6)};
+        }
+    `};
 `;
 const Nav = styled.nav`
     display: flex;
@@ -75,9 +118,13 @@ const Nav = styled.nav`
             margin-right: 0;
         }
     }
+    ${({theme}) => theme.small`
+        display: none;
+    `};
+    
 `;
 
-function Header(){
+function Header({bgColor = '', motion = false}){
     const headerRef = useRef(null);
 
     const onClick = (e) =>{
@@ -94,20 +141,21 @@ function Header(){
         const logo = header.querySelector(".logo");
         const nav = header.querySelector(".nav");
 
-        gsap.set(logo, {opacity: 0});
-        gsap.set(nav, {opacity: 0});
+        if(motion){
+            gsap.set(logo, {opacity: 0});
+            gsap.set(nav, {opacity: 0});
 
-        const ani = gsap.timeline();
-        ani.to(logo, {opacity: 1})
-            .to(nav, { opacity: 1});
+            const ani = gsap.timeline();
+            ani.to(logo, {opacity: 1})
+                .to(nav, { opacity: 1});
 
-        return () => ani.revert();
-
+            return () => ani.revert();
+        }
     }, []);
 
     return (
         <>
-            <HeaderTag ref={headerRef}>
+            <HeaderTag ref={headerRef} bgColor={bgColor}>
                 <Logo className="logo">
                     <Link to="/">
                         <img src={`${img}/logo.svg`} alt="logo" />
@@ -120,11 +168,11 @@ function Header(){
                         </Link>
                     ))}
                 </Nav>
-                {/*<Menu type="button">*/}
-                {/*    <span></span>*/}
-                {/*    <span></span>*/}
-                {/*    <span></span>*/}
-                {/*</Menu>*/}
+                <Menu type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </Menu>
             </HeaderTag>
         </>
     )

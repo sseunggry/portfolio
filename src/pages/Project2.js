@@ -1,4 +1,3 @@
-import {Title1} from "../styles/common";
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useState} from "react";
 import Layout from "../components/_inc/Layout";

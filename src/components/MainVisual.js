@@ -143,7 +143,6 @@ function MainVisual(){
 
     return (
         <>
-            <Header />
             <Section className="sec-kv" ref={sectionRef}>
             <TxtBox className="txt-box">
                 <Title>

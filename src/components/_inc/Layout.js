@@ -11,10 +11,13 @@ const Container = styled.div`
     position: relative;
 `;
 
-function Layout({footer = false, children}){
+function Layout({header = {}, footer = false, children}){
     return (
         <Wrapper>
-            <Header />
+            <Header
+                bgColor={header.bgColor}
+                motion={header.motion}
+            />
 
             <Container>
                 {children}

@@ -1,10 +1,10 @@
 import {css} from "styled-components";
 
-const breakpoints = {
-    small: '720px',
-    medium: '1080px',
-    large: '1200px',
-    xLarge: '1500px'
+export const breakpoints = {
+    small: 720,
+    medium: 980,
+    large: 1200,
+    xLarge: 1500
 };
 
 const media = Object.keys(breakpoints).reduce((acc, label) => {
