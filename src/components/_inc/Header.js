@@ -1,11 +1,10 @@
 import {Link} from "react-router-dom";
-import {headerActiveState, img, navList} from "../../recoil/atoms";
+import {img, navList} from "../../recoil/atoms";
 import styled, {css} from "styled-components";
 import theme from "../../styles/theme";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
 import {vw} from "../../utils/common";
-import {useRecoilState} from "recoil";
 
 const HeaderTag = styled.header`
     position: absolute;
@@ -19,11 +18,10 @@ const HeaderTag = styled.header`
     padding: 0 60px;
     height: 80px;
     background-color: ${(props) => props.bgcolor || theme.color.white};
-    //border-bottom: 1px solid ${theme.color.gray5};
     z-index: 1;
     
     ${(props) => (
-            (props.bgcolor !== theme.color.black) && css`
+        (props.bgcolor !== theme.color.black) && css`
             border-bottom: 1px solid ${theme.color.gray5};
         `
     )};
@@ -101,7 +99,7 @@ const Menu = styled.button`
 `;
 const Nav = styled.nav`
     display: flex;
-    
+
     a{
         margin-right: 40px;
         font-size: ${theme.font.display1.size};
@@ -124,9 +122,8 @@ const Nav = styled.nav`
     
 `;
 
-function Header({bgcolor = theme.color.white, motion = false}){
+function Header({bg, active, motion = false}){
     const headerRef = useRef(null);
-    const [headerActive, setHeaderActive] = useState(-1);
 
     const onClick = (e) =>{
         const $target = e.target;
@@ -156,7 +153,7 @@ function Header({bgcolor = theme.color.white, motion = false}){
 
     return (
         <>
-            <HeaderTag ref={headerRef} bgcolor={bgcolor}>
+            <HeaderTag ref={headerRef} bgcolor={bg}>
                 <Logo className="logo">
                     <Link to="/">
                         <img src={`${img}/logo.svg`} alt="logo" />
@@ -164,7 +161,7 @@ function Header({bgcolor = theme.color.white, motion = false}){
                 </Logo>
                 <Nav className="nav">
                     {navList.map((el, idx) => (
-                        <Link to={`/${el}`} key={idx} onClick={onClick}>
+                        <Link to={`/${el}`} key={idx} onClick={onClick} className={idx === active ? 'active' : ''}>
                             {el}
                         </Link>
                     ))}

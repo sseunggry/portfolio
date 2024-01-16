@@ -188,7 +188,7 @@ function Project(){
     }
 
     return (
-        <Layout>
+        <Layout header={{active: 1}}>
             <ProjectCon>
                 <Text name="tit1">Project</Text>
                 <Tab onClick={onClick}>

@@ -115,6 +115,8 @@ function Contact() {
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
+        // ScrollTrigger.saveStyles(".mobile, .desktop");
+
         const section = sectionRef.current;
         const txtBox = txtRef.current;
         const linkBox = linkRef.current;
@@ -124,30 +126,89 @@ function Contact() {
         const txtLine = txtBox.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
-        const ani = gsap.timeline();
-        gsap.set(section, {background: theme.color.white});
-        gsap.set(txtLine, {width: 0});
+        ScrollTrigger.matchMedia({
+            "(min-width: 720px)": function() {
+                const ani = gsap.timeline();
+                gsap.set(section, {background: theme.color.white});
+                gsap.set(txtLine, {width: 0});
 
-        ani.to(section, {background: theme.color.black})
-            .to(tit, {color: theme.color.white})
-            .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
-            .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-            .to(linkList, {color: theme.color.white});
+                ani.to(section, {background: theme.color.black})
+                    .to(tit, {color: theme.color.white})
+                    .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
+                    .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
+                    .to(linkList, {color: theme.color.white});
 
-        ScrollTrigger.create({
-            animation: ani,
-            trigger: section,
-            start: "10% 10%",
-            end: "top 10%",
-            endTrigger: tit,
-            scrub: 1,
+                ScrollTrigger.create({
+                    animation: ani,
+                    trigger: section,
+                    start: "10% 10%",
+                    end: "top 10%",
+                    endTrigger: tit,
+                    scrub: 1,
+                });
+            },
+
+            "(min-width: 719px) and (max-height: 959px)": function() {
+                const ani = gsap.timeline();
+                gsap.set(section, {background: theme.color.white});
+                gsap.set(txtLine, {width: 0});
+
+                ani.to(section, {background: theme.color.black})
+                    .to(tit, {color: theme.color.white})
+                    .to(linkList, {color: theme.color.white});
+
+                ScrollTrigger.create({
+                    animation: ani,
+                    trigger: section,
+                    start: "10% 10%",
+                    end: "top 10%",
+                    endTrigger: tit,
+                    scrub: 1,
+                });
+
+                const ani2 = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: txtList,
+                        start: "top 50%",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        markers: true
+                    }
+                })
+                ani2.to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8})
+                    .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8})
+                    .to(linkList, {color: theme.color.white});
+            },
+
+            "all": function() {
+
+            }
         });
+
+        // const ani = gsap.timeline();
+        // gsap.set(section, {background: theme.color.white});
+        // gsap.set(txtLine, {width: 0});
+        //
+        // ani.to(section, {background: theme.color.black})
+        //     .to(tit, {color: theme.color.white})
+        //     .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
+        //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
+        //     .to(linkList, {color: theme.color.white});
+        //
+        // ScrollTrigger.create({
+        //     animation: ani,
+        //     trigger: section,
+        //     start: "10% 10%",
+        //     end: "top 10%",
+        //     endTrigger: tit,
+        //     scrub: 1,
+        // });
 
 
     }, []);
 
     return (
-        <Layout>
+        <Layout header={{active: 2}}>
             <ContactCon ref={sectionRef}>
                 <Inner>
                     <Text name="tit1">Contact</Text>

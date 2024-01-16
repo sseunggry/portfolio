@@ -2,6 +2,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import styled from "styled-components";
 import Header_ from "./Header_";
+import theme from "../../styles/theme";
 
 const Wrapper = styled.div`
     
@@ -11,11 +12,12 @@ const Container = styled.div`
     position: relative;
 `;
 
-function Layout({header = {}, footer = false, children}){
+function Layout({header = {active: -1, bg: theme.color.white}, footer = false, children}){
     return (
         <Wrapper>
             <Header
-                bgcolor={header.bgcolor}
+                active={header.active}
+                bg={header.bg}
                 motion={header.motion}
             />
 

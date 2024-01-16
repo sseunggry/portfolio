@@ -173,7 +173,6 @@ function About(){
     const featureRef = useRef(null);
     const largeTxtRef = useRef(null);
 
-
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -210,21 +209,14 @@ function About(){
         gsap.set(tit, {yPercent: 30, opacity: 0});
         gsap.set(infoTxt, {yPercent: 30, opacity: 0});
 
-        const ani = gsap.timeline({
-            // scrollTrigger: {
-            //     trigger: titBox,
-            //     start: "top top",
-            //     end: "center top",
-            //     scrub: 1,
-            //     markers: true
-            // }
-        });
+        const ani = gsap.timeline();
         ani.to(tit, {yPercent: 0, opacity: 1})
             .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.8});
 
         gsap.set(featureTit, {xPercent: -30, opacity: 0});
         gsap.to(featureTit, {
-            xPercent: 0, opacity: 1, stagger: 0.2, duration: 2,
+            xPercent: 0, opacity: 1, stagger: 0.4, duration: 2,
+            ease: "none",
             scrollTrigger: {
                 trigger: featureTitCon,
                 start: "top 20%",
@@ -236,6 +228,7 @@ function About(){
         gsap.set(featureTxt, {xPercent: 30, opacity: 0});
         gsap.to(featureTxt, {
             xPercent: 0, opacity: 1,
+            ease: "none",
             scrollTrigger: {
                 trigger: featureTxt,
                 start: "top 60%",
@@ -245,19 +238,20 @@ function About(){
         });
 
         gsap.to(largeTxt.querySelectorAll("span"), {
-           color: theme.color.black, stagger: 0.2, duration: 1.5,
-           scrollTrigger: {
-               trigger: largeTxt,
-               start: "top top",
-               end: "bottom bottom",
-               scrub: 1,
-           }
+            color: theme.color.black, stagger: 0.5, duration: 5,
+            ease: "none",
+            scrollTrigger: {
+                trigger: largeTxt,
+                start: "top top",
+                end: "bottom 70%",
+                scrub: 1
+            }
         });
 
     });
 
     return (
-        <Layout>
+        <Layout header={{active: 0}}>
             <AboutCon ref={sectionRef}>
                 <TitBox ref={titBoxRef}>
                     <Inner>
