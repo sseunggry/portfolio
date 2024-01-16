@@ -1,10 +1,11 @@
 import {Link} from "react-router-dom";
-import {img, navList} from "../../recoil/atoms";
+import {headerActiveState, img, navList} from "../../recoil/atoms";
 import styled, {css} from "styled-components";
 import theme from "../../styles/theme";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
 import {vw} from "../../utils/common";
+import {useRecoilState} from "recoil";
 
 const HeaderTag = styled.header`
     position: absolute;
@@ -17,12 +18,12 @@ const HeaderTag = styled.header`
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
-    background-color: ${(props) => props.bgColor || theme.color.white};
+    background-color: ${(props) => props.bgcolor || theme.color.white};
     //border-bottom: 1px solid ${theme.color.gray5};
     z-index: 1;
     
     ${(props) => (
-            (props.bgColor !== theme.color.black) && css`
+            (props.bgcolor !== theme.color.black) && css`
             border-bottom: 1px solid ${theme.color.gray5};
         `
     )};
@@ -30,7 +31,7 @@ const HeaderTag = styled.header`
     Nav{
         a{
             &:hover, &.active{
-                color: ${({bgColor}) => theme.color.white || theme.color.black};
+                color: ${(props) => (props.bgcolor === theme.color.black) ?  theme.color.white : theme.color.black}
             }
         }
     }
@@ -123,8 +124,9 @@ const Nav = styled.nav`
     
 `;
 
-function Header({bgColor = '', motion = false}){
+function Header({bgcolor = theme.color.white, motion = false}){
     const headerRef = useRef(null);
+    const [headerActive, setHeaderActive] = useState(-1);
 
     const onClick = (e) =>{
         const $target = e.target;
@@ -154,7 +156,7 @@ function Header({bgColor = '', motion = false}){
 
     return (
         <>
-            <HeaderTag ref={headerRef} bgColor={bgColor}>
+            <HeaderTag ref={headerRef} bgcolor={bgcolor}>
                 <Logo className="logo">
                     <Link to="/">
                         <img src={`${img}/logo.svg`} alt="logo" />

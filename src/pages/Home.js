@@ -8,7 +8,7 @@ import theme from "../styles/theme";
 
 function Home(){
     return(
-        <Layout header={{bgColor: theme.color.black, motion: true}}>
+        <Layout header={{bgcolor: theme.color.black, motion: true}}>
             <MainVisual />
             <MainProject />
             <MainCareer />

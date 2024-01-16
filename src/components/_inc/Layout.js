@@ -15,7 +15,7 @@ function Layout({header = {}, footer = false, children}){
     return (
         <Wrapper>
             <Header
-                bgColor={header.bgColor}
+                bgcolor={header.bgcolor}
                 motion={header.motion}
             />
 
