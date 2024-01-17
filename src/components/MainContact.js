@@ -138,12 +138,12 @@ function MainContact(){
         const desc = descRef.current;
         const info = infoRef.current;
         const deco = decoRef.current;
-        const h3 = section.querySelector("h3");
+        const h2 = section.querySelector("h2");
         // const descList = desc.querySelectorAll("p span");
         const infoList = info.querySelectorAll("ul li");
         // Object.values(descList).map((el) => el.style.height = `${el.clientHeight}px`);
 
-        gsap.set(h3, {yPercent: 20, opacity: 0,});
+        gsap.set(h2, {yPercent: 20, opacity: 0,});
         gsap.set(desc, {yPercent: 20, opacity: 0});
         gsap.set(infoList, {xPercent: 20, opacity: 0});
 
@@ -169,7 +169,7 @@ function MainContact(){
         });
 
         const ani2 = gsap.timeline();
-        ani2.to(h3, {yPercent: 0, opacity: 1})
+        ani2.to(h2, {yPercent: 0, opacity: 1})
             .to(desc, {yPercent: 0, opacity: 1})
             .to(infoList, {xPercent: 0, opacity: 1});
 

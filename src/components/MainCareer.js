@@ -6,6 +6,7 @@ import Text from "../styles/Text";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
+import useWindowSize from "../utils/resize";
 
 const Section = styled.section`
     display: flex;
@@ -119,6 +120,9 @@ function MainCareer(){
     const leftRef = useRef(null);
     const rightRef = useRef(null);
 
+    let sectionReSize = useWindowSize('.sec-02');
+    let windowReSize = useWindowSize('window');
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -129,6 +133,29 @@ function MainCareer(){
         const leftTit = leftCon.querySelector("h3");
         const leftTxt = leftCon.querySelectorAll("dl");
 
+        console.log(windowReSize.width);
+
+        // if(windowReSize > 980) {
+        //     const ani = gsap.timeline();
+        //     ani.to(leftCon, {width: "43%"});
+        //     ScrollTrigger.create({
+        //         trigger: section,
+        //         start: "top top",
+        //         end: `bottom+=${sectionReSize.height}`,
+        //         scrub: 1, pin: true, anticipatePin: 1,
+        //         markers: true
+        //     });
+        // } else{
+        //     const ani = gsap.timeline();
+        //     ani.to(leftCon, {width: "100%"});
+        //     ScrollTrigger.create({
+        //         trigger: section,
+        //         start: "top top",
+        //         end: `bottom bottom`,
+        //         scrub: 1, pin: false,
+        //     });
+        // }
+
         // ScrollTrigger.matchMedia({
         //     "(min-width: 980px)": function() {
         //         const ani = gsap.timeline();
@@ -138,6 +165,7 @@ function MainCareer(){
         //                 start: "top top",
         //                 end: `bottom bottom`,
         //                 scrub: 1, pin: true, anticipatePin: 1,
+        //             markers: true
         //         });
         //     },
         //
@@ -174,8 +202,9 @@ function MainCareer(){
             ScrollTrigger.create({
                 trigger: section,
                     start: "top top",
-                    end: `bottom bottom`,
-                    scrub: 1, pin: true, anticipatePin: 1,
+                    end: `+=${section.offsetHeight}`,
+                    scrub: 1,
+                    // pin: true, anticipatePin: 1,
             });
 
             const ani2 = gsap.timeline({
