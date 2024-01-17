@@ -191,7 +191,6 @@ function About(){
 
         const largeTxtList = largeTxt.querySelector("p");
         const largeTxtSpan = largeTxt.querySelectorAll("span");
-        // console.log(largeTxtSpan);
 
         // infoTxt.forEach((el) => {
         //     let txtDesc = el.innerText.split('');

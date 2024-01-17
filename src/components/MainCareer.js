@@ -11,6 +11,10 @@ const Section = styled.section`
     display: flex;
     //overflow: hidden;
     //height: 100vh;
+
+    ${({theme}) => theme.medium`
+        flex-direction: column;
+    `};
 `;
 const LeftCon = styled.div`
     //position: sticky;
@@ -18,8 +22,11 @@ const LeftCon = styled.div`
     padding: 140px;
     flex-shrink: 0;
     width: 100vw;
-    //height: 100vh;
     background-color: ${theme.color.black};
+
+    h3{
+        line-height: 1;
+    }
     
     dl{
         margin-top: 40px;
@@ -38,6 +45,14 @@ const LeftCon = styled.div`
             color: ${theme.color.gray2};
         }
     }
+
+    ${({theme}) => theme.large`
+        padding: 80px;
+    `};
+
+    ${({theme}) => theme.medium`
+        width: 100%;
+    `};
 `;
 const RightCon = styled.div`
     padding: 80px 90px;
@@ -84,7 +99,7 @@ const RightCon = styled.div`
         }
     }
 
-    @media screen and (max-width: 1500px) {
+    ${({theme}) => theme.xLarge`
         dl{
             flex-direction: column;
             
@@ -92,7 +107,11 @@ const RightCon = styled.div`
                 margin-bottom: 40px;
             }
         }
-    }
+    `};
+
+    ${({theme}) => theme.medium`
+        width: 100%;
+    `};
 `;
 
 function MainCareer(){
@@ -110,34 +129,68 @@ function MainCareer(){
         const leftTit = leftCon.querySelector("h3");
         const leftTxt = leftCon.querySelectorAll("dl");
 
+        // ScrollTrigger.matchMedia({
+        //     "(min-width: 980px)": function() {
+        //         const ani = gsap.timeline();
+        //         ani.to(leftCon, {width: "43%"});
+        //         ScrollTrigger.create({
+        //             trigger: section,
+        //                 start: "top top",
+        //                 end: `bottom bottom`,
+        //                 scrub: 1, pin: true, anticipatePin: 1,
+        //         });
+        //     },
+        //
+        //     "(max-width: 979px)": function() {
+        //         const ani = gsap.timeline();
+        //         ani.to(leftCon, {width: "100%"});
+        //         ScrollTrigger.create({
+        //             trigger: section,
+        //             start: "top top",
+        //             end: "bottom bottom",
+        //             scrub: 1, pin: true, anticipatePin: 1,
+        //         });
+        //     },
+        //
+        //     "all": function() {
+        //         const ani2 = gsap.timeline({
+        //             scrollTrigger: {
+        //                 trigger: section,
+        //                 start: "top top",
+        //                 end: "center center",
+        //                 scrub: 1,
+        //             }
+        //         });
+        //         gsap.set(leftTit, {opacity: 0});
+        //         gsap.set(leftTxt, {opacity: 0});
+        //         ani2.to(leftTit, {opacity: 1})
+        //             .to(leftTxt, {opacity: 1});
+        //     }
+        // });
+
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
-            // gsap.set(leftCon, {width: "100vw"});
+            ani.to(leftCon, {width: "43%"});
+            ScrollTrigger.create({
+                trigger: section,
+                    start: "top top",
+                    end: `bottom bottom`,
+                    scrub: 1, pin: true, anticipatePin: 1,
+            });
+
+            const ani2 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: "center center",
+                    scrub: 1,
+                }
+            });
             gsap.set(leftTit, {opacity: 0});
             gsap.set(leftTxt, {opacity: 0});
-
-            ani.to(leftCon, {width: "43%"});
-            // ani.to(rightCon, {xPercent: -100});
-            ScrollTrigger.create({
-                animation: ani,
-                trigger: section,
-                start: "top top",
-                end: `+=${section.offsetHeight}`,
-                scrub: 1,
-                pin: true,
-                anticipatePin: 1,
-            })
-
-            const ani2 = gsap.timeline();
             ani2.to(leftTit, {opacity: 1})
                 .to(leftTxt, {opacity: 1});
-            ScrollTrigger.create({
-                animation: ani2,
-                trigger: section,
-                start: "top top",
-                end: "center center",
-                scrub: 1,
-            })
+
         }, sectionRef);
 
         return () => ctx.revert();

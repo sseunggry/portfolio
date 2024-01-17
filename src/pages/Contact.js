@@ -148,7 +148,7 @@ function Contact() {
                 });
             },
 
-            "(min-width: 719px) and (max-height: 959px)": function() {
+            "(max-width: 719px) and (max-height: 959px)": function() {
                 const ani = gsap.timeline();
                 gsap.set(section, {background: theme.color.white});
                 gsap.set(txtLine, {width: 0});
@@ -203,7 +203,6 @@ function Contact() {
         //     endTrigger: tit,
         //     scrub: 1,
         // });
-
 
     }, []);
 

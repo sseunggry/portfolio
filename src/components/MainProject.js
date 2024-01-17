@@ -67,7 +67,6 @@ function MainProject(){
         listLi.forEach((el) => listWidth += el.offsetWidth);
 
         let ctx = gsap.context(() => {
-            gsap.set(section, {x: 0});
             gsap.to(section, {
                 x: -( listWidth - list.offsetWidth/2 ),
                 ease: "none",
@@ -95,7 +94,6 @@ function MainProject(){
             // });
 
         }, sectionRef);
-
         return () => ctx.revert();
 
     }, []);
