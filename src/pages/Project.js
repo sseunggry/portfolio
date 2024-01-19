@@ -203,13 +203,13 @@ function Project(){
     }
 
     useEffect(() => {
-       gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger);
 
-       const section = sectionRef.current;
-       const thumbCon = thumbConRef.current;
-       const thumbList = thumbRef.current;
-       const pageTit = section.querySelector('[name="tit1"]');
-       const thumb = thumbList.querySelectorAll('li');
+        const section = sectionRef.current;
+        const thumbCon = thumbConRef.current;
+        const thumbList = thumbRef.current;
+        const pageTit = section.querySelector('[name="tit1"]');
+        const thumb = thumbList.querySelectorAll('li');
 
         let ctx = gsap.context(() => {
             gsap.set(pageTit, {yPercent: 30, opacity: 0});

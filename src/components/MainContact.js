@@ -138,65 +138,60 @@ function MainContact(){
         const desc = descRef.current;
         const info = infoRef.current;
         const deco = decoRef.current;
-        const h2 = section.querySelector("h2");
+
+        const h2 = section.querySelector('h2');
         // const descList = desc.querySelectorAll("p span");
-        const infoList = info.querySelectorAll("ul li");
+        const infoList = info.querySelectorAll('ul li');
         // Object.values(descList).map((el) => el.style.height = `${el.clientHeight}px`);
 
+        gsap.set(section, {backgroundColor: theme.color.black});
         gsap.set(h2, {yPercent: 20, opacity: 0,});
         gsap.set(desc, {yPercent: 20, opacity: 0});
         gsap.set(infoList, {xPercent: 20, opacity: 0});
 
-        let mm = gsap.matchMedia();
-        mm.add("(min-width: 1280px", () => {
+        let ctx = gsap.context(() => {
+            const ani = gsap.timeline();
+            ani.to(section, {backgroundColor: theme.color.white})
+            ScrollTrigger.create({
+                animation: ani,
+                trigger: section,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                // pin: true,
+                // anticipatePin: 1,
+                // markers: true
+            });
 
-        });
-        mm.add("(max-width: 1179px)", () => {
+            const ani2 = gsap.timeline();
+            ani2.to(h2, {yPercent: 0, opacity: 1})
+                .to(desc, {yPercent: 0, opacity: 1})
+                .to(infoList, {xPercent: 0, opacity: 1});
 
-        });
-
-        const ani = gsap.timeline();
-        ani.to(section, {backgroundColor: theme.color.white})
-        ScrollTrigger.create({
-            animation: ani,
-            trigger: section,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1,
-            // pin: true,
-            // anticipatePin: 1,
-            // markers: true
-        });
-
-        const ani2 = gsap.timeline();
-        ani2.to(h2, {yPercent: 0, opacity: 1})
-            .to(desc, {yPercent: 0, opacity: 1})
-            .to(infoList, {xPercent: 0, opacity: 1});
-
-        ScrollTrigger.create({
-            animation: ani2,
-            trigger: section,
-            start: "top top",
-            end: "center center",
-            scrub: 1,
-        });
-
-        gsap.set(deco, {opacity: 0});
-        gsap.to(deco, {
-            xPercent: -20,
-            opacity: 1,
-            color: theme.color.white,
-            scrollTrigger: {
+            ScrollTrigger.create({
+                animation: ani2,
                 trigger: section,
                 start: "top top",
                 end: "center center",
                 scrub: 1,
-            }
-        });
+            });
 
-        return () => {
-            ani.revert();
-        }
+            gsap.set(deco, {opacity: 0});
+            gsap.to(deco, {
+                xPercent: -20,
+                opacity: 1,
+                color: theme.color.white,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: "center center",
+                    scrub: 1,
+                }
+            });
+
+        }, sectionRef);
+        return () => ctx.revert;
+
     }, []);
 
     let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
@@ -204,7 +199,7 @@ function MainContact(){
 
     return (
         <Section className="sec-03" ref={sectionRef}>
-            <Inner>
+            <Inner className="inner">
                 <Text name="tit1">Contact</Text>
                 <TxtBox>
                     <TxtDesc ref={descRef} className="desc">

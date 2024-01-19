@@ -9,17 +9,13 @@ import {useEffect, useRef} from "react";
 import useWindowSize from "../utils/resize";
 
 const Section = styled.section`
+    overflow: hidden;
     display: flex;
-    //overflow: hidden;
     //height: 100vh;
 
     ${({theme}) => theme.medium`
         flex-direction: column;
     `};
-`;
-const TxtBox = styled.div`
-    width: 100%;
-    height: fit-content;
 `;
 const LeftCon = styled.div`
     //position: sticky;
@@ -135,7 +131,6 @@ function MainCareer(){
         const leftCon = leftRef.current;
         const rightCon = rightRef.current;
 
-        const txtBox = leftCon.querySelector('.txt-box');
         const leftTit = leftCon.querySelector('h3');
         const leftTxt = leftCon.querySelectorAll('dl');
 
@@ -203,19 +198,17 @@ function MainCareer(){
         // });
 
         let ctx = gsap.context(() => {
-            const ani = gsap.timeline();
+            // const ani = gsap.timeline();
             // ani.to(leftCon, {width: "43%"});
-
 
             ScrollTrigger.matchMedia({
                 "(min-width: 980px)": function() {
                     ScrollTrigger.create({
                         trigger: section,
                         start: "top top",
-                        end: `+=${section.offsetHeight}`,
+                        end: 'bottom bottom',
                         scrub: 1,
-                        pin: txtBox,
-                        // anticipatePin: 1,
+                        pin: leftCon,
                     });
                 },
                 "(max-width: 979px)" : function() {
@@ -245,17 +238,15 @@ function MainCareer(){
     return (
         <Section className="sec-02" ref={sectionRef}>
             <LeftCon ref={leftRef}>
-                <TxtBox className="txt-box">
-                    <Text name="tit2" color={theme.color.white}>career</Text>
-                    <dl>
-                        <dt>Publisher</dt>
-                        <dd>23.09 ~ 재직중 (2년 6개월)</dd>
-                    </dl>
-                    <dl>
-                        <dt>Designer</dt>
-                        <dd>21.05 ~ 23.01 (2년 9개월)</dd>
-                    </dl>
-                </TxtBox>
+                <Text name="tit2" color={theme.color.white}>career</Text>
+                <dl>
+                    <dt>Publisher</dt>
+                    <dd>23.09 ~ 재직중 (2년 6개월)</dd>
+                </dl>
+                <dl>
+                    <dt>Designer</dt>
+                    <dd>21.05 ~ 23.01 (2년 9개월)</dd>
+                </dl>
             </LeftCon>
             <RightCon ref={rightRef}>
                 <dl>
