@@ -1,16 +1,25 @@
 import {img, projectPersonal, projectWork} from "../recoil/atoms";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Layout from "../components/_inc/Layout";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 const ProjectCon = styled.div`
+    padding-top: 80px;
+
+    ${({theme}) => theme.small`
+        padding-top: ${vw(120)};
+    `};
+`;
+const Inner = styled.div`
     margin: 0 auto;
     padding: 150px 0;
     max-width: 1440px;
-    
+
     ${({theme}) => theme.xLarge`
         padding-left: 60px;
         padding-right: 60px;
@@ -22,7 +31,7 @@ const ProjectCon = styled.div`
 `;
 const Tab = styled.ul`
     display: flex;
-    margin: 20px 0 50px;
+    margin: 50px 0;
     
     li{
         margin-right: 80px;
@@ -51,27 +60,30 @@ const Tab = styled.ul`
     `};
     
 `;
-const Thumb = styled.div`
-    display: flex;
-    &:nth-of-type(2n){
-        flex-direction: row-reverse;
-    }
-
-    ${({theme}) => theme.medium`
-        flex-direction: column;
-        margin-bottom: 60px;
-        
+const ThumbList = styled.ul`
+    
+    li{
+        display: flex;
         &:nth-of-type(2n){
+            flex-direction: row-reverse;
+        }
+        
+        ${({theme}) => theme.medium`
             flex-direction: column;
-        }
-        &:last-of-type{
-            margin-bottom: 0;
-        }
-    `};
-
-    ${({theme}) => theme.small`
-        margin-bottom: ${vw(60)};
-    `};
+            margin-bottom: 60px;
+            
+            &:nth-of-type(2n){
+                flex-direction: column;
+            }
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+        `};
+    
+        ${({theme}) => theme.small`
+            margin-bottom: ${vw(60)};
+        `};
+    }
 `;
 const ImgBox = styled.div`
     position: relative;
@@ -171,6 +183,9 @@ const TxtBox = styled.div`
 
 function Project(){
     const [projectData, setProjectData] = useState(projectWork);
+    const sectionRef = useRef(null);
+    const thumbConRef = useRef(null);
+    const thumbRef = useRef(null);
 
     const onClick = (e) => {
         const $target = e.target;
@@ -187,28 +202,75 @@ function Project(){
         }
     }
 
+    useEffect(() => {
+       gsap.registerPlugin(ScrollTrigger);
+
+       const section = sectionRef.current;
+       const thumbCon = thumbConRef.current;
+       const thumbList = thumbRef.current;
+       const pageTit = section.querySelector('[name="tit1"]');
+       const thumb = thumbList.querySelectorAll('li');
+
+        let ctx = gsap.context(() => {
+            gsap.set(pageTit, {yPercent: 30, opacity: 0});
+            gsap.set(thumbCon, {yPercent: 10, opacity: 0});
+            // gsap.set(thumbList, {yPercent: 1, opacity: 0});
+            gsap.set(thumb[0], {opacity: 0});
+            gsap.set(thumb, {opacity: 0});
+
+            const ani = gsap.timeline();
+            ani.to(pageTit, {yPercent: 0, opacity: 1}, 'motion')
+               .to(thumbCon, {yPercent: 0, opacity: 1}, 'motion')
+               .to(thumb[0], {opacity: 1}, 'motion');
+
+
+            Object.values(thumb).map((el, idx) => {
+                const ani2 = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 80%",
+                        end: "bottom bottom",
+                        scrub: 1,
+                    }
+                });
+                if(idx !== 0) {
+                    ani2.to(el, {opacity: 1});
+                }
+            })
+
+
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
         <Layout header={{active: 1}}>
-            <ProjectCon>
-                <Text name="tit1">Project</Text>
-                <Tab onClick={onClick}>
-                    <li className="active">work ({projectWork.length})</li>
-                    <li>personal ({projectPersonal.length})</li>
-                </Tab>
-                {projectData.map(({client, name, period, thumbImg, desc}, idx) => (
-                    <Thumb key={idx}>
-                        <ImgBox>
-                            <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
-                        </ImgBox>
-                        <TxtBox>
-                            <strong>{client}</strong>
-                            <h3>{name}</h3>
-                            {/*<h3>[{client}] <br/> {name}</h3>*/}
-                            <Text name="desc3" className="desc">{desc}</Text>
-                            <Text name="desc2" className="period">{period}</Text>
-                        </TxtBox>
-                    </Thumb>
-                ))}
+            <ProjectCon ref={sectionRef}>
+                <Inner>
+                    <Text name="tit1">Project</Text>
+                    <div ref={thumbConRef}>
+                        <Tab onClick={onClick}>
+                            <li className="active">work ({projectWork.length})</li>
+                            <li>personal ({projectPersonal.length})</li>
+                        </Tab>
+                        <ThumbList ref={thumbRef}>
+                            {projectData.map(({client, name, period, thumbImg, desc}, idx) => (
+                                <li key={idx}>
+                                    <ImgBox>
+                                        <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
+                                    </ImgBox>
+                                    <TxtBox>
+                                        <strong>{client}</strong>
+                                        <h3>{name}</h3>
+                                        {/*<h3>[{client}] <br/> {name}</h3>*/}
+                                        <Text name="desc3" className="desc">{desc}</Text>
+                                        <Text name="desc2" className="period">{period}</Text>
+                                    </TxtBox>
+                                </li>
+                            ))}
+                        </ThumbList>
+                    </div>
+                </Inner>
             </ProjectCon>
         </Layout>
     )

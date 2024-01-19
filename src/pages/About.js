@@ -8,7 +8,11 @@ import Text from "../styles/Text";
 import {vw} from "../utils/common";
 
 const AboutCon = styled.div`
-    //padding: 150px 0 0;
+    padding-top: 80px;
+
+    ${({theme}) => theme.small`
+        padding-top: ${vw(120)};
+    `};
 `;
 const Inner = styled.div`
     margin: 0 auto;
@@ -182,15 +186,15 @@ function About(){
         const feature = featureRef.current;
         const largeTxt = largeTxtRef.current;
 
-        const tit = section.querySelector("h2");
-        const infoTxt = info.querySelectorAll("p");
+        const tit = section.querySelector('h2');
+        const infoTxt = info.querySelectorAll('p');
         // const infoSpan = info.querySelectorAll("span");
-        const featureTitCon = feature.querySelectorAll(".tit");
-        const featureTit = feature.querySelectorAll(".tit h3");
-        const featureTxt = feature.querySelector(".desc");
+        const featureTitCon = feature.querySelectorAll('.tit');
+        const featureTit = feature.querySelectorAll('.tit h3');
+        const featureTxt = feature.querySelector('.desc');
 
-        const largeTxtList = largeTxt.querySelector("p");
-        const largeTxtSpan = largeTxt.querySelectorAll("span");
+        const largeTxtList = largeTxt.querySelector('p');
+        const largeTxtSpan = largeTxt.querySelectorAll('span');
 
         // infoTxt.forEach((el) => {
         //     let txtDesc = el.innerText.split('');
@@ -209,8 +213,8 @@ function About(){
         gsap.set(infoTxt, {yPercent: 30, opacity: 0});
 
         const ani = gsap.timeline();
-        ani.to(tit, {yPercent: 0, opacity: 1})
-            .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.8});
+        ani.to(tit, {yPercent: 0, opacity: 1}, 'motion')
+            .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.2, duration: 1.2}, 'motion');
 
         gsap.set(featureTit, {xPercent: -30, opacity: 0});
         gsap.to(featureTit, {

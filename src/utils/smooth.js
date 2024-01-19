@@ -13,6 +13,7 @@ function smooth() {
     }
 
     requestAnimationFrame(raf);
+    ScrollTrigger.config({autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"});
     lenis.on("scroll", ScrollTrigger.update);
 
 

@@ -5,6 +5,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import theme from "../styles/theme";
 import Text from "../styles/Text";
+import {vw} from "../utils/common";
 
 const Section = styled.section`
     position: relative;
@@ -80,14 +81,26 @@ const LoadTxt = styled.div`
     
     &.hide{
         transform: translate(0, -100%);
-        opacity: 0;
     }
     
     p{
         overflow: hidden;
         height: fit-content;
-        font-size: 400px;
+        //padding: 0 40px;
+        font-size: 240px;
         font-weight: 800;
+
+        ${({theme}) => theme.large`
+            font-size: 200px;
+        `}
+
+        ${({theme}) => theme.medium`
+            font-size: 140px;
+        `}
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(130)};
+        `}
         
         span{
             display: inline-block;

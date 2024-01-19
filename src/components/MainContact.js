@@ -16,8 +16,8 @@ const Section = styled.section`
     //background-color: ${theme.color.white};
 `;
 const Inner = styled.div`
-    max-width: 1440px;
     margin: 0 auto;
+    max-width: 1440px;
 
     ${({ theme }) => theme.xLarge`
         padding-left: 60px; 
@@ -163,8 +163,8 @@ function MainContact(){
             start: "top top",
             end: "bottom bottom",
             scrub: 1,
-            pin: true,
-            anticipatePin: 1,
+            // pin: true,
+            // anticipatePin: 1,
             // markers: true
         });
 

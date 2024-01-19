@@ -17,12 +17,16 @@ const Section = styled.section`
         flex-direction: column;
     `};
 `;
+const TxtBox = styled.div`
+    width: 100%;
+    height: fit-content;
+`;
 const LeftCon = styled.div`
     //position: sticky;
     //top: 0;
     padding: 140px;
     flex-shrink: 0;
-    width: 100vw;
+    width: 43%;
     background-color: ${theme.color.black};
 
     h3{
@@ -53,10 +57,11 @@ const LeftCon = styled.div`
 
     ${({theme}) => theme.medium`
         width: 100%;
+        height: fit-content;
     `};
 `;
 const RightCon = styled.div`
-    padding: 80px 90px;
+    padding: 200px 90px;
     flex-shrink: 0;
     width: 57%;
     background-color: ${theme.color.white};
@@ -130,10 +135,11 @@ function MainCareer(){
         const leftCon = leftRef.current;
         const rightCon = rightRef.current;
 
-        const leftTit = leftCon.querySelector("h3");
-        const leftTxt = leftCon.querySelectorAll("dl");
+        const txtBox = leftCon.querySelector('.txt-box');
+        const leftTit = leftCon.querySelector('h3');
+        const leftTxt = leftCon.querySelectorAll('dl');
 
-        console.log(windowReSize.width);
+        // console.log(windowReSize.width);
 
         // if(windowReSize > 980) {
         //     const ani = gsap.timeline();
@@ -198,27 +204,37 @@ function MainCareer(){
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
-            ani.to(leftCon, {width: "43%"});
-            ScrollTrigger.create({
-                trigger: section,
-                    start: "top top",
-                    end: `+=${section.offsetHeight}`,
-                    scrub: 1,
-                    // pin: true, anticipatePin: 1,
-            });
+            // ani.to(leftCon, {width: "43%"});
 
-            const ani2 = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top top",
-                    end: "center center",
-                    scrub: 1,
+
+            ScrollTrigger.matchMedia({
+                "(min-width: 980px)": function() {
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top top",
+                        end: `+=${section.offsetHeight}`,
+                        scrub: 1,
+                        pin: txtBox,
+                        // anticipatePin: 1,
+                    });
+                },
+                "(max-width: 979px)" : function() {
+
                 }
             });
-            gsap.set(leftTit, {opacity: 0});
-            gsap.set(leftTxt, {opacity: 0});
-            ani2.to(leftTit, {opacity: 1})
-                .to(leftTxt, {opacity: 1});
+
+            // const ani2 = gsap.timeline({
+            //     scrollTrigger: {
+            //         trigger: section,
+            //         start: "top top",
+            //         end: "center center",
+            //         scrub: 1,
+            //     }
+            // });
+            // gsap.set(leftTit, {opacity: 0});
+            // gsap.set(leftTxt, {opacity: 0});
+            // ani2.to(leftTit, {opacity: 1})
+            //     .to(leftTxt, {opacity: 1});
 
         }, sectionRef);
 
@@ -229,15 +245,17 @@ function MainCareer(){
     return (
         <Section className="sec-02" ref={sectionRef}>
             <LeftCon ref={leftRef}>
-                <Text name="tit2" color={theme.color.white}>career</Text>
-                <dl>
-                    <dt>Publisher</dt>
-                    <dd>23.09 ~ 재직중 (2년 6개월)</dd>
-                </dl>
-                <dl>
-                    <dt>Designer</dt>
-                    <dd>21.05 ~ 23.01 (2년 9개월)</dd>
-                </dl>
+                <TxtBox className="txt-box">
+                    <Text name="tit2" color={theme.color.white}>career</Text>
+                    <dl>
+                        <dt>Publisher</dt>
+                        <dd>23.09 ~ 재직중 (2년 6개월)</dd>
+                    </dl>
+                    <dl>
+                        <dt>Designer</dt>
+                        <dd>21.05 ~ 23.01 (2년 9개월)</dd>
+                    </dl>
+                </TxtBox>
             </LeftCon>
             <RightCon ref={rightRef}>
                 <dl>

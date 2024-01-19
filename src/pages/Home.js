@@ -5,11 +5,10 @@ import MainCareer from "../components/MainCareer";
 import MainContact from "../components/MainContact";
 import theme from "../styles/theme";
 
-
 function Home(){
     // setTimeout (() => ScrollTrigger .refresh ( ), 2000 );
     return(
-        <Layout header={{bg: theme.color.black, motion: true}}>
+        <Layout header={{color: theme.color.white, motion: true}} color={theme.color.white}>
             <MainVisual />
             <MainProject />
             <MainCareer />

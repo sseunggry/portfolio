@@ -17,11 +17,11 @@ const HeaderTag = styled.header`
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
-    background-color: ${(props) => props.bgcolor || theme.color.white};
+    //background-color: ${({color}) => color || theme.color.black};
     z-index: 1;
     
-    ${(props) => (
-        (props.bgcolor !== theme.color.black) && css`
+    ${({color}) => (
+        (color === '') && css`
             border-bottom: 1px solid ${theme.color.gray5};
         `
     )};
@@ -29,7 +29,8 @@ const HeaderTag = styled.header`
     Nav{
         a{
             &:hover, &.active{
-                color: ${(props) => (props.bgcolor === theme.color.black) ?  theme.color.white : theme.color.black}
+                // color: ${({color}) => (color === theme.color.white) ?  theme.color.white : theme.color.black}
+                color: ${({color}) => color || theme.color.black}
             }
         }
     }
@@ -122,7 +123,7 @@ const Nav = styled.nav`
     
 `;
 
-function Header({bg, active, motion = false}){
+function Header({color, active, motion = false}){
     const headerRef = useRef(null);
 
     const onClick = (e) =>{
@@ -153,7 +154,7 @@ function Header({bg, active, motion = false}){
 
     return (
         <>
-            <HeaderTag ref={headerRef} bgcolor={bg}>
+            <HeaderTag ref={headerRef} color={color}>
                 <Logo className="logo">
                     <Link to="/">
                         <img src={`${img}/logo.svg`} alt="logo" />

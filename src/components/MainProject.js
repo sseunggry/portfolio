@@ -5,18 +5,28 @@ import Text from "../styles/Text";
 import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import useWindowSize from "../utils/resize";
 
 const Section = styled.section`
     //overflow: hidden;
-    //position: relative;
+    position: relative;
+    height: 100vh;
     //display: flex;
-    padding: 120px 240px;
+    //padding: 120px 240px;
 
     h3{
         margin-bottom: 40px;
         //padding-left: 240px;
     }
 `;
+
+const Inner = styled.div`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 120px 240px;
+`;
+
 const List = styled.ul`
     display: flex;
 
@@ -26,6 +36,7 @@ const List = styled.ul`
         flex-shrink: 0;
         width: 640px;
         height: fit-content;
+        background-color: ${theme.color.white};
 
         &:last-child{
             margin-right: 0;
@@ -60,20 +71,22 @@ function MainProject(){
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
+        const sectionInner = section.querySelector('.inner');
         const list = listRef.current;
         const listLi = list.querySelectorAll("li");
 
-        let listWidth = 0;
-        listLi.forEach((el) => listWidth += el.offsetWidth);
+
+        // let listWidth = 0;
+        // listLi.forEach((el) => listWidth += el.offsetWidth);
 
         let ctx = gsap.context(() => {
             gsap.to(section, {
-                x: -( listWidth - list.offsetWidth/2 ),
+                x: -( sectionInner.offsetWidth - window.innerWidth ),
                 ease: "none",
                 scrollTrigger: {
                     trigger: section,
                     start: "top top",
-                    end: `bottom+=${listWidth}`,
+                    end: `bottom+=${sectionInner.offsetWidth}`,
                     scrub: 1,
                     pin: true,
                     anticipatePin: 1,
@@ -100,18 +113,20 @@ function MainProject(){
 
     return (
         <Section className="sec-01" ref={sectionRef}>
-            <Text name="tit2">Project</Text>
-            <List className="list" ref={listRef}>
-                {data && Object.values(data).map(({client, name, period, thumbImg}, idx) => (
-                    <li key={idx}>
-                        <TxtBox>
-                            <Text name="tit4" color={theme.color.white} fontWeight="400">[{client}] <br/>{name}</Text>
-                            <p>{period}</p>
-                        </TxtBox>
-                        <Img src={`${img}/${thumbImg}`} alt="" />
-                    </li>
-                ))}
-            </List>
+            <Inner className="inner">
+                <Text name="tit2">Project</Text>
+                <List className="list" ref={listRef}>
+                    {data && Object.values(data).map(({client, name, period, thumbImg}, idx) => (
+                        <li key={idx}>
+                            <TxtBox>
+                                <Text name="tit4" color={theme.color.white} fontWeight="400">[{client}] <br/>{name}</Text>
+                                <p>{period}</p>
+                            </TxtBox>
+                            <Img src={`${img}/${thumbImg}`} alt="" />
+                        </li>
+                    ))}
+                </List>
+            </Inner>
         </Section>
     )
 }
