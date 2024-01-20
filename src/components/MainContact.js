@@ -4,30 +4,36 @@ import styled from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
+import {vw} from "../utils/common";
 
 const Section = styled.section`
     position: relative;
     padding: 120px 0 0;
     //height: 100vh;
     //box-sizing: border-box;
-     background-color: ${theme.color.black};
+    // background-color: ${theme.color.black};
     //background-color: ${theme.color.white};
 `;
 const Inner = styled.div`
     margin: 0 auto;
     max-width: 1440px;
 
-    ${({ theme }) => theme.xLarge`
+    ${({theme}) => theme.xLarge`
         padding-left: 60px; 
         padding-right: 60px; 
     `};
 
-    @media screen and (max-width: 1500px) {
-        padding-left: 60px;
-        padding-right: 60px;
-    }
+    ${({theme}) => theme.medium`
+        padding-left: 40px; 
+        padding-right: 40px; 
+    `};
+
+    ${({theme}) => theme.small`
+        padding-left: ${vw(40)}; 
+        padding-right: ${vw(40)}; 
+    `};
 `;
 const TxtBox = styled.div`
     display: flex;
@@ -38,19 +44,16 @@ const TxtBox = styled.div`
         flex-direction: column;
     `};
 
-    @media screen and (max-width: 1500px) {
-        flex-direction: column;
-        
-        .desc{
-            margin-bottom: 40px;
-        }
-    }
+    ${({theme}) => theme.small`
+        padding: ${vw(130)} 0 ${vw(280)};
+    `};
 `;
 const TxtDesc = styled.div`
+    margin-right: 50px;
+    width: 360px;
+    
     p{
         overflow: hidden;
-        margin-right: 50px;
-        width: 360px;
         font-size: 20px;
         line-height: 1.6;
         
@@ -58,6 +61,21 @@ const TxtDesc = styled.div`
             display: block;
         }
     }
+    
+    ${({theme}) => theme.xLarge`
+        margin-right: 0;
+        margin-bottom: 50px;
+    `};
+
+    ${({theme}) => theme.medium`
+        width: 100%;
+    `};
+
+    ${({theme}) => theme.small`
+        p{
+            font-size: ${vw(30)};
+        }
+    `};
 `;
 const InfoCon = styled.div`
     li{
@@ -94,6 +112,30 @@ const ContactTxt = styled.ul`
             text-decoration: underline;
         }
     }
+
+    ${({theme}) => theme.large`
+        margin-bottom: 50px;
+        font-size: 76px;
+    `};
+
+    ${({theme}) => theme.medium`
+        font-size: 66px;
+    `};
+
+    ${({theme}) => theme.sMedium`
+        font-size: 54px;
+    `};
+
+    ${({theme}) => theme.small`
+        font-size: ${vw(54)};
+        
+        li{
+            margin-bottom: ${vw(10)};
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+        }
+    `};
 `;
 const LinkTxt = styled.ul`
     display: flex;
@@ -108,6 +150,18 @@ const LinkTxt = styled.ul`
             margin-right: 0;
         }
     }
+
+    ${({theme}) => theme.xLarge`
+        margin-right: 0;
+    `};
+
+    ${({theme}) => theme.small`
+        font-size: ${vw(40)};
+        
+        li{
+            margin-right: ${vw(40)};
+        }
+    `};
 `;
 const DecoTxt = styled.p`
     position: absolute;
@@ -116,13 +170,18 @@ const DecoTxt = styled.p`
     padding: 0 40px;
     font-size: 120px;
     font-weight: 900;
-    color: ${theme.color.black};
+    color: ${theme.color.white};
     letter-spacing: 6px;
     text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
+    //-webkit-text-stroke: 1px ${theme.color.black};
 
     span{
         white-space: nowrap;
     }
+
+    ${({theme}) => theme.small`
+        font-size: ${vw(120)};
+    `};
 `;
 
 function MainContact(){
@@ -130,6 +189,24 @@ function MainContact(){
     const descRef = useRef(null);
     const infoRef = useRef(null);
     const decoRef = useRef(null);
+    const [decoIdx, setDecoIdx] = useState(1);
+
+    const txtMotion = () => {
+        const decoTxt = decoRef.current;
+        const decoSpan = decoTxt.querySelectorAll('span');
+
+        setDecoIdx((prev) => prev++);
+        if(decoSpan.length - 1  === decoIdx){
+            setDecoIdx(1);
+            decoTxt.style.left = 0;
+        }
+
+        decoTxt.animate({'left': '-'+(100*decoIdx)+'px'}, 1500, () => {
+            setTimeout(() => {
+                txtMotion();
+            }, 750);
+        });
+    }
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -140,14 +217,13 @@ function MainContact(){
         const deco = decoRef.current;
 
         const h2 = section.querySelector('h2');
-        // const descList = desc.querySelectorAll("p span");
         const infoList = info.querySelectorAll('ul li');
-        // Object.values(descList).map((el) => el.style.height = `${el.clientHeight}px`);
 
         gsap.set(section, {backgroundColor: theme.color.black});
-        gsap.set(h2, {yPercent: 20, opacity: 0,});
-        gsap.set(desc, {yPercent: 20, opacity: 0});
-        gsap.set(infoList, {xPercent: 20, opacity: 0});
+        gsap.set(h2, {yPercent: 0, opacity: 0, color: theme.color.white});
+        gsap.set(desc, {yPercent: 20, opacity: 0, color: theme.color.white});
+        gsap.set(infoList, {xPercent: 20, opacity: 0, color: theme.color.white});
+        gsap.set(deco, {opacity: 0, color: theme.color.white});
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
@@ -158,15 +234,13 @@ function MainContact(){
                 start: "top top",
                 end: "bottom bottom",
                 scrub: 1,
-                // pin: true,
-                // anticipatePin: 1,
-                // markers: true
             });
 
             const ani2 = gsap.timeline();
-            ani2.to(h2, {yPercent: 0, opacity: 1})
-                .to(desc, {yPercent: 0, opacity: 1})
-                .to(infoList, {xPercent: 0, opacity: 1});
+            ani2.to(h2, {yPercent: 0, opacity: 1, color: theme.color.black})
+                .to(desc, {yPercent: 0, opacity: 1, color: theme.color.black})
+                .to(infoList, {xPercent: 0, opacity: 1, color: theme.color.black}, 'motion')
+                .to(deco, {opacity: 1, color: theme.color.white}, 'motion')
 
             ScrollTrigger.create({
                 animation: ani2,
@@ -176,23 +250,33 @@ function MainContact(){
                 scrub: 1,
             });
 
-            gsap.set(deco, {opacity: 0});
-            gsap.to(deco, {
-                xPercent: -20,
-                opacity: 1,
-                color: theme.color.white,
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top top",
-                    end: "center center",
-                    scrub: 1,
-                }
-            });
+            // let ani3 = gsap.timeline({
+            //    repeat: -1,
+            // });
+            // gsap.set(deco, {opacity: 1});
+            // ani3.from(deco, {
+            //     xPercent: 0,
+            //     // repeat: -1,
+            // });
+            // ani3.to(deco, {
+            //     xPercent: -50,
+            //     opacity: 1,
+            //     delay: 0.5,
+            //     onComplete: () => {
+            //         deco.style.left = 0;
+            //     }
+            //     // repeat: -1,
+            // });
 
         }, sectionRef);
-        return () => ctx.revert;
+        return () => ctx.revert();
 
     }, []);
+    // useEffect(() => {
+    //     // let txtIdx = 1;
+    //     // txtMotion();
+    //     // console.log(decoIdx);
+    // }, [decoIdx]);
 
     let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
     phraseTxt= phraseTxt.split("\n");
@@ -233,6 +317,8 @@ function MainContact(){
             </Inner>
             <DecoTxt ref={decoRef}>
                 <span>CHOI SEUNG YEON  </span>
+                <span>CHOI SEUNG YEON</span>
+                <span>CHOI SEUNG YEON</span>
                 <span>CHOI SEUNG YEON</span>
             </DecoTxt>
         </Section>

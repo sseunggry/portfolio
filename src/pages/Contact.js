@@ -18,7 +18,7 @@ const ContactCon = styled.div`
 `;
 const Inner = styled.div`
     margin: 0 auto;
-    padding: 150px 0;
+    padding: 150px 0 300px;
     max-width: 1440px;
 
     ${({theme}) => theme.xLarge`
@@ -26,9 +26,8 @@ const Inner = styled.div`
         padding-right: 60px;
     `};
 
-    ${({theme}) => theme.small`
-        padding-left: ${vw(40)};
-        padding-right: ${vw(40)};
+    ${({theme}) => theme.small`        
+        padding: ${vw(100)} ${vw(40)} ${vw(200)};
     `};
 `;
 const Info = styled.div`
@@ -107,10 +106,6 @@ const LinkList = styled.ul`
     }
 `;
 
-const Info2 = styled.div`
-    padding: 80px 0;
-`;
-
 function Contact() {
     const sectionRef = useRef(null);
     const txtRef = useRef(null);
@@ -186,7 +181,6 @@ function Contact() {
                             start: "top 50%",
                             end: "bottom bottom",
                             scrub: 1,
-                            markers: true
                         }
                     });
                     ani2.to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8})
@@ -210,7 +204,6 @@ function Contact() {
         }, sectionRef);
 
         return () => ctx.revert();
-
 
 
         // const ani = gsap.timeline();
@@ -268,9 +261,6 @@ function Contact() {
                             <li><Link to="">Resume</Link></li>
                         </LinkList>
                     </Info>
-                    <Info2>
-                        많은 관심과 연락 주세요!
-                    </Info2>
                 </Inner>
             </ContactCon>
         </Layout>

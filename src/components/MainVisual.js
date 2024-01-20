@@ -1,49 +1,70 @@
-import {img} from "../recoil/atoms";
 import styled from "styled-components";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import theme from "../styles/theme";
-import Text from "../styles/Text";
 import {vw} from "../utils/common";
 
 const Section = styled.section`
-    position: relative;
     overflow: hidden;
-    width: 100vw;
-    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
     background-color: ${theme.color.black};
+
+    ${({theme}) => theme.small`
+        padding-top: ${vw(120)};
+    `};
 `;
 const TxtBox = styled.div`
-    position: absolute;
-    top: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 100px;
-    width: 100%;
     text-align: center;
-    z-index: 1;
 
-    h3{
-        padding-bottom: 60px;
-    }
+    ${({theme}) => theme.small`
+        padding-left: ${vw(40)};
+        padding-right: ${vw(40)};
+    `};
 `;
-
 const Title = styled.h2`
     margin-bottom: 40px;
-    font-size: 100px;
+    font-size: 90px;
     font-weight: 700;
     letter-spacing: 2px;
     color: ${theme.color.white};
-`;
 
-const Img = styled.img`
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-`;
+    ${({theme}) => theme.large`
+        font-size: 70px;
+    `};
 
+    ${({theme}) => theme.medium`
+        font-size: 60px;
+    `};
+
+    ${({theme}) => theme.small`
+        font-size: ${vw(70)};
+    `};
+`;
+const Desc = styled.p`
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: ${theme.color.gray2};
+    word-break: keep-all;
+
+    ${({theme}) => theme.large`
+        font-size: 18px;
+    `};
+
+    ${({theme}) => theme.medium`
+        font-size: 18px;
+    `};
+
+    ${({theme}) => theme.small`
+        // display: none;
+        font-size: ${vw(28)};
+    `};
+`;
 const ScrollTxt = styled.p`
     position: absolute;
     bottom: 0;
@@ -149,16 +170,19 @@ function MainVisual(){
             gsap.set(scroll, {opacity: 0});
 
             gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
+                onStart: () => {
+                    document.querySelector('html').classList.add('lenis-stopped');
+                },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
+                    document.querySelector('html').classList.remove('lenis-stopped');
 
                     const aniTxt = gsap.timeline();
-                    aniTxt
-                        .to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})
+                    aniTxt.to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})
                         .to(tit1, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
                         .to(tit3, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
-                        .to(desc, {yPercent: 0, opacity: 1})
-                        .to(scroll, {opacity: 1});
+                        .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"});
+                        // .to(scroll, {opacity: 1});
                 }
             });
         }, loadTxt);
@@ -231,10 +255,10 @@ function MainVisual(){
                     {/*    프론트엔드 개발자 <br/> */}
                     {/*    최승연 입니다*/}
                     {/*</Text>*/}
-                    <Text name="desc1" fontWeight="300" className="desc">
+                    <Desc className="desc">
                         현재 퍼블리셔 3년차이며, 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
                         프론트엔드 개발자로 성장하기위해 리액트를 공부하고 있습니다.
-                    </Text>
+                    </Desc>
                 </TxtBox>
                 {/*<Img src={`${img}/main_visual.jpg`} alt="" />*/}
                 <ScrollTxt className="txt-scroll">scroll</ScrollTxt>

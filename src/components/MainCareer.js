@@ -7,6 +7,7 @@ import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import useWindowSize from "../utils/resize";
+import {vw} from "../utils/common";
 
 const Section = styled.section`
     overflow: hidden;
@@ -18,8 +19,6 @@ const Section = styled.section`
     `};
 `;
 const LeftCon = styled.div`
-    //position: sticky;
-    //top: 0;
     padding: 140px;
     flex-shrink: 0;
     width: 43%;
@@ -42,7 +41,6 @@ const LeftCon = styled.div`
         }
 
         &:last-of-type{
-            //opacity: 0.5;
             color: ${theme.color.gray2};
         }
     }
@@ -54,6 +52,32 @@ const LeftCon = styled.div`
     ${({theme}) => theme.medium`
         width: 100%;
         height: fit-content;
+        
+        dl{
+            display: inline-block;
+            &:last-of-type{
+                margin-top: 0;
+                margin-left: 80px;
+            }
+        }
+    `};
+
+    ${({theme}) => theme.small`
+        padding: ${vw(80)} ${vw(40)};
+        
+        dl{
+            &:last-of-type{
+                margin-top: ${vw(40)};
+                margin-left: 0;
+            }
+            dt{
+                margin-bottom: ${vw(16)};
+                font-size: ${vw(36)};
+            }
+            dd{
+                font-size: ${vw(28)};
+            }
+        }
     `};
 `;
 const RightCon = styled.div`
@@ -112,7 +136,30 @@ const RightCon = styled.div`
     `};
 
     ${({theme}) => theme.medium`
+        padding-top: 100px;
+        padding-bottom: 100px;
         width: 100%;
+    `};
+
+    ${({theme}) => theme.small`
+        padding: ${vw(100)} ${vw(40)};
+        
+        dl{
+            dt{
+                margin-bottom: ${vw(40)};
+                font-size: ${vw(48)};
+            }
+            dd{
+                font-size: ${vw(28)};
+                
+                p{
+                    margin-bottom: ${vw(40)};
+                    .period{
+                        margin-bottom: ${vw(12)};
+                    }
+                }
+            }
+        }
     `};
 `;
 

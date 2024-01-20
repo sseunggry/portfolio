@@ -91,7 +91,6 @@ const GlobalStyle = createGlobalStyle`
         color: inherit;
     }
     .blind{
-        display: none;
         overflow: hidden;
         border: 0;
         position: relative;

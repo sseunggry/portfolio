@@ -43,6 +43,10 @@ const InfoTxt = styled.div`
     font-weight: 200;
     line-height: 1.6;
     word-break: keep-all;
+    
+    br{
+        display: none;
+    }
 
     //span{
     //    display: inline-block;
@@ -59,7 +63,11 @@ const InfoTxt = styled.div`
 
     ${({theme}) => theme.small`
         padding-top: ${vw(100)};
-        font-size: ${vw(80)};
+        font-size: ${vw(70)};
+        
+        br{
+            display: block;
+        }
     `};
 `;
 
@@ -209,49 +217,51 @@ function About(){
         largeTxtList.innerHTML = txtDescList;
 
 
-        gsap.set(tit, {yPercent: 30, opacity: 0});
-        gsap.set(infoTxt, {yPercent: 30, opacity: 0});
+        let ctx = gsap.context(() => {
+            gsap.set(tit, {yPercent: 30, opacity: 0});
+            gsap.set(infoTxt, {yPercent: 30, opacity: 0});
 
-        const ani = gsap.timeline();
-        ani.to(tit, {yPercent: 0, opacity: 1}, 'motion')
-            .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.2, duration: 1.2}, 'motion');
+            const ani = gsap.timeline();
+            ani.to(tit, {yPercent: 0, opacity: 1}, 'motion')
+                .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.2, duration: 1.2}, 'motion');
 
-        gsap.set(featureTit, {xPercent: -30, opacity: 0});
-        gsap.to(featureTit, {
-            xPercent: 0, opacity: 1, stagger: 0.4, duration: 2,
-            ease: "none",
-            scrollTrigger: {
-                trigger: featureTitCon,
-                start: "top 20%",
-                end: "bottom bottom",
-                scrub: 1,
-            }
-        });
+            gsap.set(featureTit, {xPercent: -30, opacity: 0});
+            gsap.to(featureTit, {
+                xPercent: 0, opacity: 1, stagger: 0.2, duration: 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: featureTitCon,
+                    start: "top 20%",
+                    end: "bottom bottom",
+                    scrub: 1,
+                }
+            });
 
-        gsap.set(featureTxt, {xPercent: 30, opacity: 0});
-        gsap.to(featureTxt, {
-            xPercent: 0, opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: featureTxt,
-                start: "top 60%",
-                end: "bottom bottom",
-                scrub: 1,
-            }
-        });
+            gsap.set(featureTxt, {xPercent: 30, opacity: 0});
+            gsap.to(featureTxt, {
+                xPercent: 0, opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: featureTxt,
+                    start: "top 60%",
+                    end: "bottom bottom",
+                    scrub: 1,
+                }
+            });
 
-        gsap.to(largeTxt.querySelectorAll("span"), {
-            color: theme.color.black, stagger: 0.5, duration: 5,
-            ease: "none",
-            scrollTrigger: {
-                trigger: largeTxt,
-                start: "top top",
-                end: "bottom 70%",
-                scrub: 1
-            }
-        });
-
-    });
+            gsap.to(largeTxt.querySelectorAll("span"), {
+                color: theme.color.black, stagger: 0.5, duration: 5,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: largeTxt,
+                    start: "top top",
+                    end: "bottom 70%",
+                    scrub: 1
+                }
+            });
+        }, section);
+        return () => ctx.revert();
+    }, []);
 
     return (
         <Layout header={{active: 0}}>
@@ -261,7 +271,7 @@ function About(){
                         <Text name="tit1">About</Text>
                         <InfoTxt ref={infoRef}>
                             <p>안녕하세요!</p>
-                            <p>열정적인 프론트엔드 개발자</p>
+                            <p>열정적인 <br/> 프론트엔드 개발자</p>
                             <p>최승연 입니다.</p>
                         </InfoTxt>
                     </Inner>

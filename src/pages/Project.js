@@ -228,7 +228,7 @@ function Project(){
                 const ani2 = gsap.timeline({
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 80%",
+                        start: "top 90%",
                         end: "bottom bottom",
                         scrub: 1,
                     }

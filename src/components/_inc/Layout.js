@@ -5,16 +5,16 @@ import Header_ from "./Header_";
 import theme from "../../styles/theme";
 
 const Wrapper = styled.div`
-    background-color: ${(props) => props.color ? props.color : theme.color.white};
+    //background-color: ${(props) => props.color ? props.color : theme.color.white};
 `;
 const Container = styled.div`
     overflow: hidden;
     position: relative;
 `;
 
-function Layout({header = {active: -1, color: ''}, footer = false, color = '', children}){
+function Layout({header = {active: -1, color: ''}, footer = false, children}){
     return (
-        <Wrapper color={color}>
+        <Wrapper>
             <Header
                 active={header.active}
                 color={header.color}

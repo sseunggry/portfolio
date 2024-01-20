@@ -8,7 +8,7 @@ import theme from "../styles/theme";
 function Home(){
     // setTimeout (() => ScrollTrigger .refresh ( ), 2000 );
     return(
-        <Layout header={{color: theme.color.white, motion: true}} color={theme.color.white}>
+        <Layout header={{color: theme.color.white, motion: true}}>
             <MainVisual />
             <MainProject />
             <MainCareer />

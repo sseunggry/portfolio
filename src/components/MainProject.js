@@ -6,18 +6,24 @@ import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import useWindowSize from "../utils/resize";
+import {vw} from "../utils/common";
 
 const Section = styled.section`
     //overflow: hidden;
     position: relative;
     height: 100vh;
-    //display: flex;
-    //padding: 120px 240px;
 
     h3{
         margin-bottom: 40px;
-        //padding-left: 240px;
     }
+
+    ${({theme}) => theme.medium`
+        height: fit-content;
+    `};
+
+    ${({theme}) => theme.small`
+        margin-bottom: ${vw(40)};
+    `};
 `;
 
 const Inner = styled.div`
@@ -25,22 +31,55 @@ const Inner = styled.div`
     top: 50%;
     transform: translateY(-50%);
     padding: 120px 240px;
+
+    ${({theme}) => theme.medium`
+        position: initial;
+        transform: translateY(0);
+        padding: 100px 60px;
+    `};
+
+    ${({theme}) => theme.small`
+        padding: ${vw(100)} ${vw(40)};
+    `};
 `;
 
 const List = styled.ul`
     display: flex;
+
+    ${({theme}) => theme.medium`
+        flex-direction: column;
+    `};
 
     li{
         position: relative;
         margin-right: 30px;
         flex-shrink: 0;
         width: 640px;
-        height: fit-content;
         background-color: ${theme.color.white};
+        
+        &::before{
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
 
         &:last-child{
             margin-right: 0;
         }
+
+        ${({theme}) => theme.medium`
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 30px;
+            
+            &:last-child{
+                margin-bottom: 0;
+            }
+        `};
+
+        ${({theme}) => theme.small`
+            margin-bottom: ${vw(40)};
+        `};
     }
 `;
 const TxtBox = styled.div`
@@ -50,16 +89,30 @@ const TxtBox = styled.div`
     padding: 0 60px 60px;
     width: 100%;
     color: ${theme.color.white};
+    z-index: 1;
     
     p{
         margin-top: 16px;
         font-size: 18px;
     }
+
+    ${({theme}) => theme.small`
+        padding: 0 ${vw(40)} ${vw(40)};
+        
+        p{
+            margin-top: ${vw(20)};
+            font-size: ${vw(28)};
+        }
+    `};
 `;
 const Img = styled.img`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    //object-fit: cover;
 `;
 
 function MainProject(){
@@ -75,37 +128,26 @@ function MainProject(){
         const list = listRef.current;
         const listLi = list.querySelectorAll("li");
 
-
-        // let listWidth = 0;
-        // listLi.forEach((el) => listWidth += el.offsetWidth);
-
         let ctx = gsap.context(() => {
-            gsap.to(section, {
-                x: -( sectionInner.offsetWidth - window.innerWidth ),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top top",
-                    end: `bottom+=${sectionInner.offsetWidth}`,
-                    scrub: 1,
-                    pin: true,
-                    anticipatePin: 1,
+
+            ScrollTrigger.matchMedia({
+                "(min-width: 981px)": function() {
+                    gsap.to(section, {
+                        x: -( sectionInner.offsetWidth - window.innerWidth ),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top top",
+                            end: `bottom+=${sectionInner.offsetWidth}`,
+                            scrub: 1,
+                            pin: section,
+                        }
+                    });
+                },
+                "(max-width: 980px)": function() {
+
                 }
             });
-
-            // gsap.set(listLi, {xPercent: 20, opacity: 0});
-            // const ani2 = gsap.to(listLi, {
-            //     stagger: 0.5,
-            //     xPercent: 0,
-            //     opacity: 1,
-            //     ease: "none",
-            //     scrollTrigger: {
-            //         trigger: listLi,
-            //         start: "top top",
-            //         scrub: 1,
-            //     }
-            // });
-
         }, sectionRef);
         return () => ctx.revert();
 
