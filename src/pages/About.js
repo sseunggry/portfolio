@@ -133,7 +133,7 @@ const LargeTxt = styled.div`
     padding: 200px 0;
     font-size: 100px;
     font-weight: 700;
-    word-break: keep-all;
+    //word-break: keep-all;
     color: ${theme.color.gray5};
 
     ${({theme}) => theme.large`
@@ -306,6 +306,7 @@ function About(){
                             저는 3년차 퍼블리셔 최승연 입니다.
                             저는 인터랙션 및 스크립트에 관심이 많습니다.
                             재사용 가능한 소스를 짜기 위해 생각하며 코딩합니다.
+                            저는 솔직함과 진정성을 가지고 있으며 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.
                         </p>
                     </Inner>
 

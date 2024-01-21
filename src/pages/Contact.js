@@ -11,6 +11,7 @@ import {vw} from "../utils/common";
 
 const ContactCon = styled.div`
     padding-top: 80px;
+    min-height: 100vh;
 
     ${({theme}) => theme.small`
         padding-top: ${vw(120)};
@@ -124,83 +125,40 @@ function Contact() {
         const linkList = linkBox.querySelectorAll('li a');
 
         let ctx = gsap.context(() => {
-            const ani = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: "10% 10%",
-                    end: "top 10%",
-                    endTrigger: pageTit,
-                    scrub: 1,
-                }
-            });
-            gsap.set(section, {background: theme.color.white});
-            gsap.set(txtLine, {width: 0});
+            const ani = gsap.timeline();
 
             ScrollTrigger.matchMedia({
                 "(min-width: 720px)": function() {
-                    // const ani = gsap.timeline();
-                    // gsap.set(section, {background: theme.color.white});
-                    // gsap.set(txtLine, {width: 0});
+                    gsap.set(section, {background: theme.color.white});
+                    gsap.set(txtLine, {width: 0});
 
                     ani.to(section, {background: theme.color.black})
                         .to(pageTit, {color: theme.color.white})
                         .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
                         .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-                        .to(linkList, {color: theme.color.white});
+                        .to(linkList, {color: theme.color.white, marginTop: '100px'});
 
-                    // ScrollTrigger.create({
-                    //     animation: ani,
-                    //     trigger: section,
-                    //     start: "10% 10%",
-                    //     end: "top 10%",
-                    //     endTrigger: tit,
-                    //     scrub: 1,
-                    // });
-                },
-                "(max-width: 719px) and (max-height: 959px)": function() {
-                    // const ani = gsap.timeline();
-                    // gsap.set(section, {background: theme.color.white});
-                    // gsap.set(txtLine, {width: 0});
-
-                    ani.to(section, {background: theme.color.black})
-                        .to(pageTit, {color: theme.color.white})
-                        .to(linkList, {color: theme.color.white});
-
-                    // ScrollTrigger.create({
-                    //     animation: ani,
-                    //     trigger: section,
-                    //     start: "10% 10%",
-                    //     end: "top 10%",
-                    //     endTrigger: tit,
-                    //     scrub: 1,
-                    // });
-
-                    const ani2 = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: txtList,
-                            start: "top 50%",
-                            end: "bottom bottom",
-                            scrub: 1,
-                        }
+                    ScrollTrigger.create({
+                        animation: ani,
+                        trigger: section,
+                        start: "10% 10%",
+                        end: "top 10%",
+                        endTrigger: pageTit,
+                        scrub: 1,
                     });
-                    ani2.to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8})
-                        .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8})
+                },
+                "(max-width: 719px)": function() {
+                    gsap.set(section, {background: theme.color.black});
+
+                    ani.to(pageTit, {color: theme.color.white})
+                        .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
+                        .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
                         .to(linkList, {color: theme.color.white});
                 },
                 "all": function() {
 
                 }
             });
-
-            const ani3 = gsap.timeline();
-            gsap.set(pageTit, {yPercent: 30, opacity: 0});
-            gsap.set(txtBox, {yPercent: 10, opacity: 0});
-            gsap.set(linkBox, {yPercent: 30, opacity: 0});
-
-            ani3.to(pageTit, {yPercent: 0, opacity: 1}, 'motion')
-                .to(txtBox, {yPercent: 0, opacity: 1}, 'motion')
-                .to(linkBox, {yPercent: 0, opacity: 1}, 'motion');
-
         }, sectionRef);
 
         return () => ctx.revert();

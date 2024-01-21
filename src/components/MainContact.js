@@ -232,7 +232,7 @@ function MainContact(){
                 animation: ani,
                 trigger: section,
                 start: "top top",
-                end: "bottom bottom",
+                end: "center center",
                 scrub: 1,
             });
 

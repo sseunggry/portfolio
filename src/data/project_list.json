@@ -20,19 +20,19 @@
             "client": "하나증권",
             "name": "WTS 고도화 작업",
             "period": "22.11 ~ 23.01",
-            "thumbImg": "main_thumb_02.jpg"
+            "thumbImg": "project_thumb_work_02.jpg"
         },
         {
             "client": "신한카드",
             "name": "정보보호 통합신청 업무시스템 구축",
             "period": "22.09 ~ 23.10",
-            "thumbImg": "main_thumb_02.jpg"
+            "thumbImg": "project_thumb_work_03.jpg"
         },
         {
             "client": "LGU+",
             "name": "디지털 카탈로그 구축",
             "period": "22.03 ~ 22.06",
-            "thumbImg": "main_thumb_02.jpg"
+            "thumbImg": "project_thumb_work_04.jpg"
         },
         {
             "client": "대신증권",
@@ -43,7 +43,7 @@
             "client": "신한카드",
             "name": "PayDays 플랫폼 구축",
             "period": "21.09 ~ 21.11",
-            "thumbImg": "main_thumb_02.jpg",
+            "thumbImg": "project_thumb_work_06.jpg",
             "link": "https://paydays.shinhancard.com/myincome/main"
         }
     ],
@@ -52,28 +52,28 @@
             "client": "넥플릭스",
             "name": "리액트 웹사이트 퍼블리싱",
             "period": "24.01 ~ 24.02",
-            "thumbImg": "main_thumb_01.jpg",
+            "thumbImg": "project_thumb_person_01.jpg",
             "link": "www"
         },
         {
             "client": "피자알볼로",
             "name": "리액트 모바일웹 퍼블리싱",
             "period": "23.11 ~ 24.01",
-            "thumbImg": "main_thumb_01.jpg",
+            "thumbImg": "project_thumb_person_02.jpg",
             "link": "https://sseunggry.github.io/pizzahut/"
         },
         {
             "client": "워크위즈",
             "name": "반응형 퍼블리싱",
             "period": "22.06 ~ 22.08",
-            "thumbImg": "main_thumb_02.jpg",
+            "thumbImg": "project_thumb_person_03.jpg",
             "link": "www"
         },
         {
             "client": "한화케미칼",
             "name": "반응형 퍼블리싱",
             "period": "21.04 ~ 21.07",
-            "thumbImg": "main_thumb_02.jpg",
+            "thumbImg": "project_thumb_person_04.jpg",
             "link": "www"
         }
     ],

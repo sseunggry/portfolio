@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
-import {RecoilRoot} from "recoil";
+import {RecoilRoot, useRecoilState} from "recoil";
 
 import {ThemeProvider} from "styled-components";
 import GlobalStyle from "./styles/global";

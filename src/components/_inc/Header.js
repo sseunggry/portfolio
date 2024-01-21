@@ -5,6 +5,7 @@ import theme from "../../styles/theme";
 import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
 import {vw} from "../../utils/common";
+import {lenis} from "../../utils/smooth";
 
 const Menu = styled.button`
     display: none;
@@ -92,6 +93,7 @@ const HeaderTag = styled.header`
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
+    background-color: ${({color}) => color ? theme.color.black : theme.color.white};
     border-bottom: 1px solid ${({color}) => color ? 'transparent' : theme.color.gray5};
     z-index: 1;
 
@@ -115,6 +117,8 @@ const HeaderTag = styled.header`
     `};
 
     ${({theme}) => theme.small`
+        position: fixed;
+        top: 0;
         padding-left: ${vw(40)};
         padding-right: ${vw(40)};
         height: ${vw(120)};
@@ -219,13 +223,16 @@ function Header({color, active, motion = false}){
 
         if(moMenuRef.current) {
             moMenuRef.current.classList.remove('on');
+            lenis.start();
         }
     }
     const menuOnClick = (e) => {
         moMenuRef.current.classList.add('on');
+        lenis.stop();
     }
     const closeClick = (e) => {
         moMenuRef.current.classList.remove('on');
+        lenis.start();
     }
     useEffect(() => {
         const header = headerRef.current;

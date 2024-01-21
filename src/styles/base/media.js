@@ -5,7 +5,7 @@ export const breakpoints = {
     sMedium: 840,
     medium: 980,
     large: 1200,
-    xLarge: 1500
+    xLarge: 1560
 };
 
 const media = Object.keys(breakpoints).reduce((acc, label) => {

@@ -87,6 +87,7 @@ const ThumbList = styled.ul`
 `;
 const ImgBox = styled.div`
     position: relative;
+    overflow: hidden;
     width: 50%;
     
     &::before{
@@ -96,9 +97,30 @@ const ImgBox = styled.div`
         width: 100%;
     }
 
+    &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        // background-color: ${theme.color.white};
+        transition: all 0.3s;
+        //clip-path: ;
+    }
+    
+    //&.motion{
+    //    &::after{
+    //        left: -100%;
+    //    }
+    //}
+
     img{
         position: absolute;
         width: 100%;
+        height: 100%;
+        object-fit: cover;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -111,6 +133,7 @@ const ImgBox = styled.div`
 const TxtBox = styled.div`
     padding: 60px;
     flex: 1;
+    align-self: center;
 
     strong{
         font-size: 20px;
@@ -214,7 +237,6 @@ function Project(){
         let ctx = gsap.context(() => {
             gsap.set(pageTit, {yPercent: 30, opacity: 0});
             gsap.set(thumbCon, {yPercent: 10, opacity: 0});
-            // gsap.set(thumbList, {yPercent: 1, opacity: 0});
             gsap.set(thumb[0], {opacity: 0});
             gsap.set(thumb, {opacity: 0});
 

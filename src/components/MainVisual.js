@@ -4,6 +4,9 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
+import {useRecoilState} from "recoil";
+import {loadingState} from "../recoil/atoms";
+import {lenis} from "../utils/smooth";
 
 const Section = styled.section`
     overflow: hidden;
@@ -30,8 +33,13 @@ const Title = styled.h2`
     margin-bottom: 40px;
     font-size: 90px;
     font-weight: 700;
+    //font-weight: 100;
     letter-spacing: 2px;
     color: ${theme.color.white};
+    
+    strong{
+        font-weight: 700;
+    }
 
     ${({theme}) => theme.large`
         font-size: 70px;
@@ -154,13 +162,6 @@ function MainVisual(){
         const desc = section.querySelector(".desc");
         const scroll = section.querySelector(".txt-scroll");
 
-        // let titDesc = tit2.innerText.split('');
-        // let titDescList = '';
-        // titDesc.map((el) => titDescList += `<span>${el}</span>`);
-        // tit2.innerHTML = titDescList;
-
-        // const titSpan = tit2.querySelectorAll("span");
-
         let ctx = gsap.context(() => {
             gsap.set(loadTxtSpan, {yPercent: 100});
             gsap.set(tit1, {yPercent: 20, opacity: 0});
@@ -171,20 +172,28 @@ function MainVisual(){
 
             gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
                 onStart: () => {
-                    document.querySelector('html').classList.add('lenis-stopped');
+                    lenis.stop();
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
-                    document.querySelector('html').classList.remove('lenis-stopped');
+                    lenis.start();
 
-                    const aniTxt = gsap.timeline();
-                    aniTxt.to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})
-                        .to(tit1, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
-                        .to(tit3, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
-                        .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"});
-                        // .to(scroll, {opacity: 1});
+                    visualAni();
                 }
             });
+
+            const visualAni = () => {
+                const aniTxt = gsap.timeline({
+                    onComplete: () => {
+                        // lenis.start();
+                    }
+                });
+                aniTxt.to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})
+                    .to(tit1, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
+                    .to(tit3, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
+                    .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"});
+                // .to(scroll, {opacity: 1});
+            }
         }, loadTxt);
         return () => ctx.revert();
 
@@ -241,7 +250,6 @@ function MainVisual(){
         <>
             <LoadTxt ref={loadTxtRef}>
                 <p>SSEUNG</p>
-                {/*<p>SEUNG YEON</p>*/}
             </LoadTxt>
             <Section className="sec-kv" ref={sectionRef}>
                 <TxtBox>
@@ -249,6 +257,9 @@ function MainVisual(){
                         <p>Let's Introduce</p>
                         <p>Frontend Developer's</p>
                         <p>Seung Yeon</p>
+                        {/*<p>안녕하세요.</p>*/}
+                        {/*<p>프론트엔드 개발자</p>*/}
+                        {/*<p><strong>최승연</strong> 입니다.</p>*/}
                     </Title>
                     {/*<Text name="tit2" fontWeight="100">*/}
                     {/*    안녕하세요. <br/> */}

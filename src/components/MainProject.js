@@ -44,6 +44,7 @@ const Inner = styled.div`
 `;
 
 const List = styled.ul`
+    overflow: hidden;
     display: flex;
 
     ${({theme}) => theme.medium`
@@ -61,6 +62,21 @@ const List = styled.ul`
             content: '';
             display: block;
             padding-top: 100%;
+        }
+        
+        //--inset-value: inset(0 0);
+        
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            //background-color: ${theme.color.white};
+            //clip-path: var(--inset-value);
+            transition: all 0.3s;
         }
 
         &:last-child{
@@ -112,7 +128,7 @@ const Img = styled.img`
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    //object-fit: cover;
+    object-fit: cover;
 `;
 
 function MainProject(){
@@ -126,10 +142,9 @@ function MainProject(){
         const section = sectionRef.current;
         const sectionInner = section.querySelector('.inner');
         const list = listRef.current;
-        const listLi = list.querySelectorAll("li");
+        const listLi = list.querySelectorAll('li');
 
         let ctx = gsap.context(() => {
-
             ScrollTrigger.matchMedia({
                 "(min-width: 981px)": function() {
                     gsap.to(section, {
@@ -145,9 +160,39 @@ function MainProject(){
                     });
                 },
                 "(max-width: 980px)": function() {
-
+                    gsap.set(listLi, {xPercent: -100, opacity: 1});
+                    Object.values(listLi).map((el) => {
+                        gsap.to(el, {
+                            // opacity: 1,
+                            xPercent: 0,
+                            width: '100%',
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 90%",
+                                end: "bottom bottom",
+                                scrub: 1,
+                            }
+                        });
+                    });
                 }
             });
+
+            // const li = list.querySelectorAll('li::after');
+            // console.log(listLi);
+            // gsap.set(listLi, {opacity: 0});
+            // Object.values(listLi).forEach((el, idx) => {
+            //    gsap.to(el, {
+            //        opacity: 1,
+            //        stagger: 0.1,
+            //        scrollTrigger: {
+            //            trigger: listLi,
+            //            // start: "top top",
+            //            // end: "bottom bottom",
+            //            scrub: 1,
+            //            markers: true,
+            //        }
+            //    })
+            // });
         }, sectionRef);
         return () => ctx.revert();
 
