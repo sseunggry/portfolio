@@ -14,8 +14,3 @@ export const projectPersonal = Object.values(personal).filter((el, idx) => el.th
 export const design = project.design;
 
 export const navList = ['About', 'Project', 'Contact'];
-
-export const loadingState = atom({
-    key: "loadingState",
-    default: true
-});
