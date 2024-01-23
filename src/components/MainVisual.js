@@ -4,8 +4,6 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
-import {useRecoilState} from "recoil";
-import {loadingState} from "../recoil/atoms";
 import {lenis} from "../utils/smooth";
 
 const Section = styled.section`
@@ -176,7 +174,7 @@ function MainVisual(){
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
-                    lenis.start();
+                    // lenis.start();
 
                     visualAni();
                 }
@@ -185,7 +183,7 @@ function MainVisual(){
             const visualAni = () => {
                 const aniTxt = gsap.timeline({
                     onComplete: () => {
-                        // lenis.start();
+                        lenis.start();
                     }
                 });
                 aniTxt.to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})

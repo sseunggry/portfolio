@@ -136,7 +136,7 @@ function Contact() {
                         .to(pageTit, {color: theme.color.white})
                         .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
                         .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-                        .to(linkList, {color: theme.color.white, marginTop: '100px'});
+                        .to(linkList, {color: theme.color.white, marginTop: '150px'});
 
                     ScrollTrigger.create({
                         animation: ani,

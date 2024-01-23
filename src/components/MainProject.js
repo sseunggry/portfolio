@@ -158,14 +158,29 @@ function MainProject(){
                             pin: section,
                         }
                     });
-                },
-                "(max-width: 980px)": function() {
-                    gsap.set(listLi, {xPercent: -100, opacity: 1});
+
+                    gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
                     Object.values(listLi).map((el) => {
                         gsap.to(el, {
-                            // opacity: 1,
-                            xPercent: 0,
-                            width: '100%',
+                            opacity: 1,
+                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                            ease: "power3.in",
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 90%",
+                                end: "bottom bottom",
+                                scrub: 1,
+                            }
+                        });
+                    });
+                },
+                "(max-width: 980px)": function() {
+                    gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                    Object.values(listLi).map((el) => {
+                        gsap.to(el, {
+                            opacity: 1,
+                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                            ease: "power3.in",
                             scrollTrigger: {
                                 trigger: el,
                                 start: "top 90%",

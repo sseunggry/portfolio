@@ -4,7 +4,7 @@ import styled from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
 
@@ -182,7 +182,10 @@ const DecoTxt = styled.p`
     ${({theme}) => theme.small`
         font-size: ${vw(120)};
     `};
+    
+    // ${({decoIdx}) => decoIdx ? `left: -(100*${decoIdx})px` : ''};
 `;
+
 
 function MainContact(){
     const sectionRef = useRef(null);
@@ -190,15 +193,26 @@ function MainContact(){
     const infoRef = useRef(null);
     const decoRef = useRef(null);
     const [decoIdx, setDecoIdx] = useState(1);
+    const [isInitial, setIsInitial] = useState(true);
 
     const txtMotion = () => {
         const decoTxt = decoRef.current;
         const decoSpan = decoTxt.querySelectorAll('span');
 
-        setDecoIdx((prev) => prev++);
+        // setDecoIdx((prev) => {
+        //     if(decoSpan.length - 1 === prev){
+        //         decoTxt.style.left = 0;
+        //         return prev = 1;
+        //     } else{
+        //         return prev = prev+1;
+        //     }
+        // });
+        // console.log(decoIdx);
         if(decoSpan.length - 1  === decoIdx){
             setDecoIdx(1);
             decoTxt.style.left = 0;
+        } else{
+            // setDecoIdx((prev) => prev+1);
         }
 
         decoTxt.animate({'left': '-'+(100*decoIdx)+'px'}, 1500, () => {
@@ -220,10 +234,10 @@ function MainContact(){
         const infoList = info.querySelectorAll('ul li');
 
         gsap.set(section, {backgroundColor: theme.color.black});
-        gsap.set(h2, {yPercent: 0, opacity: 0, color: theme.color.white});
-        gsap.set(desc, {yPercent: 20, opacity: 0, color: theme.color.white});
-        gsap.set(infoList, {xPercent: 20, opacity: 0, color: theme.color.white});
-        gsap.set(deco, {opacity: 0, color: theme.color.white});
+        gsap.set(h2, {yPercent: 0, opacity: 1, color: theme.color.white});
+        gsap.set(desc, {yPercent: 0, opacity: 1, color: theme.color.white});
+        gsap.set(infoList, {xPercent: 0, opacity: 1, color: theme.color.white});
+        gsap.set(deco, {opacity: 1, color: theme.color.white});
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
@@ -232,21 +246,21 @@ function MainContact(){
                 animation: ani,
                 trigger: section,
                 start: "top top",
-                end: "center center",
+                end: "top 50%",
                 scrub: 1,
             });
 
             const ani2 = gsap.timeline();
             ani2.to(h2, {yPercent: 0, opacity: 1, color: theme.color.black})
                 .to(desc, {yPercent: 0, opacity: 1, color: theme.color.black})
-                .to(infoList, {xPercent: 0, opacity: 1, color: theme.color.black}, 'motion')
+                .to(infoList, {stagger: 0.1, xPercent: 0, opacity: 1, color: theme.color.black, textDecoration: "underline"}, 'motion')
                 .to(deco, {opacity: 1, color: theme.color.white}, 'motion')
 
             ScrollTrigger.create({
                 animation: ani2,
                 trigger: section,
                 start: "top top",
-                end: "center center",
+                end: "top 50%",
                 scrub: 1,
             });
 
@@ -272,11 +286,24 @@ function MainContact(){
         return () => ctx.revert();
 
     }, []);
-    // useEffect(() => {
-    //     // let txtIdx = 1;
-    //     // txtMotion();
-    //     // console.log(decoIdx);
-    // }, [decoIdx]);
+    useEffect(() => {
+        // const decoTxt = decoRef.current;
+        // const decoSpan = decoTxt.querySelectorAll('span');
+        // const decoTxt = decoRef.current;
+
+        // if(isInitial) {
+        //     if(decoSpan.length - 1  === decoIdx){
+        //         setDecoIdx(1);
+        //         decoTxt.style.left = 0;
+        //     } else{
+        //         setDecoIdx(decoIdx+1);
+        //         setIsInitial(false);
+        //     }
+        // }
+        // txtMotion();
+    }, [decoIdx]);
+
+    console.log(decoIdx);
 
     let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
     phraseTxt= phraseTxt.split("\n");

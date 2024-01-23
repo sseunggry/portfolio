@@ -207,7 +207,7 @@ const TxtBox = styled.div`
 function Project(){
     const [projectData, setProjectData] = useState(projectWork);
     const sectionRef = useRef(null);
-    const thumbConRef = useRef(null);
+    const tabRef = useRef(null);
     const thumbRef = useRef(null);
 
     const onClick = (e) => {
@@ -229,36 +229,86 @@ function Project(){
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const thumbCon = thumbConRef.current;
+        const tab = tabRef.current;
         const thumbList = thumbRef.current;
         const pageTit = section.querySelector('[name="tit1"]');
         const thumb = thumbList.querySelectorAll('li');
+        const thumbImg = thumbList.querySelectorAll('li .img-box');
+        const thumbTxt = thumbList.querySelectorAll('li .txt-box');
+
 
         let ctx = gsap.context(() => {
             gsap.set(pageTit, {yPercent: 30, opacity: 0});
-            gsap.set(thumbCon, {yPercent: 10, opacity: 0});
-            gsap.set(thumb[0], {opacity: 0});
-            gsap.set(thumb, {opacity: 0});
+            gsap.set(tab, {yPercent: 30, opacity: 0});
+            gsap.set(thumbImg[0], {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(thumbTxt[0].children, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(thumbImg, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
             const ani = gsap.timeline();
             ani.to(pageTit, {yPercent: 0, opacity: 1}, 'motion')
-               .to(thumbCon, {yPercent: 0, opacity: 1}, 'motion')
-               .to(thumb[0], {opacity: 1}, 'motion');
+               .to(tab, {yPercent: 0, opacity: 1}, 'motion')
+               .to(thumbImg[0], {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: "power3.in"})
+               .to(thumbTxt[0].children, {stagger: 0.1, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: "power3.in"});
 
+            ScrollTrigger.matchMedia({
+                "(min-width: 981px)": function() {
+                    Object.values(thumbImg).map((el, idx) => {
+                        console.log(thumbTxt[idx].children);
+                        // gsap.set(el.children, {scale: 2});
 
-            Object.values(thumb).map((el, idx) => {
-                const ani2 = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 90%",
-                        end: "bottom bottom",
-                        scrub: 1,
-                    }
-                });
-                if(idx !== 0) {
-                    ani2.to(el, {opacity: 1});
+                        let txtBoxList = thumbTxt[idx].children;
+                        gsap.set(txtBoxList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+
+                        const ani2 = gsap.timeline({
+                            ease: "power3.in",
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 30%",
+                                end: "bottom 90%",
+                                scrub: 1,
+                            }
+                        });
+                        if(idx !== 0){
+                            ani2.to(el, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 'motion2')
+                                .to(txtBoxList, {stagger: 0.2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 2}, 'motion2')
+                        }
+
+                        // gsap.to(el.children, {scale: 1, delay: -1, duration: 2});
+                    });
+                },
+                "(max-width: 980px)": function() {
+                    Object.values(thumbImg).map((el, idx) => {
+                        if(idx !== 0){
+                            gsap.to(el, {
+                                opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1,
+                                ease: "power3.in",
+                                scrollTrigger: {
+                                    trigger: el,
+                                    start: "top 50%",
+                                    end: "bottom 90%",
+                                    scrub: 1,
+                                }
+                            });
+                        }
+                    });
+
+                    Object.values(thumbTxt).map((el, idx) => {
+                        if(idx !== 0){
+                            gsap.set(el.children, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                            gsap.to(el.children, {
+                                stagger: 0.2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 2,
+                                ease: "power3.in",
+                                scrollTrigger: {
+                                    trigger: thumbImg[idx],
+                                    start: "center 50%",
+                                    end: "bottom 90%",
+                                    scrub: 1,
+                                }
+                            });
+                        }
+                    });
                 }
-            })
+            });
 
 
         }, sectionRef);
@@ -270,18 +320,18 @@ function Project(){
             <ProjectCon ref={sectionRef}>
                 <Inner>
                     <Text name="tit1">Project</Text>
-                    <div ref={thumbConRef}>
-                        <Tab onClick={onClick}>
+                    <div >
+                        <Tab onClick={onClick} ref={tabRef}>
                             <li className="active">work ({projectWork.length})</li>
                             <li>personal ({projectPersonal.length})</li>
                         </Tab>
                         <ThumbList ref={thumbRef}>
                             {projectData.map(({client, name, period, thumbImg, desc}, idx) => (
                                 <li key={idx}>
-                                    <ImgBox>
+                                    <ImgBox className="img-box">
                                         <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
                                     </ImgBox>
-                                    <TxtBox>
+                                    <TxtBox className="txt-box">
                                         <strong>{client}</strong>
                                         <h3>{name}</h3>
                                         {/*<h3>[{client}] <br/> {name}</h3>*/}

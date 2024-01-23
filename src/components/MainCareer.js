@@ -180,7 +180,7 @@ function MainCareer(){
 
         const leftTit = leftCon.querySelector('h3');
         const leftTxt = leftCon.querySelectorAll('dl');
-        const rightTit = rightCon.querySelector('dt');
+        const rightTit = rightCon.querySelectorAll('dt');
         const rightTxt = rightCon.querySelectorAll('dd');
 
         let ctx = gsap.context(() => {
@@ -193,15 +193,32 @@ function MainCareer(){
                         scrub: 1,
                         pin: leftCon,
                     });
+
+                    Object.values(rightTit).map((el, idx) => {
+                        const ani = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 50%",
+                                end: "bottom 30%",
+                                endTrigger: el,
+                                scrub: 1,
+                            }
+                        });
+                        gsap.set(rightTit, {opacity: 0, yPercent: -20});
+                        gsap.set(rightTxt[idx].children, {opacity: 0, yPercent: -20});
+
+                        ani.to(rightTit, {opacity: 1, yPercent: 0})
+                            .to(rightTxt[idx].children, {opacity: 1, stagger: 0.1, yPercent: 0});
+
+                    });
+
                 },
                 "(max-width: 979px)" : function() {
-                    gsap.set(leftCon, {xPercent: -100});
-                    gsap.set(rightCon, {opacity: 0});
-                    // gsap.set(rightTit, {opacity: 0});
-                    // gsap.set(rightTxt, {opacity: 0});
+                    gsap.set(leftCon, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
                     gsap.to(leftCon, {
-                        xPercent: 0,
+                        ease: "power3.in",
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
                         scrollTrigger: {
                             trigger: leftCon,
                             start: "top 80%",
@@ -210,16 +227,41 @@ function MainCareer(){
                         }
                     });
 
-                    const ani = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: rightCon,
-                            start: "top 80%",
-                            end: 'center center',
-                            scrub: 1,
-                        }
-                    })
-                    ani.to(rightCon, {opacity: 1});
-                        // .to(rightTxt, {opacity: 1});
+                    Object.values(rightTit).map((el, idx) => {
+                        // gsap.set(el, {opacity: 0, xPercent: -20});
+                        gsap.set(el, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                        gsap.to(el, {
+                            ease: "power3.in",
+                            opacity: 1,
+                            // xPercent: 0,
+                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 50%",
+                                end: "bottom 80%",
+                                scrub: 1,
+                            }
+                        })
+                    });
+
+                    Object.values(rightTxt).map((el, idx) => {
+                        // gsap.set(el.children, {opacity: 0, xPercent: -20});
+                        gsap.set(el.children, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                        gsap.to(el.children, {
+                            ease: "power3.in",
+                            opacity: 1,
+                            // xPercent: 0,
+                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                            stagger: 0.2,
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 50%",
+                                end: "bottom 80%",
+                                scrub: 1,
+                            }
+                        });
+
+                    });
                 }
             });
 

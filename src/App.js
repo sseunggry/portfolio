@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import smooth from "./utils/smooth";
 import Project2 from "./pages/Project2";
 import media from "./styles/base/media";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
     useEffect(() => {
@@ -22,6 +23,7 @@ function App() {
             <GlobalStyle />
             <RecoilRoot>
                 <BrowserRouter basename={process.env.PUBLIC_URL}>
+                    <ScrollToTop />
                     <Routes>
                         <Route path="/" element={<Home />}/>
                         <Route path="/about" element={<About />}/>
