@@ -6,6 +6,7 @@ import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
+import {img} from "../recoil/atoms";
 
 const AboutCon = styled.div`
     padding-top: 80px;
@@ -44,12 +45,8 @@ const InfoTxt = styled.div`
     line-height: 1.6;
     word-break: keep-all;
     
-    br{
-        display: none;
-    }
-
-    //span{
-    //    display: inline-block;
+    //br{
+    //    display: none;
     //}
 
     ${({theme}) => theme.large`
@@ -59,6 +56,10 @@ const InfoTxt = styled.div`
     ${({theme}) => theme.medium`
         padding-left: 0;
         font-size: 52px;
+        
+        em{
+            display: none;
+        }
     `};
 
     ${({theme}) => theme.small`
@@ -133,7 +134,6 @@ const LargeTxt = styled.div`
     padding: 200px 0;
     font-size: 100px;
     font-weight: 700;
-    //word-break: keep-all;
     color: ${theme.color.gray5};
 
     ${({theme}) => theme.large`
@@ -147,69 +147,139 @@ const LargeTxt = styled.div`
 
     ${({theme}) => theme.small`
         padding: ${vw(150)} 0;
-        font-size: ${vw(60)};;
+        font-size: ${vw(70)};;
     `};
 `;
-const Intro = styled.div`
-    padding: 200px 0;
-    font-size: 24px;
-    font-weight: 300;
+const StoryTit = styled.h3`
+    position: absolute;
+    font-family: 'Over the Rainbow', cursive;
+    font-size: 180px;
     color: ${theme.color.white};
-    background-color: ${theme.color.black};
-  
+    transform: rotate(-20deg);
+    z-index: 2;
+
+    ${({theme}) => theme.xLarge`
+        font-size: 150px;
+    `};
+
+    ${({theme}) => theme.mLarge`
+        font-size: 130px;
+    `};
+
+    ${({theme}) => theme.sMedium`
+        font-size: 100px;
+    `};
+    
+    ${({theme}) => theme.medium`
+        em{
+            display: none;
+        }
+    `};
+
+    ${({theme}) => theme.small`
+        transform: rotate(0);
+        width: 100%;
+        font-size: ${vw(120)};
+    `};
+`;
+const StoryImg = styled.div`
+    overflow: hidden;
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 40%;
+    min-width: 400px;
+    
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    ${({theme}) => theme.large`
+        margin: 0 0 100px auto;
+    `};
+
+    ${({theme}) => theme.small`
+        // margin-top: ${vw(-250)};
+        margin-bottom: ${vw(100)};
+        min-width: auto;
+        width: 70%;
+    `};
+`;
+const StoryTxt = styled.div`
+    margin-left: 50px;
+    width: 60%;
+    font-size: 18px;
+    color: ${theme.color.gray2};
+    line-height: 1.6;
+    word-break: keep-all;
+    
     p{
-        margin-bottom: 40px;
-        word-break: keep-all;
-        text-align: center;
-        line-height: 1.6;
-      
+        margin-bottom: 20px;
+        
         &:last-of-type{
-          margin-bottom: 0;
+            margin-bottom: 0;
         }
     }
     
+    ${({theme}) => theme.large`
+        width: 80%;
+    `};
+
+    ${({theme}) => theme.medium`
+        margin-left: 0;
+    `};
+
     ${({theme}) => theme.small`
-        padding: ${vw(200)} 0;
-        font-size: ${vw(32)};
+        width: 100%;
+        font-size: ${vw(28)};
+        br{
+            display: none;
+        }
         
         p{
-            margin-bottom: ${vw(40)};
+            margin-bottom: ${vw(30)};
         }
+    `};
+`;
+const Story = styled.div`
+    padding: 200px 0;
+    background-color: ${theme.color.black};
+
+    ${Inner} {
+        position: relative;
+    }
+    
+    ${({theme}) => theme.small`
+        padding: ${vw(150)} 0;
     `};
 `;
 
 function About(){
     const sectionRef = useRef(null);
-    const titBoxRef = useRef(null);
     const infoRef = useRef(null);
     const featureRef = useRef(null);
     const largeTxtRef = useRef(null);
+    const storyRef = useRef(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const titBox = titBoxRef.current;
         const info = infoRef.current;
         const feature = featureRef.current;
         const largeTxt = largeTxtRef.current;
+        const storyCon = storyRef.current;
 
         const tit = section.querySelector('h2');
         const infoTxt = info.querySelectorAll('p');
-        // const infoSpan = info.querySelectorAll("span");
         const featureTitCon = feature.querySelectorAll('.tit');
         const featureTit = feature.querySelectorAll('.tit h3');
         const featureTxt = feature.querySelector('.desc');
-
         const largeTxtList = largeTxt.querySelector('p');
-        const largeTxtSpan = largeTxt.querySelectorAll('span');
-
-        // infoTxt.forEach((el) => {
-        //     let txtDesc = el.innerText.split('');
-        //     let txtDescList = '';
-        //     txtDesc.map((txt) => txtDescList += `<span>${txt}</span>`);
-        //     el.innerHTML = txtDescList;
-        // });
+        const storyConTit = storyCon.querySelector('.tit');
+        const storyConImg = storyCon.querySelector('.img-box');
+        const storyConTxt = storyCon.querySelector('.txt-box');
 
         let txtDesc = largeTxtList.innerText.split('');
         let txtDescList = '';
@@ -218,45 +288,80 @@ function About(){
 
 
         let ctx = gsap.context(() => {
-            gsap.set(tit, {yPercent: 30, opacity: 0});
-            gsap.set(infoTxt, {yPercent: 30, opacity: 0});
-
-            const ani = gsap.timeline();
-            ani.to(tit, {yPercent: 0, opacity: 1}, 'motion')
-                .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.2, duration: 1.2}, 'motion');
-
-            gsap.set(featureTit, {xPercent: -30, opacity: 0});
-            gsap.to(featureTit, {
-                xPercent: 0, opacity: 1, stagger: 0.2, duration: 1,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: featureTitCon,
-                    start: "top 20%",
-                    end: "bottom bottom",
-                    scrub: 1,
-                }
-            });
-
-            gsap.set(featureTxt, {xPercent: 30, opacity: 0});
-            gsap.to(featureTxt, {
-                xPercent: 0, opacity: 1,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: featureTxt,
-                    start: "top 60%",
-                    end: "bottom bottom",
-                    scrub: 1,
-                }
-            });
-
-            gsap.to(largeTxt.querySelectorAll("span"), {
+            let aniTxt = gsap.to(largeTxt.querySelectorAll("span"), {
                 color: theme.color.black, stagger: 0.5, duration: 5,
                 ease: "none",
+            });
+
+            gsap.set(storyConTit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(storyConImg, {opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
+            gsap.set(storyConTxt, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+
+            const aniStory = gsap.timeline({
+                ease: "power3.in",
                 scrollTrigger: {
-                    trigger: largeTxt,
-                    start: "top top",
-                    end: "bottom 70%",
-                    scrub: 1
+                    trigger: storyCon,
+                    start: "top 30%",
+                    end: "center 50%",
+                    // scrub: 1,
+                }
+            });
+            aniStory.to(storyConTit, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0, 100% 100%, 0 100%)"})
+                    .to(storyConImg, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"})
+                    .to(storyConTxt, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"});
+
+            ScrollTrigger.matchMedia({
+                "(min-width: 980px)": function() {
+                    ScrollTrigger.create({
+                        animation: aniTxt,
+                            trigger: largeTxt,
+                            start: "top top",
+                            end: "bottom 70%",
+                            scrub: 1
+                    });
+                },
+                "(max-width: 979px)": function() {
+                    ScrollTrigger.create({
+                        animation: aniTxt,
+                        trigger: largeTxt,
+                        start: "top 50%",
+                        end: "bottom 70%",
+                        scrub: 1
+                    });
+                },
+                "all": function(){
+                    gsap.set(tit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                    gsap.set(infoTxt, {yPercent: 40, opacity: 0});
+
+                    const ani = gsap.timeline({
+                        ease: "power3.in",
+                    });
+                    ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1})
+                        .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.5, delay: -0.5});
+
+                    gsap.set(featureTit, {xPercent: -30, opacity: 0});
+                    gsap.to(featureTit, {
+                        xPercent: 0, opacity: 1, stagger: 0.2, duration: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: featureTitCon,
+                            start: "top 20%",
+                            end: "bottom bottom",
+                            scrub: 1,
+                        }
+                    });
+
+                    gsap.set(featureTxt, {xPercent: 30, opacity: 0});
+                    gsap.to(featureTxt, {
+                        xPercent: 0, opacity: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: featureTxt,
+                            start: "top 60%",
+                            end: "bottom bottom",
+                            scrub: 1,
+                        }
+                    });
                 }
             });
         }, section);
@@ -266,12 +371,12 @@ function About(){
     return (
         <Layout header={{active: 0}}>
             <AboutCon ref={sectionRef}>
-                <TitBox ref={titBoxRef}>
+                <TitBox>
                     <Inner>
                         <Text name="tit1">About</Text>
                         <InfoTxt ref={infoRef}>
                             <p>안녕하세요!</p>
-                            <p>열정적인 <br/> 프론트엔드 개발자</p>
+                            <p>열정적인 프론트엔드 <em>개발자</em></p>
                             <p>최승연 입니다.</p>
                         </InfoTxt>
                     </Inner>
@@ -294,8 +399,10 @@ function About(){
                                 맞추기 위해 밤을 새서라도 작업을 끝냅니다.
                             </p>
                             <p>
-                                어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로
-                                사용이 가능할지를 고려하며 코딩합니다.
+                                저는 에이젼시를 다니면서 다양한 프로젝트 경험이 있어, 업무 프로세스에 대해
+                                잘 알고 있습니다. 또한 다른 팀과의 협업 및 커뮤니케이션을 잘 합니다!
+                                {/*어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로*/}
+                                {/*사용이 가능할지를 고려하며 코딩합니다.*/}
                             </p>
                         </div>
                     </Inner>
@@ -306,37 +413,40 @@ function About(){
                             저는 3년차 퍼블리셔 최승연 입니다.
                             저는 인터랙션 및 스크립트에 관심이 많습니다.
                             재사용 가능한 소스를 짜기 위해 생각하며 코딩합니다.
-                            저는 솔직함과 진정성을 가지고 있으며 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.
+                            저는 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.
+                            {/*저는 솔직함과 진정성을 가지고 있으며 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.*/}
                         </p>
                     </Inner>
-
-                    {/*<p></p>*/}
-                    {/*<p>최승연 입니다.</p>*/}
-
-                    {/*<p>저는 인터랙션 및 스크립트에 관심이 많습니다.</p>*/}
-                    {/*<p>재사용 가능한 소스를 짜기 위해 생각하며</p>*/}
-                    {/*<p>코딩합니다.</p>*/}
                 </LargeTxt>
-                <Intro>
+                <Story ref={storyRef}>
                     <Inner>
-                        <p>
-                            저는 2년 9개월 동안 디자이너로 일했고, 제가 디자이너로 일하면서 느꼈던 것은 <br/>
-                            디자인은 주관적인 평가로 판단된다는 것 이였습니다.
-                        </p>
-                        <p>
-                            그래서 저는 주관적인 평가가 아닌 객관적인 평가를 받을 수 있는<br/>
-                            직업이 하고 싶었습니다. 제가 본 퍼블리셔는 객관적으로 평가되어지는 직업이라고<br/>
-                            생각해서 이직을 하게 되었습니다.
-                        </p>
-                        <p>
-                            지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에<br/>
-                            흥미를 느끼며 재미있게 작업하고 있습니다.
-                        </p>
-                        <p>
-                            앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.
-                        </p>
+                        <StoryTit className="tit">
+                            <span><em>Choi</em> Seung yeon </span>
+                            <span>Story</span>
+                        </StoryTit>
+                        <StoryImg className="img-box">
+                            <img src={`${img}/img_about.jpg`} alt="" />
+                        </StoryImg>
+                        <StoryTxt className="txt-box">
+                            <p>
+                                저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은 <br/>
+                                디자인은 주관적인 기준에 의해 평가된다는 것입니다. <br/>
+                                그래서 저는 주관적인 기준이 아닌 객관적인 기준에 의해 평가되어지는 직업이 하고 싶었습니다.
+                            </p>
+                            <p>
+                                제가 본 퍼블리셔는 디자인과 동일한지, 기능적으로 이상이 없는지 등과 같이
+                                객관적인 기준에 의해 평가되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
+                            </p>
+                            <p>
+                                지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에 <br/>
+                                흥미를 느끼며 재미있게 작업하고 있습니다.
+                            </p>
+                            <p>
+                                앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.
+                            </p>
+                        </StoryTxt>
                     </Inner>
-                </Intro>
+                </Story>
             </AboutCon>
         </Layout>
     )

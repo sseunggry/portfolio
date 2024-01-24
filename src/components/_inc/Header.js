@@ -95,7 +95,7 @@ const HeaderTag = styled.header`
     height: 80px;
     background-color: ${({color}) => color ? theme.color.black : theme.color.white};
     border-bottom: 1px solid ${({color}) => color ? 'transparent' : theme.color.gray5};
-    z-index: 1;
+    z-index: 10;
 
     ${Nav}{
         a{

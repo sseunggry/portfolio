@@ -40,6 +40,10 @@ const Info = styled.div`
         margin-left: 0;
         width: 100%;
     `};
+
+    ${({theme}) => theme.small`
+        margin-top: ${vw(250)};
+    `};
 `;
 const TxtBox = styled.ul`
     li {
@@ -84,7 +88,7 @@ const TxtBox = styled.ul`
 `;
 const LinkList = styled.ul`
     display: flex;
-    margin-top: 60px;
+    margin-top: 150px;
   
     li{
         margin-right: 30px;
@@ -105,6 +109,10 @@ const LinkList = styled.ul`
             font-size: ${vw(30)};
         `};
     }
+
+    ${({theme}) => theme.small`
+        margin-top: ${vw(150)};
+    `};
 `;
 
 function Contact() {
@@ -130,13 +138,14 @@ function Contact() {
             ScrollTrigger.matchMedia({
                 "(min-width: 720px)": function() {
                     gsap.set(section, {background: theme.color.white});
-                    gsap.set(txtLine, {width: 0});
+                    gsap.set(txtList, {transform: 'rotate(-10deg)'});
+                    gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
 
                     ani.to(section, {background: theme.color.black})
                         .to(pageTit, {color: theme.color.white})
-                        .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
+                        .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
                         .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-                        .to(linkList, {color: theme.color.white, marginTop: '150px'});
+                        .to(linkList, {color: theme.color.white});
 
                     ScrollTrigger.create({
                         animation: ani,
@@ -162,26 +171,6 @@ function Contact() {
         }, sectionRef);
 
         return () => ctx.revert();
-
-
-        // const ani = gsap.timeline();
-        // gsap.set(section, {background: theme.color.white});
-        // gsap.set(txtLine, {width: 0});
-        //
-        // ani.to(section, {background: theme.color.black})
-        //     .to(tit, {color: theme.color.white})
-        //     .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, transform: 'rotate(-10deg)'}, 'motion')
-        //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-        //     .to(linkList, {color: theme.color.white});
-        //
-        // ScrollTrigger.create({
-        //     animation: ani,
-        //     trigger: section,
-        //     start: "10% 10%",
-        //     end: "top 10%",
-        //     endTrigger: tit,
-        //     scrub: 1,
-        // });
 
     }, []);
 
