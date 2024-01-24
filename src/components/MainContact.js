@@ -1,4 +1,4 @@
-import {contactInfo, infoLink} from "../recoil/atoms";
+import {contactInfo, img, infoLink} from "../recoil/atoms";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import theme from "../styles/theme";
@@ -7,6 +7,10 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useCallback, useEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay} from "swiper/modules";
+
+import "swiper/css";
 
 const Section = styled.section`
     position: relative;
@@ -38,7 +42,7 @@ const Inner = styled.div`
 const TxtBox = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 130px 0 320px;
+    padding: 130px 0 200px;
 
     ${({ theme }) => theme.xLarge`
         flex-direction: column;
@@ -163,24 +167,34 @@ const LinkTxt = styled.ul`
         }
     `};
 `;
-const DecoTxt = styled.p`
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 0 40px;
-    font-size: 120px;
-    font-weight: 900;
-    color: ${theme.color.white};
-    letter-spacing: 6px;
-    text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
-    //-webkit-text-stroke: 1px ${theme.color.black};
+const DecoTxt = styled.div`
+    //position: absolute;
+    //left: 0;
+    //bottom: 0;
+    //padding: 0 40px;
+    
+    .swiper-slide{
+        width: fit-content;
+    }
 
-    span{
+    p{
+        padding-left: 30px;
+        width: fit-content;
+        font-size: 120px;
+        font-weight: 900;
+        color: ${theme.color.white};
+        letter-spacing: 10px;
+        text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
+        text-transform: uppercase;
         white-space: nowrap;
     }
 
     ${({theme}) => theme.small`
-        font-size: ${vw(120)};
+        p{
+            padding-left: ${vw(30)};
+            font-size: ${vw(120)};
+            letter-spacing:  ${vw(10)};
+        }
     `};
     
     // ${({decoIdx}) => decoIdx ? `left: -(100*${decoIdx})px` : ''};
@@ -253,7 +267,7 @@ function MainContact(){
             const ani2 = gsap.timeline();
             ani2.to(h2, {yPercent: 0, opacity: 1, color: theme.color.black})
                 .to(desc, {yPercent: 0, opacity: 1, color: theme.color.black})
-                .to(infoList, {stagger: 0.1, xPercent: 0, opacity: 1, color: theme.color.black, textDecoration: "underline"}, 'motion')
+                .to(infoList, {stagger: 0.1, xPercent: 0, opacity: 1, color: theme.color.black}, 'motion')
                 .to(deco, {opacity: 1, color: theme.color.white}, 'motion')
 
             ScrollTrigger.create({
@@ -303,8 +317,6 @@ function MainContact(){
         // txtMotion();
     }, [decoIdx]);
 
-    console.log(decoIdx);
-
     let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
     phraseTxt= phraseTxt.split("\n");
 
@@ -343,11 +355,29 @@ function MainContact(){
                 </TxtBox>
             </Inner>
             <DecoTxt ref={decoRef}>
-                <span>CHOI SEUNG YEON  </span>
-                <span>CHOI SEUNG YEON</span>
-                <span>CHOI SEUNG YEON</span>
-                <span>CHOI SEUNG YEON</span>
+                <Swiper
+                    slidesPerView={'auto'}
+                    loop={true}
+                    allowTouchMove={false}
+                    autoplay={{delay: 0, disableOnInteraction: false}}
+                    speed={5000}
+                    modules={[Autoplay]}
+                >
+                    <SwiperSlide>
+                        <p><span>Choi Seung Yeon</span> </p>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <p><span>Choi Seung Yeon</span></p>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <p><span>Choi Seung Yeon</span></p>
+                    </SwiperSlide>
+                </Swiper>
             </DecoTxt>
+            {/*<DecoTxt ref={decoRef}>*/}
+            {/*    <span>Choi Seung Yeon FrontEnd Developer</span>*/}
+            {/*    <span>Choi Seung Yeon FrontEnd Developer</span>*/}
+            {/*</DecoTxt>*/}
         </Section>
     )
 }
