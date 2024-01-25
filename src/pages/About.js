@@ -336,8 +336,8 @@ function About(){
                     const ani = gsap.timeline({
                         ease: "power3.in",
                     });
-                    ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1})
-                        .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.5, delay: -0.5});
+                    ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.5})
+                        .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.3, delay: -1});
 
                     gsap.set(featureTit, {xPercent: -30, opacity: 0});
                     gsap.to(featureTit, {

@@ -195,12 +195,13 @@ const DecoTxt = styled.div`
         width: 100%;
         animation: marquee 10s linear infinite;
         font-size: 40px;
-        font-weight: 400;
+        font-weight: 900;
         color: ${theme.color.white};
         letter-spacing: 5px;
         text-align: center;
-        //text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
-        //text-transform: uppercase;
+        //color: transparent;
+        //-webkit-text-stroke: 1px ${theme.color.white};
+        text-transform: uppercase;
         
         &:nth-child(1){
             position: absolute;
@@ -219,18 +220,6 @@ const DecoTxt = styled.div`
             transform: translateX(100%);
         }
     }
-
-    // p{
-    //     padding-left: 30px;
-    //     width: fit-content;
-    //     font-size: 120px;
-    //     font-weight: 900;
-    //     color: ${theme.color.white};
-    //     letter-spacing: 10px;
-    //     text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
-    //     text-transform: uppercase;
-    //     white-space: nowrap;
-    // }
 
     ${({theme}) => theme.small`
         span{
@@ -424,8 +413,8 @@ function MainContact(){
             */}
 
             <DecoTxt ref={decoRef}>
-                <span>Choi Seung Yeon FrontEnd Developer</span>
-                <span>FrontEnd Developer Choi Seung Yeon </span>
+                <span>Choi Seung Yeon</span>
+                <span>FrontEnd Developer</span>
             </DecoTxt>
         </Section>
     )
