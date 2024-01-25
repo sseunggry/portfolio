@@ -42,7 +42,7 @@ const Inner = styled.div`
 const TxtBox = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 130px 0 200px;
+    padding: 130px 0 250px;
 
     ${({ theme }) => theme.xLarge`
         flex-direction: column;
@@ -99,22 +99,35 @@ const ContactTxt = styled.ul`
         position: relative;
 
         &::after{
-            content: '';
-            position: absolute;
-            display: block;
-            width: 0;
-            height: 6px;
-            background-color: #000;
-            transition: width 0.4s;
+            //content: '';
+            //position: absolute;
+            //display: block;
+            //width: 0;
+            //height: 6px;
+            //background-color: #000;
+            //transition: width 0.4s;
             
         }
 
         &:hover{
-            &::after{
-                width: 100%;
-            }
-            text-decoration: underline;
+            //&::after{
+            //    width: 100%;
+            //}
+            //text-decoration: underline;
         }
+    }
+    .line{
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 0;
+        height: 8px;
+        background-color: ${theme.color.black};
+
+        ${({theme}) => theme.small`
+            bottom: ${vw(-4)};
+            height: ${vw(4)};
+        `};
     }
 
     ${({theme}) => theme.large`
@@ -172,28 +185,58 @@ const DecoTxt = styled.div`
     //left: 0;
     //bottom: 0;
     //padding: 0 40px;
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
+    background-color: ${theme.color.black};
     
-    .swiper-slide{
-        width: fit-content;
+    span{
+        padding: 12px 0;
+        width: 100%;
+        animation: marquee 10s linear infinite;
+        font-size: 40px;
+        font-weight: 400;
+        color: ${theme.color.white};
+        letter-spacing: 5px;
+        text-align: center;
+        //text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
+        //text-transform: uppercase;
+        
+        &:nth-child(1){
+            position: absolute;
+            left: -100%;
+            animation: marquee 10s 5s linear infinite;
+        }
+    }
+    
+    @keyframes marquee{
+        0%{
+            left: 0;
+            transform: translateX(-100%);
+        }
+        100%{
+            left: 0;
+            transform: translateX(100%);
+        }
     }
 
-    p{
-        padding-left: 30px;
-        width: fit-content;
-        font-size: 120px;
-        font-weight: 900;
-        color: ${theme.color.white};
-        letter-spacing: 10px;
-        text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
-        text-transform: uppercase;
-        white-space: nowrap;
-    }
+    // p{
+    //     padding-left: 30px;
+    //     width: fit-content;
+    //     font-size: 120px;
+    //     font-weight: 900;
+    //     color: ${theme.color.white};
+    //     letter-spacing: 10px;
+    //     text-shadow: -2px 0 #ddd, 0 2px #ddd, 2px 0 #ddd, 0 -2px #ddd;
+    //     text-transform: uppercase;
+    //     white-space: nowrap;
+    // }
 
     ${({theme}) => theme.small`
-        p{
-            padding-left: ${vw(30)};
-            font-size: ${vw(120)};
-            letter-spacing:  ${vw(10)};
+        span{
+            padding: ${vw(20)} 0;
+            font-size: ${vw(60)};
+            letter-spacing:  ${vw(5)};
         }
     `};
     
@@ -246,6 +289,8 @@ function MainContact(){
 
         const h2 = section.querySelector('h2');
         const infoList = info.querySelectorAll('ul li');
+        // const
+        const txtLine = info.querySelectorAll('.line');
 
         gsap.set(section, {backgroundColor: theme.color.black});
         gsap.set(h2, {yPercent: 0, opacity: 1, color: theme.color.white});
@@ -269,6 +314,7 @@ function MainContact(){
                 .to(desc, {yPercent: 0, opacity: 1, color: theme.color.black})
                 .to(infoList, {stagger: 0.1, xPercent: 0, opacity: 1, color: theme.color.black}, 'motion')
                 .to(deco, {opacity: 1, color: theme.color.white}, 'motion')
+                .to(txtLine, {width: "100%"} );
 
             ScrollTrigger.create({
                 animation: ani2,
@@ -334,11 +380,11 @@ function MainContact(){
                         ))}
                     </TxtDesc>
                     <InfoCon ref={infoRef}>
-                        <ContactTxt>
+                        <ContactTxt className="contact-txt">
                             {contactInfo && contactInfo.map(({phone, email}, idx) => (
                                 <li key={idx}>
-                                    {phone && <Link to={`tel:${phone}`}>+{phone}</Link>}
-                                    {email && <Link to={`mailto:${email}`}>{email}</Link>}
+                                    {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span> </Link>}
+                                    {email && <Link to={`mailto:${email}`}>{email} <span className="line"></span></Link>}
                                 </li>
                             ))}
                         </ContactTxt>
@@ -354,6 +400,7 @@ function MainContact(){
                     </InfoCon>
                 </TxtBox>
             </Inner>
+            {/*
             <DecoTxt ref={decoRef}>
                 <Swiper
                     slidesPerView={'auto'}
@@ -374,10 +421,12 @@ function MainContact(){
                     </SwiperSlide>
                 </Swiper>
             </DecoTxt>
-            {/*<DecoTxt ref={decoRef}>*/}
-            {/*    <span>Choi Seung Yeon FrontEnd Developer</span>*/}
-            {/*    <span>Choi Seung Yeon FrontEnd Developer</span>*/}
-            {/*</DecoTxt>*/}
+            */}
+
+            <DecoTxt ref={decoRef}>
+                <span>Choi Seung Yeon FrontEnd Developer</span>
+                <span>FrontEnd Developer Choi Seung Yeon </span>
+            </DecoTxt>
         </Section>
     )
 }

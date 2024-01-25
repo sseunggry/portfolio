@@ -168,9 +168,6 @@ function MainCareer(){
     const leftRef = useRef(null);
     const rightRef = useRef(null);
 
-    let sectionReSize = useWindowSize('.sec-02');
-    let windowReSize = useWindowSize('window');
-
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -198,7 +195,7 @@ function MainCareer(){
                         const ani = gsap.timeline({
                             scrollTrigger: {
                                 trigger: el,
-                                start: "top 50%",
+                                start: "top 40%",
                                 end: "bottom 30%",
                                 endTrigger: el,
                                 scrub: 1,
