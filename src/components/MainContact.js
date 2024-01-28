@@ -4,21 +4,13 @@ import styled from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay} from "swiper/modules";
-
-import "swiper/css";
 
 const Section = styled.section`
     position: relative;
     padding: 120px 0 0;
-    //height: 100vh;
-    //box-sizing: border-box;
-    // background-color: ${theme.color.black};
-    //background-color: ${theme.color.white};
 `;
 const Inner = styled.div`
     margin: 0 auto;
@@ -94,28 +86,6 @@ const ContactTxt = styled.ul`
     &:last-of-type{
         margin-bottom: 0;
     }
-
-    a{
-        position: relative;
-
-        &::after{
-            //content: '';
-            //position: absolute;
-            //display: block;
-            //width: 0;
-            //height: 6px;
-            //background-color: #000;
-            //transition: width 0.4s;
-            
-        }
-
-        &:hover{
-            //&::after{
-            //    width: 100%;
-            //}
-            //text-decoration: underline;
-        }
-    }
     .line{
         position: absolute;
         left: 0;
@@ -181,12 +151,12 @@ const LinkTxt = styled.ul`
     `};
 `;
 const DecoTxt = styled.div`
-    //position: absolute;
-    //left: 0;
-    //bottom: 0;
-    //padding: 0 40px;
     overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     display: flex;
+    width: 100%;
     white-space: nowrap;
     background-color: ${theme.color.black};
     
@@ -199,13 +169,11 @@ const DecoTxt = styled.div`
         color: ${theme.color.white};
         letter-spacing: 5px;
         text-align: center;
-        //color: transparent;
-        //-webkit-text-stroke: 1px ${theme.color.white};
         text-transform: uppercase;
         
         &:nth-child(1){
             position: absolute;
-            left: -100%;
+            left: 100%;
             animation: marquee 10s 5s linear infinite;
         }
     }
@@ -213,11 +181,11 @@ const DecoTxt = styled.div`
     @keyframes marquee{
         0%{
             left: 0;
-            transform: translateX(-100%);
+            transform: translateX(100%);
         }
         100%{
             left: 0;
-            transform: translateX(100%);
+            transform: translateX(-100%);
         }
     }
 
@@ -232,28 +200,17 @@ const DecoTxt = styled.div`
     // ${({decoIdx}) => decoIdx ? `left: -(100*${decoIdx})px` : ''};
 `;
 
-
 function MainContact(){
     const sectionRef = useRef(null);
     const descRef = useRef(null);
     const infoRef = useRef(null);
     const decoRef = useRef(null);
     const [decoIdx, setDecoIdx] = useState(1);
-    const [isInitial, setIsInitial] = useState(true);
 
     const txtMotion = () => {
         const decoTxt = decoRef.current;
         const decoSpan = decoTxt.querySelectorAll('span');
 
-        // setDecoIdx((prev) => {
-        //     if(decoSpan.length - 1 === prev){
-        //         decoTxt.style.left = 0;
-        //         return prev = 1;
-        //     } else{
-        //         return prev = prev+1;
-        //     }
-        // });
-        // console.log(decoIdx);
         if(decoSpan.length - 1  === decoIdx){
             setDecoIdx(1);
             decoTxt.style.left = 0;
@@ -278,7 +235,6 @@ function MainContact(){
 
         const h2 = section.querySelector('h2');
         const infoList = info.querySelectorAll('ul li');
-        // const
         const txtLine = info.querySelectorAll('.line');
 
         gsap.set(section, {backgroundColor: theme.color.black});
@@ -313,42 +269,11 @@ function MainContact(){
                 scrub: 1,
             });
 
-            // let ani3 = gsap.timeline({
-            //    repeat: -1,
-            // });
-            // gsap.set(deco, {opacity: 1});
-            // ani3.from(deco, {
-            //     xPercent: 0,
-            //     // repeat: -1,
-            // });
-            // ani3.to(deco, {
-            //     xPercent: -50,
-            //     opacity: 1,
-            //     delay: 0.5,
-            //     onComplete: () => {
-            //         deco.style.left = 0;
-            //     }
-            //     // repeat: -1,
-            // });
-
         }, sectionRef);
         return () => ctx.revert();
 
     }, []);
     useEffect(() => {
-        // const decoTxt = decoRef.current;
-        // const decoSpan = decoTxt.querySelectorAll('span');
-        // const decoTxt = decoRef.current;
-
-        // if(isInitial) {
-        //     if(decoSpan.length - 1  === decoIdx){
-        //         setDecoIdx(1);
-        //         decoTxt.style.left = 0;
-        //     } else{
-        //         setDecoIdx(decoIdx+1);
-        //         setIsInitial(false);
-        //     }
-        // }
         // txtMotion();
     }, [decoIdx]);
 
@@ -389,29 +314,6 @@ function MainContact(){
                     </InfoCon>
                 </TxtBox>
             </Inner>
-            {/*
-            <DecoTxt ref={decoRef}>
-                <Swiper
-                    slidesPerView={'auto'}
-                    loop={true}
-                    allowTouchMove={false}
-                    autoplay={{delay: 0, disableOnInteraction: false}}
-                    speed={5000}
-                    modules={[Autoplay]}
-                >
-                    <SwiperSlide>
-                        <p><span>Choi Seung Yeon</span> </p>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <p><span>Choi Seung Yeon</span></p>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <p><span>Choi Seung Yeon</span></p>
-                    </SwiperSlide>
-                </Swiper>
-            </DecoTxt>
-            */}
-
             <DecoTxt ref={decoRef}>
                 <span>Choi Seung Yeon</span>
                 <span>FrontEnd Developer</span>

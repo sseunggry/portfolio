@@ -1,4 +1,4 @@
-import {img, projectPersonal, projectWork, windowWidths} from "../recoil/atoms";
+import {img, projectPersonal, projectWork} from "../recoil/atoms";
 import {useEffect, useRef, useState} from "react";
 import Layout from "../components/_inc/Layout";
 import styled from "styled-components";
@@ -7,33 +7,26 @@ import Text from "../styles/Text";
 import {vw} from "../utils/common";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useRecoilValue} from "recoil";
-import {Link} from "react-router-dom";
 
 const ProjectCon = styled.div`
-    position: relative;
     padding-top: 80px;
-    min-height: 100vh;
-    background-color: ${theme.color.black};
 
     ${({theme}) => theme.small`
         padding-top: ${vw(120)};
     `};
 `;
 const Inner = styled.div`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 120px 240px;
+    margin: 0 auto;
+    padding: 150px 0;
+    max-width: 1440px;
 
-    ${({theme}) => theme.medium`
-        position: initial;
-        transform: translateY(0);
-        padding: 100px 60px;
+    ${({theme}) => theme.xLarge`
+        padding-left: 60px;
+        padding-right: 60px;
     `};
 
     ${({theme}) => theme.small`
-        padding: ${vw(100)} ${vw(40)};
+        padding: ${vw(150)} ${vw(40)};
     `};
 `;
 const Tab = styled.ul`
@@ -42,8 +35,8 @@ const Tab = styled.ul`
     
     li{
         margin-right: 80px;
-        font-size: 40px;
-        font-weight: 500;
+        font-size: 28px;
+        font-weight: 700;
         color: ${theme.color.gray3};
         text-transform: uppercase;
         cursor: pointer;
@@ -53,7 +46,7 @@ const Tab = styled.ul`
         }
       
         &:hover, &.active{
-            color: ${theme.color.white};
+            color: ${theme.color.black};
         }
     }
     ${({theme}) => theme.small`
@@ -68,62 +61,28 @@ const Tab = styled.ul`
     
 `;
 const ThumbList = styled.ul`
-    //overflow: hidden;
-    display: flex;
-
-    ${({theme}) => theme.medium`
-        flex-direction: column;
-    `};
     
     li{
-        position: relative;
-        margin-right: 30px;
-        flex-shrink: 0;
-        width: 100%;
-        //background-color: ${theme.color.white};
-
-        &:last-child{
-            margin-right: 0;
+        display: flex;
+        &:nth-of-type(2n){
+            flex-direction: row-reverse;
         }
         
-        //display: flex;
-        //&:nth-of-type(2n){
-        //    flex-direction: row-reverse;
-        //}
-
-        a{
-            display: flex;
-        }
-
         ${({theme}) => theme.medium`
-            width: 100%;
-            margin-right: 0;
-            margin-bottom: 30px;
+            flex-direction: column;
+            margin-bottom: 60px;
             
-            &:last-child{
+            &:nth-of-type(2n){
+                flex-direction: column;
+            }
+            &:last-of-type{
                 margin-bottom: 0;
             }
         `};
-
+    
         ${({theme}) => theme.small`
-            margin-bottom: ${vw(40)};
+            margin-bottom: ${vw(60)};
         `};
-        
-        // ${({theme}) => theme.medium`
-        //     flex-direction: column;
-        //     margin-bottom: 60px;
-        //    
-        //     &:nth-of-type(2n){
-        //         flex-direction: column;
-        //     }
-        //     &:last-of-type{
-        //         margin-bottom: 0;
-        //     }
-        // `};
-        //
-        // ${({theme}) => theme.small`
-        //     margin-bottom: ${vw(60)};
-        // `};
     }
 `;
 const ImgBox = styled.div`
@@ -134,7 +93,7 @@ const ImgBox = styled.div`
     &::before{
         content: '';
         display: block;
-        padding-top: 80%;
+        padding-top: 100%;
         width: 100%;
     }
 
@@ -147,7 +106,7 @@ const ImgBox = styled.div`
         width: 100%;
         height: 100%;
         // background-color: ${theme.color.white};
-        //transition: all 0.3s;
+        transition: all 0.3s;
         //clip-path: ;
     }
     
@@ -175,7 +134,6 @@ const TxtBox = styled.div`
     padding: 60px;
     flex: 1;
     align-self: center;
-    color: ${theme.color.white};
 
     strong{
         font-size: 20px;
@@ -267,91 +225,6 @@ function Project(){
         }
     }
 
-    const windowWidth = useRecoilValue(windowWidths);
-
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        const section = sectionRef.current;
-        const tab = tabRef.current;
-        const thumbList = thumbRef.current;
-
-        const sectionInner = section.querySelector('.inner');
-        // const pageTit = section.querySelector('[name="tit1"]');
-        const thumbLi = thumbList.querySelectorAll('li');
-        const thumbImg = thumbList.querySelectorAll('li .img-box');
-        const thumbTxt = thumbList.querySelectorAll('li .txt-box');
-
-
-        let ctx = gsap.context(() => {
-            // gsap.set(pageTit, {yPercent: 30, opacity: 0});
-            gsap.set(tab, {yPercent: 30, opacity: 0});
-            // gsap.set(thumbImg[0], {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            // gsap.set(thumbTxt[0].children, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            // gsap.set(thumbImg, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            // gsap.set(thumbLi, {scale: 0.8,});
-
-            const ani = gsap.timeline();
-            ani.to(tab, {yPercent: 0, opacity: 1}, 'motion')
-                // .to(thumbImg[0], {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: "power3.in"},'motion')
-                // .to(thumbTxt[0].children, {stagger: 0.1, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: "power3.in"}, 'motion');
-
-            // const section = sectionRef.current;
-            // const sectionInner = section.querySelector('.inner');
-            // const list = listRef.current;
-            // const listLi = list.querySelectorAll('li');
-
-            console.log(thumbList.querySelector('li').offsetWidth*thumbLi.length);
-
-            if(windowWidth > 980) {
-                gsap.to(section, {
-                    x: -( thumbList.querySelector('li').offsetWidth*thumbLi.length - windowWidth ),
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top top",
-                        end: `bottom+=${thumbList.offsetWidth}`,
-                        scrub: 1,
-                        pin: section,
-                    }
-                });
-                gsap.set(thumbLi, {opacity: 1, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                Object.values(thumbLi).map((el) => {
-                    gsap.to(el, {
-                        opacity: 1,
-                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                        ease: "power3.in",
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 90%",
-                            end: "bottom bottom",
-                            scrub: 1,
-                        }
-                    });
-                });
-            } else{
-                gsap.set(thumbLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                Object.values(thumbLi).map((el) => {
-                    gsap.to(el, {
-                        opacity: 1,
-                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                        ease: "power3.in",
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 90%",
-                            end: "bottom bottom",
-                            scrub: 1,
-                        }
-                    });
-                });
-            }
-        }, sectionRef);
-
-        return () => ctx.revert();
-
-    }, [windowWidth]);
-
-    /*
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
@@ -434,21 +307,20 @@ function Project(){
         }, sectionRef);
         return () => ctx.revert();
     }, []);
-     */
 
     return (
         <Layout header={{active: 1}}>
             <ProjectCon ref={sectionRef}>
-                <Inner className="inner">
-                    {/*<Text name="tit1">Project</Text>*/}
-                    <Tab onClick={onClick} ref={tabRef}>
-                        <li className="active">work ({projectWork.length})</li>
-                        <li>personal ({projectPersonal.length})</li>
-                    </Tab>
-                    <ThumbList ref={thumbRef}>
-                        {projectData.map(({client, name, period, thumbImg, desc, link}, idx) => (
-                            <li key={idx}>
-                                <Link to={link ? link : ''} target="_blank">
+                <Inner>
+                    <Text name="tit1">Project</Text>
+                    <div >
+                        <Tab onClick={onClick} ref={tabRef}>
+                            <li className="active">work ({projectWork.length})</li>
+                            <li>personal ({projectPersonal.length})</li>
+                        </Tab>
+                        <ThumbList ref={thumbRef}>
+                            {projectData.map(({client, name, period, thumbImg, desc}, idx) => (
+                                <li key={idx}>
                                     <ImgBox className="img-box">
                                         <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
                                     </ImgBox>
@@ -459,10 +331,10 @@ function Project(){
                                         <Text name="desc3" className="desc">{desc}</Text>
                                         <Text name="desc2" className="period">{period}</Text>
                                     </TxtBox>
-                                </Link>
-                            </li>
-                        ))}
-                    </ThumbList>
+                                </li>
+                            ))}
+                        </ThumbList>
+                    </div>
                 </Inner>
             </ProjectCon>
         </Layout>

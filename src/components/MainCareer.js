@@ -1,4 +1,4 @@
-import {design, work} from "../recoil/atoms";
+import {design, windowWidths, work} from "../recoil/atoms";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import {Link} from "react-router-dom";
@@ -6,8 +6,8 @@ import Text from "../styles/Text";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
-import useWindowSize from "../utils/resize";
 import {vw} from "../utils/common";
+import {useRecoilValue} from "recoil";
 
 const Section = styled.section`
     overflow: hidden;
@@ -168,19 +168,21 @@ function MainCareer(){
     const leftRef = useRef(null);
     const rightRef = useRef(null);
 
+    const windowWidth = useRecoilValue(windowWidths);
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        const section = sectionRef.current;
-        const leftCon = leftRef.current;
-        const rightCon = rightRef.current;
-
-        const leftTit = leftCon.querySelector('h3');
-        const leftTxt = leftCon.querySelectorAll('dl');
-        const rightTit = rightCon.querySelectorAll('dt');
-        const rightTxt = rightCon.querySelectorAll('dd');
-
         let ctx = gsap.context(() => {
+            const section = sectionRef.current;
+            const leftCon = leftRef.current;
+            const rightCon = rightRef.current;
+
+            const leftTit = leftCon.querySelector('h3');
+            const leftTxt = leftCon.querySelectorAll('dl');
+            const rightTit = rightCon.querySelectorAll('dt');
+            const rightTxt = rightCon.querySelectorAll('dd');
+
             ScrollTrigger.matchMedia({
                 "(min-width: 980px)": function() {
                     ScrollTrigger.create({
@@ -261,12 +263,11 @@ function MainCareer(){
                     });
                 }
             });
-
         }, sectionRef);
 
         return () => ctx.revert();
 
-    }, []);
+    }, [windowWidth]);
 
     return (
         <Section className="sec-02" ref={sectionRef}>

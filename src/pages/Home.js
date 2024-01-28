@@ -4,6 +4,7 @@ import MainProject from "../components/MainProject";
 import MainCareer from "../components/MainCareer";
 import MainContact from "../components/MainContact";
 import theme from "../styles/theme";
+import MainVisual_ from "../components/MainVisual_";
 
 function Home(){
     // setTimeout (() => ScrollTrigger .refresh ( ), 2000 );

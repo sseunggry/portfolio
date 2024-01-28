@@ -1,7 +1,24 @@
 import {useEffect, useState} from "react";
+import {debounce} from "lodash";
+import {useRecoilState} from "recoil";
+import {windowWidths} from "../recoil/atoms";
+
+const [windowWidth, setWindowWidth] = useRecoilState(windowWidths);
+
+const handleResize = debounce(() => {
+    setWindowWidth(window.innerWidth);
+}, 200);
+
+useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    }
+}, [windowWidth]);
 
 // const useWindowSizeCustom = () => {
-//     const [windowSize, setWindowSize] = useState({
+//     const [resize, setResize] = useState({
 //         width: undefined,
 //         height: undefined
 //     });
@@ -10,7 +27,7 @@ import {useEffect, useState} from "react";
 //         if(typeof window !== 'undefined') {
 //
 //             const handleResize = () => {
-//                 setWindowSize({
+//                 setResize({
 //                     width: window.innerWidth,
 //                     height: window.innerHeight
 //                 });
@@ -18,7 +35,6 @@ import {useEffect, useState} from "react";
 //
 //             window.addEventListener('resize', handleResize);
 //             handleResize();
-//
 //             return () => window.removeEventListener('resize', handleResize);
 //
 //         } else{
@@ -28,41 +44,7 @@ import {useEffect, useState} from "react";
 //         }
 //     }, []);
 //
-//     return windowSize;
+//     return resize;
 // }
-
-const useWindowSizeCustom = (target) => {
-    const [resize, setResize] = useState({
-        width: undefined,
-        height: undefined
-    });
-
-    useEffect(() => {
-        if(typeof target !== 'undefined') {
-            let $targetWidth = (target === 'window') ? window.innerWidth : document.querySelector(target).offsetWidth;
-            let $targetHeight = (target === 'window') ? window.innerHeight : document.querySelector(target).offsetHeight;
-
-            const handleResize = () => {
-                setResize({
-                    width: $targetWidth,
-                    height: $targetHeight
-                });
-            }
-
-            window.addEventListener('resize', handleResize);
-            handleResize();
-            return () => window.removeEventListener('resize', handleResize);
-
-        } else{
-            return () => window.removeEventListener('resize', () => {
-                return null
-            });
-        }
-    }, []);
-
-    return resize;
-}
-
-// export default resizeComponent;
-
-export default useWindowSizeCustom;
+//
+// export default useWindowSizeCustom;

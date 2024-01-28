@@ -11,11 +11,12 @@ import {Navigation, Pagination} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import 'swiper/css/navigation';
+import {Link} from "react-router-dom";
 
 
 const ProjectCon = styled.div`
     margin: 0 auto;
-    padding: 150px 0;
+    padding: 100px 0;
     max-width: 1440px;
 `;
 const Tab = styled.ul`
@@ -24,7 +25,7 @@ const Tab = styled.ul`
     
     li{
         margin-right: 80px;
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 700;
         color: ${theme.color.gray3};
         text-transform: uppercase;
@@ -43,9 +44,16 @@ const SwiperCon = styled.div`
     display: flex;
 
     .swiper{
+        overflow: visible;
+        width: 100%;
+        .swiper-slide{
+            a{
+                display: flex;
+            }
+        }
         &:first-of-type{
-            flex-shrink: 0;
-            width: 720px;
+            //flex-shrink: 0;
+            //width: 720px;
         }
         //.swiper-slide{
         //    display: flex;
@@ -58,18 +66,41 @@ const SwiperCon = styled.div`
     }
 `;
 const ImgBox = styled.div`
-    flex-shrink: 0;
-    //width: 720px;
+    position: relative;
+    overflow: hidden;
+    //flex-shrink: 0;
+    width: 800px;
 
+    &::before{
+        content: '';
+        display: block;
+        padding-top: 70%;
+        width: 100%;
+    }
+
+    &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    
     img{
+        position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 `;
 const TxtBox = styled.div`
     padding: 60px;
-    width: 100%;
+    width: 640px;
     font-size: 20px;
     color: ${theme.color.black};
 
@@ -78,15 +109,23 @@ const TxtBox = styled.div`
     }
     h3{
         margin-top: 10px;
+        width: 80%;
         font-size: 48px;
         font-weight: 300;
         word-break: keep-all;
+
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
     .desc{
         margin: 20px 0 40px;
         width: 70%;
         line-height: 1.5;
         color: ${theme.color.gray2};
+        word-break: keep-all;
     }
 `;
 
@@ -118,32 +157,34 @@ function Project2(){
                 </Tab>
                 <SwiperCon>
                     <Swiper slidesPerView={'auto'} pagination={{type: 'fraction'}} >
-                        {projectData && Object.values(projectData).map(({client, name, period, thumbImg, desc}, idx) => (
-                                <SwiperSlide key={idx}>
+                        {projectData && Object.values(projectData).map(({client, name, period, thumbImg, desc, link}, idx) => (
+                            <SwiperSlide key={idx}>
+                                <Link to={link ? link : ''} target="_blank">
                                     <ImgBox>
                                         <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
                                     </ImgBox>
-                                    {/*<TxtBox>*/}
-                                    {/*    <strong>{client}</strong>*/}
-                                    {/*    <h3>[{client}] <br/> {name}</h3>*/}
-                                    {/*    <p className="desc">{desc}</p>*/}
-                                    {/*    <p className="period">{period}</p>*/}
-                                    {/*</TxtBox>*/}
-                                </SwiperSlide>
+                                    <TxtBox>
+                                        <strong>{client}</strong>
+                                        <h3>{name}</h3>
+                                        <p className="desc">{desc}</p>
+                                        <p className="period">{period}</p>
+                                    </TxtBox>
+                                </Link>
+                            </SwiperSlide>
                         ))}
                     </Swiper>
-                    <Swiper slidesPerView={'auto'} modules={[Navigation,  Pagination]} pagination={{type: 'fraction'}} >
-                        {projectData && Object.values(projectData).map(({client, name, period, thumbImg, desc}, idx) => (
-                            <SwiperSlide key={idx}>
-                                <TxtBox>
-                                    <strong>{client}</strong>
-                                    <h3>[{client}] <br/> {name}</h3>
-                                    <p className="desc">{desc}</p>
-                                    <p className="period">{period}</p>
-                                </TxtBox>
-                            </SwiperSlide>
-                            ))}
-                    </Swiper>
+                    {/*<Swiper slidesPerView={'auto'} modules={[Navigation,  Pagination]} pagination={{type: 'fraction'}} >*/}
+                    {/*    {projectData && Object.values(projectData).map(({client, name, period, thumbImg, desc}, idx) => (*/}
+                    {/*        <SwiperSlide key={idx}>*/}
+                    {/*            <TxtBox>*/}
+                    {/*                <strong>{client}</strong>*/}
+                    {/*                <h3>[{client}] <br/> {name}</h3>*/}
+                    {/*                <p className="desc">{desc}</p>*/}
+                    {/*                <p className="period">{period}</p>*/}
+                    {/*            </TxtBox>*/}
+                    {/*        </SwiperSlide>*/}
+                    {/*        ))}*/}
+                    {/*</Swiper>*/}
 
                 </SwiperCon>
             </ProjectCon>

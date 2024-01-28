@@ -12,9 +12,17 @@ import Contact from "./pages/Contact";
 import smooth from "./utils/smooth";
 import Project2 from "./pages/Project2";
 import media from "./styles/base/media";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./utils/ScrollToTop";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {windowWidths} from "./recoil/atoms";
+import {debounce} from "lodash";
 
 function App() {
+    // let windowSize = useWindowSizeCustom();
+    // console.log(windowSize.width)
+    // if(windowSize.width){
+    //     ScrollTrigger.update();
+    // }
     useEffect(() => {
         smooth();
     }, []);
@@ -27,7 +35,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />}/>
                         <Route path="/about" element={<About />}/>
-                        <Route path="/project" element={<Project />}/>
+                        <Route path="/project" element={<Project2 />}/>
                         <Route path="/project2" element={<Project2 />}/>
                         <Route path="/contact" element={<Contact />}/>
                     </Routes>

@@ -199,18 +199,22 @@ const StoryImg = styled.div`
         margin: 0 0 100px auto;
     `};
 
+    ${({theme}) => theme.medium`
+        width: 50%;
+    `};
+
     ${({theme}) => theme.small`
-        // margin-top: ${vw(-250)};
         margin-bottom: ${vw(100)};
         min-width: auto;
-        width: 70%;
+        width: 80%;
     `};
 `;
 const StoryTxt = styled.div`
     margin-left: 50px;
-    width: 60%;
-    font-size: 18px;
+    width: 50%;
+    font-size: 24px;
     color: ${theme.color.gray2};
+    font-weight: 300;
     line-height: 1.6;
     word-break: keep-all;
     
@@ -232,7 +236,7 @@ const StoryTxt = styled.div`
 
     ${({theme}) => theme.small`
         width: 100%;
-        font-size: ${vw(28)};
+        font-size: ${vw(32)};
         br{
             display: none;
         }
@@ -303,7 +307,7 @@ function About(){
                     trigger: storyCon,
                     start: "top 30%",
                     end: "center 50%",
-                    // scrub: 1,
+                    scrub: 1,
                 }
             });
             aniStory.to(storyConTit, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0, 100% 100%, 0 100%)"})
@@ -429,7 +433,7 @@ function About(){
                         </StoryImg>
                         <StoryTxt className="txt-box">
                             <p>
-                                저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은 <br/>
+                                저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은
                                 디자인은 주관적인 기준에 의해 평가된다는 것입니다. <br/>
                                 그래서 저는 주관적인 기준이 아닌 객관적인 기준에 의해 평가되어지는 직업이 하고 싶었습니다.
                             </p>
@@ -438,7 +442,7 @@ function About(){
                                 객관적인 기준에 의해 평가되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
                             </p>
                             <p>
-                                지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에 <br/>
+                                지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에
                                 흥미를 느끼며 재미있게 작업하고 있습니다.
                             </p>
                             <p>

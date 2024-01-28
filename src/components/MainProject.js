@@ -1,12 +1,14 @@
-import {img, personal, work} from "../recoil/atoms";
+import {img, personal, windowWidths, work} from "../recoil/atoms";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import Text from "../styles/Text";
-import {useEffect, useRef} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import useWindowSize from "../utils/resize";
 import {vw} from "../utils/common";
+import {Link} from "react-router-dom";
+import {debounce, throttle} from "lodash";
+import {useRecoilState, useRecoilValue} from "recoil";
 
 const Section = styled.section`
     //overflow: hidden;
@@ -58,29 +60,29 @@ const List = styled.ul`
         width: 640px;
         background-color: ${theme.color.white};
         
-        &::before{
-            content: '';
-            display: block;
-            padding-top: 100%;
-        }
-        
-        //--inset-value: inset(0 0);
-        
-        &::after{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-            //background-color: ${theme.color.white};
-            //clip-path: var(--inset-value);
-            transition: all 0.3s;
-        }
-
         &:last-child{
             margin-right: 0;
+        }
+
+        a{
+            display: block;
+
+            &::before{
+                content: '';
+                display: block;
+                padding-top: 100%;
+            }
+
+            &::after{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                transition: all 0.3s;
+            }
         }
 
         ${({theme}) => theme.medium`
@@ -135,96 +137,128 @@ function MainProject(){
     const data = [...Object.values(work).filter((el) => el.link), ...Object.values(personal).filter((el) => el.link)];
     const sectionRef = useRef(null);
     const listRef = useRef(null);
+    const windowWidth = useRecoilValue(windowWidths);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-
-        const section = sectionRef.current;
-        const sectionInner = section.querySelector('.inner');
-        const list = listRef.current;
-        const listLi = list.querySelectorAll('li');
+        // let ctx2 = ScrollTrigger.matchMedia({
+        //     "(min-width: 981px)": function() {
+        //         gsap.to(section, {
+        //             x: -( sectionInner.offsetWidth - window.innerWidth ),
+        //             ease: "none",
+        //             scrollTrigger: {
+        //                 trigger: section,
+        //                 start: "top top",
+        //                 end: `bottom+=${sectionInner.offsetWidth}`,
+        //                 scrub: 1,
+        //                 pin: section,
+        //             }
+        //         });
+        //         gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+        //         Object.values(listLi).map((el) => {
+        //             gsap.to(el, {
+        //                 opacity: 1,
+        //                 clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+        //                 ease: "power3.in",
+        //                 scrollTrigger: {
+        //                     trigger: el,
+        //                     start: "top 90%",
+        //                     end: "bottom bottom",
+        //                     scrub: 1,
+        //                 }
+        //             });
+        //         });
+        //     },
+        //     "(max-width: 980px)": function() {
+        //         gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+        //         Object.values(listLi).map((el) => {
+        //             gsap.to(el, {
+        //                 opacity: 1,
+        //                 clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+        //                 ease: "power3.in",
+        //                 scrollTrigger: {
+        //                     trigger: el,
+        //                     start: "top 90%",
+        //                     end: "bottom bottom",
+        //                     scrub: 1,
+        //                 }
+        //             });
+        //         });
+        //     }
+        // });
+        //
+        // return () => ctx2.revert();
 
         let ctx = gsap.context(() => {
-            ScrollTrigger.matchMedia({
-                "(min-width: 981px)": function() {
-                    gsap.to(section, {
-                        x: -( sectionInner.offsetWidth - window.innerWidth ),
-                        ease: "none",
+            const section = sectionRef.current;
+            const sectionInner = section.querySelector('.inner');
+            const list = listRef.current;
+            const listLi = list.querySelectorAll('li');
+
+            console.log(sectionInner.offsetWidth, windowWidth, sectionInner.offsetWidth - windowWidth )
+
+            if(windowWidth > 980) {
+                gsap.to(section, {
+                    x: -( sectionInner.offsetWidth - windowWidth ),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top top",
+                        end: `bottom+=${sectionInner.offsetWidth}`,
+                        scrub: 1,
+                        pin: section,
+                    }
+                });
+                gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                Object.values(listLi).map((el) => {
+                    gsap.to(el, {
+                        opacity: 1,
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                        ease: "power3.in",
                         scrollTrigger: {
-                            trigger: section,
-                            start: "top top",
-                            end: `bottom+=${sectionInner.offsetWidth}`,
+                            trigger: el,
+                            start: "top 90%",
+                            end: "bottom bottom",
                             scrub: 1,
-                            pin: section,
                         }
                     });
-
-                    gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                    Object.values(listLi).map((el) => {
-                        gsap.to(el, {
-                            opacity: 1,
-                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                            ease: "power3.in",
-                            scrollTrigger: {
-                                trigger: el,
-                                start: "top 90%",
-                                end: "bottom bottom",
-                                scrub: 1,
-                            }
-                        });
+                });
+            } else{
+                gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                Object.values(listLi).map((el) => {
+                    gsap.to(el, {
+                        opacity: 1,
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                        ease: "power3.in",
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 90%",
+                            end: "bottom bottom",
+                            scrub: 1,
+                        }
                     });
-                },
-                "(max-width: 980px)": function() {
-                    gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                    Object.values(listLi).map((el) => {
-                        gsap.to(el, {
-                            opacity: 1,
-                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                            ease: "power3.in",
-                            scrollTrigger: {
-                                trigger: el,
-                                start: "top 90%",
-                                end: "bottom bottom",
-                                scrub: 1,
-                            }
-                        });
-                    });
-                }
-            });
-
-            // const li = list.querySelectorAll('li::after');
-            // console.log(listLi);
-            // gsap.set(listLi, {opacity: 0});
-            // Object.values(listLi).forEach((el, idx) => {
-            //    gsap.to(el, {
-            //        opacity: 1,
-            //        stagger: 0.1,
-            //        scrollTrigger: {
-            //            trigger: listLi,
-            //            // start: "top top",
-            //            // end: "bottom bottom",
-            //            scrub: 1,
-            //            markers: true,
-            //        }
-            //    })
-            // });
+                });
+            }
         }, sectionRef);
+
         return () => ctx.revert();
 
-    }, []);
+    }, [windowWidth]);
 
     return (
         <Section className="sec-01" ref={sectionRef}>
             <Inner className="inner">
                 <Text name="tit2">Project</Text>
                 <List className="list" ref={listRef}>
-                    {data && Object.values(data).map(({client, name, period, thumbImg}, idx) => (
+                    {data && Object.values(data).map(({client, name, period, thumbImg, link}, idx) => (
                         <li key={idx}>
-                            <TxtBox>
-                                <Text name="tit4" color={theme.color.white} fontWeight="400">[{client}] <br/>{name}</Text>
-                                <p>{period}</p>
-                            </TxtBox>
-                            <Img src={`${img}/${thumbImg}`} alt="" />
+                            <Link to={link ? link : ''} target="_blank">
+                                <TxtBox>
+                                    <Text name="tit4" color={theme.color.white} fontWeight="400">[{client}] <br/>{name}</Text>
+                                    <p>{period}</p>
+                                </TxtBox>
+                                <Img src={`${img}/${thumbImg}`} alt="" />
+                            </Link>
                         </li>
                     ))}
                 </List>

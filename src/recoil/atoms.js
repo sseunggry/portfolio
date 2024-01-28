@@ -14,3 +14,9 @@ export const projectPersonal = Object.values(personal).filter((el, idx) => el.th
 export const design = project.design;
 
 export const navList = ['About', 'Project', 'Contact'];
+
+//atom
+export const windowWidths = atom({
+    key: "windowWidth",
+    default: window.innerWidth
+});

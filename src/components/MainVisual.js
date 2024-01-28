@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
 import {lenis} from "../utils/smooth";
@@ -90,7 +90,6 @@ const ScrollTxt = styled.p`
         background-color: ${theme.color.white};
     }
 `;
-
 const LoadTxt = styled.div`
     overflow: hidden;
     position: fixed;
@@ -174,7 +173,10 @@ function MainVisual(){
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
-                    // lenis.start();
+
+                    if(window.scrollY !== 0 ){
+                        lenis.start();
+                    }
 
                     visualAni();
                 }
@@ -259,17 +261,11 @@ function MainVisual(){
                         {/*<p>프론트엔드 개발자</p>*/}
                         {/*<p><strong>최승연</strong> 입니다.</p>*/}
                     </Title>
-                    {/*<Text name="tit2" fontWeight="100">*/}
-                    {/*    안녕하세요. <br/> */}
-                    {/*    프론트엔드 개발자 <br/> */}
-                    {/*    최승연 입니다*/}
-                    {/*</Text>*/}
                     <Desc className="desc">
                         현재 퍼블리셔 3년차이며, 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
                         프론트엔드 개발자로 성장하기위해 리액트를 공부하고 있습니다.
                     </Desc>
                 </TxtBox>
-                {/*<Img src={`${img}/main_visual.jpg`} alt="" />*/}
                 <ScrollTxt className="txt-scroll">scroll</ScrollTxt>
             </Section>
         </>
