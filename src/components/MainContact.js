@@ -10,7 +10,7 @@ import {vw} from "../utils/common";
 
 const Section = styled.section`
     position: relative;
-    padding: 120px 0 0;
+    padding: 150px 0 0;
 `;
 const Inner = styled.div`
     margin: 0 auto;
@@ -31,10 +31,22 @@ const Inner = styled.div`
         padding-right: ${vw(40)}; 
     `};
 `;
-const TxtBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 130px 0 250px;
+const TitBox = styled.div`
+    padding: 100px 0 120px;
+    width: fit-content;
+    color: ${theme.color.gray2};
+    
+    p{
+        width: 60%;
+        word-break: keep-all;
+    }
+    h2{
+        font-family: 'Playfair Display', serif;
+        font-size: 120px;
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
 
     ${({ theme }) => theme.xLarge`
         flex-direction: column;
@@ -44,54 +56,32 @@ const TxtBox = styled.div`
         padding: ${vw(130)} 0 ${vw(280)};
     `};
 `;
-const TxtDesc = styled.div`
-    margin-right: 50px;
-    width: 360px;
-    
-    p{
-        overflow: hidden;
-        font-size: 20px;
-        line-height: 1.6;
-        
-        span{
-            display: block;
-        }
-    }
-    
-    ${({theme}) => theme.xLarge`
-        margin-right: 0;
-        margin-bottom: 50px;
-    `};
-
-    ${({theme}) => theme.medium`
-        width: 100%;
-    `};
-
-    ${({theme}) => theme.small`
-        p{
-            font-size: ${vw(30)};
-        }
-    `};
-`;
 const InfoCon = styled.div`
     li{
-        overflow: hidden;
+        a{
+            position: relative;
+        }
     }
 `;
 const ContactTxt = styled.ul`
-    margin-bottom: 30px;
+    margin-bottom: 70px;
     font-size: 80px;
     font-weight: 500;
-
-    &:last-of-type{
-        margin-bottom: 0;
+    text-align: right;
+    
+    li{
+        margin-bottom: 30px;
+        &:last-of-type{
+            margin-bottom: 0;
+        }
     }
+
     .line{
         position: absolute;
         left: 0;
-        bottom: -8px;
+        bottom: -6px;
         width: 0;
-        height: 8px;
+        height: 6px;
         background-color: ${theme.color.black};
 
         ${({theme}) => theme.small`
@@ -101,7 +91,7 @@ const ContactTxt = styled.ul`
     }
 
     ${({theme}) => theme.large`
-        margin-bottom: 50px;
+        // margin-bottom: 50px;
         font-size: 76px;
     `};
 
@@ -126,6 +116,7 @@ const ContactTxt = styled.ul`
 `;
 const LinkTxt = styled.ul`
     display: flex;
+    justify-content: flex-end;
     margin-top: 50px;
     font-size: 30px;
     font-weight: 500;
@@ -150,121 +141,38 @@ const LinkTxt = styled.ul`
         }
     `};
 `;
-const DecoTxt = styled.div`
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    width: 100%;
-    white-space: nowrap;
-    background-color: ${theme.color.black};
-    
-    span{
-        padding: 12px 0;
-        width: 100%;
-        animation: marquee 10s linear infinite;
-        font-size: 40px;
-        font-weight: 900;
-        color: ${theme.color.white};
-        letter-spacing: 5px;
-        text-align: center;
-        text-transform: uppercase;
-        
-        &:nth-child(1){
-            position: absolute;
-            left: 100%;
-            animation: marquee 10s 5s linear infinite;
-        }
-    }
-    
-    @keyframes marquee{
-        0%{
-            left: 0;
-            transform: translateX(100%);
-        }
-        100%{
-            left: 0;
-            transform: translateX(-100%);
-        }
-    }
-
-    ${({theme}) => theme.small`
-        span{
-            padding: ${vw(20)} 0;
-            font-size: ${vw(60)};
-            letter-spacing:  ${vw(5)};
-        }
-    `};
-    
-    // ${({decoIdx}) => decoIdx ? `left: -(100*${decoIdx})px` : ''};
-`;
 
 function MainContact(){
     const sectionRef = useRef(null);
-    const descRef = useRef(null);
     const infoRef = useRef(null);
-    const decoRef = useRef(null);
-    const [decoIdx, setDecoIdx] = useState(1);
-
-    const txtMotion = () => {
-        const decoTxt = decoRef.current;
-        const decoSpan = decoTxt.querySelectorAll('span');
-
-        if(decoSpan.length - 1  === decoIdx){
-            setDecoIdx(1);
-            decoTxt.style.left = 0;
-        } else{
-            // setDecoIdx((prev) => prev+1);
-        }
-
-        decoTxt.animate({'left': '-'+(100*decoIdx)+'px'}, 1500, () => {
-            setTimeout(() => {
-                txtMotion();
-            }, 750);
-        });
-    }
+    const titRef = useRef(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const desc = descRef.current;
         const info = infoRef.current;
-        const deco = decoRef.current;
+        const tit = titRef.current;
 
-        const h2 = section.querySelector('h2');
         const infoList = info.querySelectorAll('ul li');
         const txtLine = info.querySelectorAll('.line');
 
-        gsap.set(section, {backgroundColor: theme.color.black});
-        gsap.set(h2, {yPercent: 0, opacity: 1, color: theme.color.white});
-        gsap.set(desc, {yPercent: 0, opacity: 1, color: theme.color.white});
-        gsap.set(infoList, {xPercent: 0, opacity: 1, color: theme.color.white});
-        gsap.set(deco, {opacity: 1, color: theme.color.white});
+        // gsap.set(section, {backgroundColor: theme.color.black});
+        // gsap.set(h2, {yPercent: 0, opacity: 1, color: theme.color.white});
+        // gsap.set(infoList, {xPercent: 0, opacity: 1, color: theme.color.white});
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
-            ani.to(section, {backgroundColor: theme.color.white})
-            ScrollTrigger.create({
-                animation: ani,
-                trigger: section,
-                start: "top top",
-                end: "top 50%",
-                scrub: 1,
-            });
 
-            const ani2 = gsap.timeline();
-            ani2.to(h2, {yPercent: 0, opacity: 1, color: theme.color.black})
-                .to(desc, {yPercent: 0, opacity: 1, color: theme.color.black})
-                .to(infoList, {stagger: 0.1, xPercent: 0, opacity: 1, color: theme.color.black}, 'motion')
-                .to(deco, {opacity: 1, color: theme.color.white}, 'motion')
+            gsap.set(infoList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+
+            ani.to(infoList, {ease: "none", stagger: 0.1, duration: 2, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
                 .to(txtLine, {width: "100%"} );
 
             ScrollTrigger.create({
-                animation: ani2,
+                animation: ani,
                 trigger: section,
-                start: "top top",
+                start: "top 50%",
                 end: "top 50%",
                 scrub: 1,
             });
@@ -273,51 +181,34 @@ function MainContact(){
         return () => ctx.revert();
 
     }, []);
-    useEffect(() => {
-        // txtMotion();
-    }, [decoIdx]);
-
-    let phraseTxt = "안녕하세요\n프론트엔드 개발자 최승연입니다.\n좋은 동료들과 재미있게 일하고 싶습니다.\n연락주세요!";
-    phraseTxt= phraseTxt.split("\n");
 
     return (
         <Section className="sec-03" ref={sectionRef}>
             <Inner className="inner">
-                <Text name="tit1">Contact</Text>
-                <TxtBox>
-                    <TxtDesc ref={descRef} className="desc">
-                        {
-                            phraseTxt.map((txt, idx) => (
-                            <p key={idx}>
-                                <span>{txt}</span>
-                            </p>
+                <InfoCon ref={infoRef}>
+                    <ContactTxt className="contact-txt">
+                        {contactInfo && contactInfo.map(({phone, email}, idx) => (
+                            <li key={idx}>
+                                {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span> </Link>}
+                                {email && <Link to={`mailto:${email}`}>{email} <span className="line"></span></Link>}
+                            </li>
                         ))}
-                    </TxtDesc>
-                    <InfoCon ref={infoRef}>
-                        <ContactTxt className="contact-txt">
-                            {contactInfo && contactInfo.map(({phone, email}, idx) => (
-                                <li key={idx}>
-                                    {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span> </Link>}
-                                    {email && <Link to={`mailto:${email}`}>{email} <span className="line"></span></Link>}
-                                </li>
-                            ))}
-                        </ContactTxt>
-                        <LinkTxt>
-                            {infoLink && infoLink.map(({notion, github}, idx) => (
-                                <li key={idx}>
-                                    {notion && <Link to={notion}>Notion</Link>}
-                                    {github && <Link to={github}>Github</Link>}
-                                </li>
-                            ))}
-                            <li><Link to="">Resume</Link></li>
-                        </LinkTxt>
-                    </InfoCon>
-                </TxtBox>
+                    </ContactTxt>
+                    <LinkTxt>
+                        {infoLink && infoLink.map(({notion, github}, idx) => (
+                            <li key={idx}>
+                                {notion && <Link to={notion}>Notion</Link>}
+                                {github && <Link to={github}>Github</Link>}
+                            </li>
+                        ))}
+                        <li><Link to="">Resume</Link></li>
+                    </LinkTxt>
+                </InfoCon>
+                <TitBox ref={titRef}>
+                    <p>안녕하세요. 프론트엔드 개발자 최승연입니다. 좋은 동료들과 재미있게 일하고 싶습니다!</p>
+                    <h2>Get in <br/> Touch ME</h2>
+                </TitBox>
             </Inner>
-            <DecoTxt ref={decoRef}>
-                <span>Choi Seung Yeon</span>
-                <span>FrontEnd Developer</span>
-            </DecoTxt>
         </Section>
     )
 }
