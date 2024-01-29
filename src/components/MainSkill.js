@@ -9,12 +9,8 @@ import theme from "../styles/theme";
 const Section = styled.section`
     padding: 200px 0;
 
-    // ${({theme}) => theme.medium`
-    //     padding: 200px 0;
-    // `};
-
     ${({theme}) => theme.small`
-        padding: ${vw(100)} 0;
+        padding: ${vw(200)} 0;
     `};
 `;
 
@@ -34,6 +30,14 @@ const Inner = styled.div`
     ${({theme}) => theme.small`
         padding: ${vw(100)} ${vw(40)};
     `};
+`;
+
+const Desc = styled.div`
+    padding: 20px 0 60px;
+    font-size: 18px;
+    color: ${theme.color.gray2};
+    text-align: center;
+    line-height: 1.8;
 `;
 
 const LargeTxt = styled.div`
@@ -89,7 +93,9 @@ function MainSkill() {
             const section = sectionRef.current;
             const largeTxt = largeTxtRef.current;
 
-            // let ani = gsap.timeline({
+            // gsap.to(section, {
+            //     ease: "none",
+            //     backgroundColor: theme.color.black,
             //     scrollTrigger: {
             //         trigger: section,
             //         start: "top 50%",
@@ -97,34 +103,41 @@ function MainSkill() {
             //         scrub: 1,
             //     }
             // });
-            //
-            // ani.to(section, { ease: "none",  backgroundColor: theme.color.black})
-            //     .to(largeTxt, {stagger: 0.1, duration: 2, color: theme.color.white})
-            gsap.to(section, {
+            const txt = largeTxt.querySelectorAll('p:nth-of-type(2n)');
+            const txt2 = largeTxt.querySelectorAll('p:nth-of-type(2n-1)');
+
+            let ani1 = gsap.timeline({
                 ease: "none",
-                backgroundColor: theme.color.black,
                 scrollTrigger: {
                     trigger: section,
                     start: "top 50%",
-                    end: "top 50%",
+                    end: "0 100%",
                     scrub: 1,
-                }
+                },
             });
+            ani1.to('.wrap', {backgroundColor: theme.color.black, duration: 2}, )
+                // .to(txt, { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", color: theme.color.white, stagger: 0.1,duration: 5}, 'motion1')
+                // .to(txt2, {color: theme.color.white, opacity: 0.1, stagger: 0.1, duration: 5}, 'motion1')
+                // .to(section, {backgroundColor: theme.color.black})
+                // .to('.wrap', {backgroundColor: theme.color.white, duration: 2}, 'motion')
+                // .to(txt, {color: theme.color.black, duration: 2}, 'motion')
+                // .to(txt2, {color: theme.color.black, opacity: 0.5, duration: 2}, 'motion');
 
-            const txt = largeTxt.querySelectorAll('p:nth-of-type(2n)');
-            const txt2 = largeTxt.querySelectorAll('p:nth-of-type(2n-1)');
-            let ani = gsap.timeline({
+
+            let ani2 = gsap.timeline({
+                ease: "none",
                 scrollTrigger: {
                     trigger: section,
                     start: "top 50%",
                     end: "center 50%",
                     scrub: 1,
-                }
+                },
             });
             gsap.set(txt, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
-            ani.to(txt, { ease: "none", clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", color: theme.color.white, stagger: 0.1,duration: 2})
-                .to(txt2, {ease: "none", color: theme.color.white, opacity: 0.3, stagger: 0.1, duration: 2});
+            ani2
+                .to(txt, { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", color: theme.color.white, stagger: 0.1,duration: 5})
+                .to(txt2, {color: theme.color.white, opacity: 0.3, stagger: 0.1, duration: 5});
         });
 
         return () => ctx.revert();
@@ -132,6 +145,10 @@ function MainSkill() {
     return (
         <Section className="sec-02" ref={sectionRef}>
             <Inner>
+                {/*<Desc>*/}
+                {/*    <p>저는 디자이너 출신 퍼블리셔로, 디자인 툴과 퍼블리싱 툴 모두 사용 가능합니다.</p>*/}
+                {/*    <p>현재는 프론트엔드로 성장하기 위해 리액트도 공부하고 있습니다!</p>*/}
+                {/*</Desc>*/}
                 <LargeTxt ref={largeTxtRef}>
                     <p>Photoshop</p>
                     <p>Scss</p>

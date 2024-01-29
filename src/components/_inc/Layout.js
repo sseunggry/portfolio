@@ -32,7 +32,7 @@ function Layout({header = {active: -1, color: ''}, footer = false, children}){
     }, [windowWidth]);
 
     return (
-        <Wrapper>
+        <Wrapper className="wrap">
             <Header
                 active={header.active}
                 color={header.color}

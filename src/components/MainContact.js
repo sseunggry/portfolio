@@ -10,9 +10,11 @@ import {vw} from "../utils/common";
 
 const Section = styled.section`
     position: relative;
-    padding: 150px 0 0;
+    padding: 150px 0;
 `;
 const Inner = styled.div`
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     max-width: 1440px;
 
@@ -32,12 +34,13 @@ const Inner = styled.div`
     `};
 `;
 const TitBox = styled.div`
-    padding: 100px 0 120px;
+    padding-top: 100px;
     width: fit-content;
     color: ${theme.color.gray2};
     
     p{
         width: 60%;
+        font-size: 18px;
         word-break: keep-all;
     }
     h2{
@@ -48,12 +51,27 @@ const TitBox = styled.div`
         line-height: 1.2;
     }
 
-    ${({ theme }) => theme.xLarge`
-        flex-direction: column;
+    ${({ theme }) => theme.medium`
+        h2{
+            font-size: 100px;
+        }
+    `};
+
+    ${({theme}) => theme.medium`
+        padding-top: 0;
+        padding-bottom: 100px;
+        p{
+            display: none;
+        }
     `};
 
     ${({theme}) => theme.small`
-        padding: ${vw(130)} 0 ${vw(280)};
+        padding-bottom: ${vw(150)};
+        
+        p{
+            width: 100%;
+            font-size: ${vw(28)};
+        }
     `};
 `;
 const InfoCon = styled.div`
@@ -62,8 +80,13 @@ const InfoCon = styled.div`
             position: relative;
         }
     }
+
+    ${({theme}) => theme.medium`
+        order: 1;
+    `};
 `;
 const ContactTxt = styled.ul`
+    overflow: hidden;
     margin-bottom: 70px;
     font-size: 80px;
     font-weight: 500;
@@ -155,24 +178,25 @@ function MainContact(){
         const tit = titRef.current;
 
         const infoList = info.querySelectorAll('ul li');
+        const contactTxt = info.querySelectorAll('.contact-txt');
+        const linkTxt = info.querySelectorAll('.link-txt');
         const txtLine = info.querySelectorAll('.line');
-
-        // gsap.set(section, {backgroundColor: theme.color.black});
-        // gsap.set(h2, {yPercent: 0, opacity: 1, color: theme.color.white});
-        // gsap.set(infoList, {xPercent: 0, opacity: 1, color: theme.color.white});
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
 
-            gsap.set(infoList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(contactTxt, {xPercent: 100});
+            // gsap.set(linkTxt, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
-            ani.to(infoList, {ease: "none", stagger: 0.1, duration: 2, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
-                .to(txtLine, {width: "100%"} );
+            ani.to('.wrap', {backgroundColor: theme.color.white, duration: 5}, )
+                .to(contactTxt, {ease: "none", stagger: 0.2, duration: 10, opacity: 1, xPercent: 0, color: theme.color.white})
+                .to(txtLine, {width: "100%", backgroundColor: theme.color.white} )
+                // .to(linkTxt, {ease: "none", stagger: 0.5, duration: 5, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"})
 
             ScrollTrigger.create({
                 animation: ani,
                 trigger: section,
-                start: "top 50%",
+                start: "top 40%",
                 end: "top 50%",
                 scrub: 1,
             });
@@ -194,7 +218,7 @@ function MainContact(){
                             </li>
                         ))}
                     </ContactTxt>
-                    <LinkTxt>
+                    <LinkTxt className="link-txt">
                         {infoLink && infoLink.map(({notion, github}, idx) => (
                             <li key={idx}>
                                 {notion && <Link to={notion}>Notion</Link>}

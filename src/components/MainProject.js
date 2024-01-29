@@ -203,7 +203,7 @@ function MainProject(){
             const list = listRef.current;
             const listLi = list.querySelectorAll('li');
 
-            gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
 
             ScrollTrigger.matchMedia({
                 "(min-width: 980px)": function() {

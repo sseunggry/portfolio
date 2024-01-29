@@ -9,7 +9,6 @@ import MainSkill from "../components/MainSkill";
 
 
 function Home(){
-    // setTimeout (() => ScrollTrigger .refresh ( ), 2000 );
     return(
         <Layout header={{color: theme.color.white, motion: true}}>
             <MainVisual />
