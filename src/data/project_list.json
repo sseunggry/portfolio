@@ -9,6 +9,7 @@
     ],
     "work": [
         {
+            "clientEn": "DB Insurance",
             "client": "DB손해보험",
             "name": "적응형 웹 사이트 리뉴얼",
             "period": "23.04 ~ 24.02",
@@ -17,29 +18,34 @@
             "link": "www"
         },
         {
+            "clientEn": "Hana Securities",
             "client": "하나증권",
             "name": "WTS 고도화 작업",
             "period": "22.11 ~ 23.01",
             "thumbImg": "project_thumb_work_02.jpg"
         },
         {
+            "clientEn": "Shinhan Card",
             "client": "신한카드",
-            "name": "정보보호 통합신청 업무시스템 구축",
+            "name": "정보보호 업무시스템 구축",
             "period": "22.09 ~ 23.10",
             "thumbImg": "project_thumb_work_03.jpg"
         },
         {
+            "clientEn": "LG Uplus",
             "client": "LGU+",
             "name": "디지털 카탈로그 구축",
             "period": "22.03 ~ 22.06",
             "thumbImg": "project_thumb_work_04.jpg"
         },
         {
+            "clientEn": "Daishin Securities",
             "client": "대신증권",
             "name": "MyData 플랫폼 구축",
             "period": "21.11 ~ 22.01"
         },
         {
+            "clientEn": "ShinHan Card",
             "client": "신한카드",
             "name": "PayDays 플랫폼 구축",
             "period": "21.09 ~ 21.11",
@@ -49,6 +55,7 @@
     ],
     "personal": [
         {
+            "clientEn": "Netfilx",
             "client": "넷플릭스",
             "name": "리액트 웹사이트 퍼블리싱",
             "period": "24.01 ~ 24.02",
@@ -56,6 +63,7 @@
             "link": "https://sseunggry.github.io/netflix/"
         },
         {
+            "clientEn": "Pizza Alvolo",
             "client": "피자알볼로",
             "name": "리액트 모바일웹 퍼블리싱",
             "period": "23.11 ~ 24.01",
@@ -63,6 +71,7 @@
             "link": "https://sseunggry.github.io/pizzahut/"
         },
         {
+            "clientEn": "Workwiz",
             "client": "워크위즈",
             "name": "반응형 퍼블리싱",
             "period": "22.06 ~ 22.08",
@@ -70,6 +79,7 @@
             "link": "https://sseunggry.github.io/workwiz/main/index.html"
         },
         {
+            "clientEn": "Hanwha",
             "client": "한화케미칼",
             "name": "반응형 퍼블리싱",
             "period": "21.04 ~ 21.07",

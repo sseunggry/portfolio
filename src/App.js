@@ -16,6 +16,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {windowWidths} from "./recoil/atoms";
 import {debounce} from "lodash";
 import Project from "./pages/Project";
+import Project_ from "./pages/Project_";
 
 function App() {
     // let windowSize = useWindowSizeCustom();
@@ -35,7 +36,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />}/>
                         <Route path="/about" element={<About />}/>
-                        <Route path="/project" element={<Project />}/>
+                        <Route path="/project" element={<Project_ />}/>
                         <Route path="/project2" element={<Project2 />}/>
                         <Route path="/contact" element={<Contact />}/>
                     </Routes>
