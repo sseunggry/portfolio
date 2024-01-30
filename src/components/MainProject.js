@@ -163,10 +163,6 @@ const TxtBox = styled.div`
         font-size: 18px;
     }
 
-    // ${({theme}) => theme.sLarge`
-    //
-    // `};
-
     ${({theme}) => theme.medium`
         position: absolute;
         left: 0;
@@ -230,7 +226,7 @@ function MainProject(){
                             scrollTrigger: {
                                 trigger: el,
                                 start: "top 90%",
-                                end: "bottom bottom",
+                                end: "center 50%",
                                 scrub: 1,
                             }
                         });

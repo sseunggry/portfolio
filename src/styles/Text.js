@@ -6,7 +6,7 @@ const Tit1 = styled.h2`
     color: ${({color}) => color || theme.font.headLine1.color };
     font-size: ${({fontSize}) => fontSize || theme.font.headLine1.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine1.weight };
-    text-transform: ${({textTransform}) => textTransform || 'uppercase' };
+    //text-transform: ${({textTransform}) => textTransform || 'uppercase' };
 
     ${({theme}) => theme.small`
         font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine1.mobSize)};

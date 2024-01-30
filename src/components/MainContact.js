@@ -4,13 +4,17 @@ import styled from "styled-components";
 import theme from "../styles/theme";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
 
 const Section = styled.section`
     position: relative;
-    padding: 150px 0;
+    padding: 200px 0 150px;
+
+    ${({theme}) => theme.small`
+        padding: ${vw(200)} 0 ${vw(150)};
+    `};
 `;
 const Inner = styled.div`
     display: flex;
@@ -34,21 +38,23 @@ const Inner = styled.div`
     `};
 `;
 const TitBox = styled.div`
-    padding-top: 100px;
+    padding-bottom: 100px;
     width: fit-content;
     color: ${theme.color.gray2};
     
-    p{
-        width: 60%;
-        font-size: 18px;
-        word-break: keep-all;
-    }
     h2{
         font-family: 'Playfair Display', serif;
         font-size: 120px;
         font-weight: 500;
         text-transform: uppercase;
         line-height: 1.2;
+    }
+    p{
+        margin-top: 20px;
+        width: 60%;
+        font-size: 18px;
+        line-height: 1.6;
+        word-break: keep-all;
     }
 
     ${({ theme }) => theme.medium`
@@ -58,7 +64,7 @@ const TitBox = styled.div`
     `};
 
     ${({theme}) => theme.medium`
-        padding-top: 0;
+        // padding-top: 0;
         padding-bottom: 100px;
         p{
             display: none;
@@ -68,7 +74,12 @@ const TitBox = styled.div`
     ${({theme}) => theme.small`
         padding-bottom: ${vw(150)};
         
+        h2{
+            font-size: ${vw(116)};
+        }
+        
         p{
+            margin-top: ${vw(30)};
             width: 100%;
             font-size: ${vw(28)};
         }
@@ -80,14 +91,9 @@ const InfoCon = styled.div`
             position: relative;
         }
     }
-
-    ${({theme}) => theme.medium`
-        order: 1;
-    `};
 `;
 const ContactTxt = styled.ul`
     overflow: hidden;
-    margin-bottom: 70px;
     font-size: 80px;
     font-weight: 500;
     text-align: right;
@@ -108,39 +114,31 @@ const ContactTxt = styled.ul`
         background-color: ${theme.color.black};
 
         ${({theme}) => theme.small`
-            bottom: ${vw(-4)};
-            height: ${vw(4)};
+            bottom: ${vw(-5)};
+            height: ${vw(5)};
         `};
     }
 
     ${({theme}) => theme.large`
-        // margin-bottom: 50px;
         font-size: 76px;
     `};
 
-    ${({theme}) => theme.medium`
-        font-size: 66px;
-    `};
-
     ${({theme}) => theme.sMedium`
-        font-size: 54px;
+        font-size: 62px;
     `};
 
     ${({theme}) => theme.small`
-        font-size: ${vw(54)};
+        font-size: ${vw(60)};
         
         li{
-            margin-bottom: ${vw(10)};
-            &:last-of-type{
-                margin-bottom: 0;
-            }
+            margin-bottom: ${vw(20)};
         }
     `};
 `;
 const LinkTxt = styled.ul`
     display: flex;
     justify-content: flex-end;
-    margin-top: 50px;
+    margin-top: 70px;
     font-size: 30px;
     font-weight: 500;
 
@@ -157,6 +155,7 @@ const LinkTxt = styled.ul`
     `};
 
     ${({theme}) => theme.small`
+        margin-top: ${vw(70)};
         font-size: ${vw(40)};
         
         li{
@@ -170,7 +169,7 @@ function MainContact(){
     const infoRef = useRef(null);
     const titRef = useRef(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
@@ -183,23 +182,51 @@ function MainContact(){
         const txtLine = info.querySelectorAll('.line');
 
         let ctx = gsap.context(() => {
-            const ani = gsap.timeline();
+            const ani = gsap.timeline({ease: "none",});
 
-            gsap.set(contactTxt, {xPercent: 100});
-            // gsap.set(linkTxt, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            ani.to(section, {backgroundColor: theme.color.white, duration: 5,})
+                .to(txtLine, {width: "100%", backgroundColor: theme.color.black, delay: 0.1});
 
-            ani.to('.wrap', {backgroundColor: theme.color.white, duration: 5}, )
-                .to(contactTxt, {ease: "none", stagger: 0.2, duration: 10, opacity: 1, xPercent: 0, color: theme.color.white})
-                .to(txtLine, {width: "100%", backgroundColor: theme.color.white} )
-                // .to(linkTxt, {ease: "none", stagger: 0.5, duration: 5, opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"})
-
-            ScrollTrigger.create({
-                animation: ani,
-                trigger: section,
-                start: "top 40%",
-                end: "top 50%",
-                scrub: 1,
+            ScrollTrigger.matchMedia({
+                "(min-width: 721px)": function() {
+                    ScrollTrigger.create({
+                        animation: ani,
+                        trigger: section,
+                        start: "top top",
+                        end: "center 100%",
+                        scrub: 1,
+                    });
+                },
+                "(max-width: 720px)": function() {
+                    ScrollTrigger.create({
+                        animation: ani,
+                        trigger: section,
+                        start: "top 20%",
+                        end: "center 100%",
+                        scrub: 1,
+                    });
+                },
             });
+
+            // let ani = gsap.timeline({
+            //     ease: "none",
+            //     scrollTrigger: {
+            //         trigger: section,
+            //         start: "10% 50%",
+            //         end: "center 100%",
+            //         scrub: 1,
+            //     }
+            // });
+
+            // ani
+                // .to(section, {backgroundColor: theme.color.white, duration: 5, delay: 5})
+                // .to(contactTxt, {ease: "none", stagger: 0.2, duration: 10, opacity: 1, xPercent: 0,})
+                // .to(txtLine, {width: "100%"} )
+                // .to(contactTxt, {stagger: 0.2, duration: 5, opacity: 1, xPercent: 0, color: theme.color.white})
+                // .to(txtLine, {width: "100%", backgroundColor: theme.color.white})
+                // .to(contactTxt, {stagger: 0.2, duration: 5, opacity: 1, xPercent: 0, color: theme.color.black})
+                // .to(txtLine, {width: "100%", backgroundColor: theme.color.white});
+                // .to(linkTxt, {color: theme.color.white})
 
         }, sectionRef);
         return () => ctx.revert();
@@ -209,6 +236,10 @@ function MainContact(){
     return (
         <Section className="sec-03" ref={sectionRef}>
             <Inner className="inner">
+                <TitBox ref={titRef}>
+                    <h2>Get in <br/> Touch ME</h2>
+                    <p>안녕하세요. 프론트엔드 개발자 최승연입니다. 좋은 동료들과 재미있게 일하고 싶습니다!</p>
+                </TitBox>
                 <InfoCon ref={infoRef}>
                     <ContactTxt className="contact-txt">
                         {contactInfo && contactInfo.map(({phone, email}, idx) => (
@@ -228,10 +259,7 @@ function MainContact(){
                         <li><Link to="">Resume</Link></li>
                     </LinkTxt>
                 </InfoCon>
-                <TitBox ref={titRef}>
-                    <p>안녕하세요. 프론트엔드 개발자 최승연입니다. 좋은 동료들과 재미있게 일하고 싶습니다!</p>
-                    <h2>Get in <br/> Touch ME</h2>
-                </TitBox>
+
             </Inner>
         </Section>
     )

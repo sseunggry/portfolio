@@ -100,9 +100,17 @@ const GlobalStyle = createGlobalStyle`
         clip: rect(1px, 1px, 1px, 1px);
         clip-path: inset(50%);
     }
+    .outfit{
+        font-family: 'Outfit', sans-serif;
+    }
+    .poppins{
+        font-family: 'Poppins', sans-serif;
+    }
+    .playfair{
+        font-family: 'Playfair Display', serif;
+    }
     
     section{
-        //overflow: hidden;
         min-height: 100vh;
     }
 `;

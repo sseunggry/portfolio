@@ -31,9 +31,59 @@ const Inner = styled.div`
         padding: ${vw(100)} ${vw(40)} ${vw(200)};
     `};
 `;
+const TitBox = styled.div`
+    h2{
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        
+        .outfit{
+            font-weight: 700;
+        }
+
+        ${({theme}) => theme.sMedium`
+            font-size: 110px;
+        `};
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(110)};
+        `};
+    }
+`;
+const TxtList = styled.ul`
+    margin-top: 50px;
+    
+    li{
+        font-size: 18px;
+        line-height: 2;
+        color: ${theme.color.gray2};
+        text-align: center;
+        word-break: keep-all;
+        
+        &:first-of-type{
+            margin-bottom: 20px;
+        }
+        &:last-of-type{
+            margin-top: 20px;
+        }
+    }
+    
+    ${({theme}) => theme.small`
+        margin-top: ${vw(50)};
+        
+        li{
+            font-size: ${vw(28)};
+            
+            &:first-of-type{
+                margin-bottom: ${vw(30)};
+            }
+            &:last-of-type{
+                margin-top: ${vw(30)};
+            }
+        }
+    `};
+`;
 const Info = styled.div`
-    margin-top: 200px;
-    margin-left: auto;
+    margin: 200px auto 0;
     width: fit-content;
 
     ${({theme}) => theme.large`
@@ -42,34 +92,31 @@ const Info = styled.div`
     `};
 
     ${({theme}) => theme.small`
-        margin-top: ${vw(250)};
+        margin-top: ${vw(200)};
     `};
 `;
 const TxtBox = styled.ul`
     li {
         position: relative;
         margin-bottom: 20px;
-        width: fit-content;
         font-size: 80px;
         font-weight: 500;
+        text-align: center;
 
-        ${({theme}) => theme.large`
-            margin-bottom: 20px;
-            font-size: 70px;
+        ${({theme}) => theme.sLarge`
+            font-size: 72px;
         `};
-
-        ${({theme}) => theme.medium`
-            margin-bottom: 20px;
-            font-size: 50px;
-        `};
-
+        
         ${({theme}) => theme.small`
             margin-bottom: ${vw(30)};
-            font-size: ${vw(54)};
+            font-size: ${vw(60)};
         `};
         
         a{
             display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
     .line {
@@ -88,11 +135,11 @@ const TxtBox = styled.ul`
 `;
 const LinkList = styled.ul`
     display: flex;
+    justify-content: center;
     margin-top: 150px;
   
     li{
-        margin-right: 30px;
-        width: fit-content;
+        margin-right: 80px;
         font-size: 30px;
         font-weight: 500;
 
@@ -105,8 +152,8 @@ const LinkList = styled.ul`
         }
 
         ${({theme}) => theme.small`
-            margin-right: ${vw(30)};
-            font-size: ${vw(30)};
+            margin-right: ${vw(60)};
+            font-size: ${vw(40)};
         `};
     }
 
@@ -132,45 +179,45 @@ function Contact() {
         const txtLine = txtBox.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
-        let ctx = gsap.context(() => {
-            const ani = gsap.timeline();
-
-            ScrollTrigger.matchMedia({
-                "(min-width: 720px)": function() {
-                    gsap.set(section, {background: theme.color.white});
-                    gsap.set(txtList, {transform: 'rotate(-10deg)'});
-                    gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
-
-                    ani.to(section, {background: theme.color.black})
-                        .to(pageTit, {color: theme.color.white})
-                        .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
-                        .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-                        .to(linkList, {color: theme.color.white});
-
-                    ScrollTrigger.create({
-                        animation: ani,
-                        trigger: section,
-                        start: "10% 10%",
-                        end: "top 10%",
-                        endTrigger: pageTit,
-                        scrub: 1,
-                    });
-                },
-                "(max-width: 719px)": function() {
-                    gsap.set(section, {background: theme.color.black});
-
-                    ani.to(pageTit, {color: theme.color.white})
-                        .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
-                        .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
-                        .to(linkList, {color: theme.color.white});
-                },
-                "all": function() {
-
-                }
-            });
-        }, sectionRef);
-
-        return () => ctx.revert();
+        // let ctx = gsap.context(() => {
+        //     const ani = gsap.timeline();
+        //
+        //     ScrollTrigger.matchMedia({
+        //         "(min-width: 720px)": function() {
+        //             gsap.set(section, {background: theme.color.white});
+        //             gsap.set(txtList, {transform: 'rotate(-10deg)'});
+        //             gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
+        //
+        //             ani.to(section, {background: theme.color.black})
+        //                 .to(pageTit, {color: theme.color.white})
+        //                 .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
+        //                 .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
+        //                 .to(linkList, {color: theme.color.white});
+        //
+        //             ScrollTrigger.create({
+        //                 animation: ani,
+        //                 trigger: section,
+        //                 start: "10% 10%",
+        //                 end: "top 10%",
+        //                 endTrigger: pageTit,
+        //                 scrub: 1,
+        //             });
+        //         },
+        //         "(max-width: 719px)": function() {
+        //             gsap.set(section, {background: theme.color.black});
+        //
+        //             ani.to(pageTit, {color: theme.color.white})
+        //                 .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
+        //                 .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
+        //                 .to(linkList, {color: theme.color.white});
+        //         },
+        //         "all": function() {
+        //
+        //         }
+        //     });
+        // }, sectionRef);
+        //
+        // return () => ctx.revert();
 
     }, []);
 
@@ -178,7 +225,16 @@ function Contact() {
         <Layout header={{active: 2}}>
             <ContactCon ref={sectionRef}>
                 <Inner>
-                    <Text name="tit1">Contact</Text>
+                    <TitBox>
+                        <Text name="tit1" fontWeight="500">Contact <span className="outfit">ME</span></Text>
+                        <TxtList>
+                            <li>안녕하세요! 저는 ‘퍼블리셔 최승연’입니다.</li>
+                            <li>저는 긍정적이고 활발하며 맡은 일에 최선을 다하는 성실한 성격입니다.</li>
+                            <li>또한 사람들과 잘 지내며 다양한 상황에 유연하게 대처하는 능력을 가졌습니다.</li>
+                            <li>함께 일할 동료와 회사를 찾고 있습니다.</li>
+                            <li>언제든지 연락주세요!</li>
+                        </TxtList>
+                    </TitBox>
                     <Info>
                         <TxtBox ref={txtRef}>
                             {contactInfo && contactInfo.map(({phone, email}, idx) => (
