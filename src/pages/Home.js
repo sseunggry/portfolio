@@ -10,6 +10,7 @@ import {useEffect, useLayoutEffect} from "react";
 
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import MainProject_ from "../components/MainProject_";
 
 
 function Home(){

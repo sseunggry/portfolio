@@ -31,6 +31,10 @@ const Inner = styled.div`
 `;
 const TitBox = styled.div`
     padding: 150px 0 200px;
+    
+    h2{
+        font-family: 'Playfair Display', serif;
+    }
 
     ${({theme}) => theme.small`
         padding-top: ${vw(150)};
@@ -377,7 +381,7 @@ function About(){
             <AboutCon ref={sectionRef}>
                 <TitBox>
                     <Inner>
-                        <Text name="tit1">About</Text>
+                        <Text name="tit1">About <span className="outfit">ME</span></Text>
                         <InfoTxt ref={infoRef}>
                             <p>안녕하세요!</p>
                             <p>열정적인 프론트엔드 <em>개발자</em></p>

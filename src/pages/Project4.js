@@ -247,7 +247,7 @@ function Project(){
         const $targetList = $target.parentNode.childNodes;
         let text = $target.innerText.toLowerCase();
 
-        $targetList.forEach((el) => el.classList.remove('active'));
+        $targetList.forEach((el) => {if(el) return el.classList.remove('active')});
         $target.classList.add('active');
 
         if(text.includes('work')){
@@ -269,7 +269,6 @@ function Project(){
         const thumb = thumbList.querySelectorAll('li');
         const thumbImg = thumbList.querySelectorAll('li .img-box');
         const thumbTxt = thumbList.querySelectorAll('li .txt-box');
-
 
         let ctx = gsap.context(() => {
             gsap.set(tab, {yPercent: 30, opacity: 0});

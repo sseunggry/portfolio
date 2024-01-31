@@ -218,7 +218,7 @@ function Header({color, active, motion = false}){
         const $target = e.target;
         const $targetList = $target.parentNode.childNodes;
 
-        $targetList.forEach((el) => el.classList.remove('active'));
+        $targetList.forEach((el) => {if(el) return el.classList.remove('active')});
         $target.classList.add('active');
 
         if(moMenuRef.current) {
