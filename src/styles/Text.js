@@ -3,14 +3,23 @@ import theme from "./theme";
 import {vw} from "../utils/common";
 
 const Tit1 = styled.h2`
+    font-family: 'Playfair Display', serif;
     color: ${({color}) => color || theme.font.headLine1.color };
     font-size: ${({fontSize}) => fontSize || theme.font.headLine1.size };
     font-weight: ${({fontWeight}) => fontWeight || theme.font.headLine1.weight };
     //text-transform: ${({textTransform}) => textTransform || 'uppercase' };
 
+    ${({theme}) => theme.sMedium`
+        font-size: ${({padFontSize}) => padFontSize || theme.font.headLine1.padFontSize};
+    `};
+
     ${({theme}) => theme.small`
         font-size: ${({mobFontSize}) => vw(mobFontSize) || vw(theme.font.headLine1.mobSize)};
     `};
+    
+    .outfit{
+        font-weight: 700;
+    }
 `;
 
 const Tit2 = styled.h3`

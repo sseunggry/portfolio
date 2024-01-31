@@ -13,8 +13,9 @@ const font = {
     headLine1: {
         size: '120px',
         color: `${color.black}`,
-        weight: 700,
-        mobSize: '120px'
+        weight: 500,
+        padFontSize: '110px',
+        mobSize: '110px'
     },
     headLine2: {
         size: '60px',

@@ -113,6 +113,15 @@ const GlobalStyle = createGlobalStyle`
     section{
         min-height: 100vh;
     }
+    
+    .mask{
+        overflow: hidden;
+        display: block;
+        
+        span{
+            display: inline-block;
+        }
+    }
 `;
 
 export default GlobalStyle;

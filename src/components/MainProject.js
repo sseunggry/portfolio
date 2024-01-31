@@ -187,7 +187,7 @@ const TxtBox = styled.div`
 `;
 
 function MainProject(){
-    const data = [...Object.values(work).filter((el) => el.link), ...Object.values(personal).filter((el) => el.link)];
+    const data = [...Object.values(work).filter((el) => el.main), ...Object.values(personal).filter((el) => el.main)];
     const sectionRef = useRef(null);
     const listRef = useRef(null);
     // const windowWidth = useRecoilValue(windowWidths);
@@ -202,7 +202,7 @@ function MainProject(){
             gsap.set(listLi, {opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
 
             ScrollTrigger.matchMedia({
-                "(min-width: 980px)": function() {
+                "(min-width: 981px)": function() {
                     Object.values(listLi).map((el) => {
                         gsap.to(el, {
                             opacity: 1,
@@ -217,7 +217,7 @@ function MainProject(){
                         });
                     });
                 },
-                "(max-width: 979px)" : function() {
+                "(max-width: 980px)" : function() {
                     Object.values(listLi).map((el) => {
                         gsap.to(el, {
                             opacity: 1,
@@ -226,7 +226,7 @@ function MainProject(){
                             scrollTrigger: {
                                 trigger: el,
                                 start: "top 90%",
-                                end: "center 50%",
+                                end: "top 50%",
                                 scrub: 1,
                             }
                         });

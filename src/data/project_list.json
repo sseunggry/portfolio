@@ -15,7 +15,8 @@
             "period": "23.04 ~ 24.02",
             "thumbImg": "main_thumb_01.jpg",
             "desc": "DB손해보험 보험 상품(자동차, 장기, 일반) 전체 페이지를 리뉴얼 작업을 진행합니다.",
-            "link": "www"
+            "link": "www",
+            "main": true
         },
         {
             "clientEn": "Hana Securities",
@@ -50,7 +51,8 @@
             "name": "PayDays 플랫폼 구축",
             "period": "21.09 ~ 21.11",
             "thumbImg": "project_thumb_work_06_1.jpg",
-            "link": "https://paydays.shinhancard.com/myincome/main"
+            "link": "https://paydays.shinhancard.com/myincome/main",
+            "main": true
         }
     ],
     "personal": [
@@ -60,7 +62,8 @@
             "name": "리액트 웹사이트 퍼블리싱",
             "period": "24.01 ~ 24.02",
             "thumbImg": "project_thumb_person_01_.jpg",
-            "link": "https://sseunggry.github.io/netflix/"
+            "link": "https://sseunggry.github.io/netflix/",
+            "main": true
         },
         {
             "clientEn": "Alvolo",
@@ -68,7 +71,8 @@
             "name": "리액트 모바일웹 퍼블리싱",
             "period": "23.11 ~ 24.01",
             "thumbImg": "project_thumb_person_02.jpg",
-            "link": "https://sseunggry.github.io/pizzahut/"
+            "link": "https://sseunggry.github.io/pizzahut/",
+            "main": true
         },
         {
             "clientEn": "Workwiz",
@@ -76,7 +80,8 @@
             "name": "반응형 퍼블리싱",
             "period": "22.06 ~ 22.08",
             "thumbImg": "project_thumb_person_03_.jpg",
-            "link": "https://sseunggry.github.io/workwiz/main/index.html"
+            "link": "https://sseunggry.github.io/workwiz/main/index.html",
+            "main": true
         },
         {
             "clientEn": "Hanwha",
@@ -84,7 +89,8 @@
             "name": "반응형 퍼블리싱",
             "period": "21.04 ~ 21.07",
             "thumbImg": "project_thumb_person_04.jpg",
-            "link": "https://sseunggry.github.io/hanwha/"
+            "link": "https://sseunggry.github.io/hanwha/",
+            "main": true
         },
         {
             "clientEn": "Sm Entertainment",

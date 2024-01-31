@@ -30,11 +30,6 @@ const Inner = styled.div`
     ${({theme}) => theme.small`
         padding: ${vw(150)} ${vw(40)};
     `};
-    
-    h2{
-        font-family: 'Playfair Display', serif;
-        //font-weight: 400;
-    }
 `;
 const Tab = styled.ul`
     display: flex;
@@ -279,17 +274,12 @@ function Project(){
         const thumbList = thumbRef.current;
 
         const inner = section.querySelector('.inner');
-        const pageTit = section.querySelector('[name="tit1"]');
+        const pageTit = section.querySelector('[name="tit1"] span');
         const thumb = thumbList.querySelectorAll('li');
         const thumbImg = thumbList.querySelectorAll('li .img-box');
         const thumbTxt = thumbList.querySelectorAll('li .txt-box');
 
         let ctx = gsap.context(() => {
-            gsap.set(tab, {yPercent: 30, opacity: 0});
-
-            const ani = gsap.timeline();
-            ani.to(tab, {yPercent: 0, opacity: 1}, 'motion')
-
             ScrollTrigger.matchMedia({
                 "(min-width: 981px)": function() {
                     let scrollTween = gsap.to(thumb, {
@@ -306,7 +296,6 @@ function Project(){
                     });
 
                     gsap.set(thumbImg, {clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
-
                     Object.values(thumbImg).forEach((el) => {
 
                         let client = el.nextElementSibling.querySelector('strong');
@@ -346,22 +335,32 @@ function Project(){
                 "(max-width: 980px)": function() {
                     gsap.set(thumbImg, {clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
 
-                    Object.values(thumbImg).map((el, idx) => {
-                        let txt = el.nextElementSibling.querySelector('.txt');
+                    Object.values(thumbImg).map((img, idx) => {
+                        let txt = img.nextElementSibling.querySelector('.txt');
 
                         gsap.set(txt, { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-
                         gsap.timeline({
                             scrollTrigger: {
-                                trigger: el,
-                                start: "top 40%",
-                                end: "center 90%",
+                                trigger: thumb[idx],
+                                start: "top 50%",
+                                end: "top 50%",
                                 scrub: 1,
+                                // markers: true
                             }
                         })
-                            .to(el, {ease: "none", opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 0)
-                            .to(txt, {ease: "none", opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1})
+                            .to(img, {ease: "none", opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 0)
+                            .to(txt, {ease: "power3.in", opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 0)
                     });
+                },
+                "all": function() {
+                    gsap.set(pageTit, {yPercent: 110});
+                    gsap.set(tab, {yPercent: 30, opacity: 0});
+
+                    const ani = gsap.timeline({
+                        ease: "cubic-bezier(.19,1,.22,1)"
+                    });
+                    ani.to(pageTit, {opacity: 1, yPercent: 0})
+                        .to(tab, {yPercent: 0, opacity: 1})
                 }
             });
         }, sectionRef);
@@ -372,7 +371,9 @@ function Project(){
         <Layout header={{active: 1, color: theme.color.white, }}>
             <ProjectCon ref={sectionRef}>
                 <Inner className="inner">
-                    <Text name="tit1" color={theme.color.white}>Project</Text>
+                    <Text name="tit1" color={theme.color.white} className="mask">
+                        <span>Project</span>
+                    </Text>
                     <Tab onClick={onClick} ref={tabRef}>
                         <li className="active">work <span className="outfit">{projectWork.length}</span></li>
                         <li>personal <span className="outfit">{projectPersonal.length}</span></li>

@@ -31,10 +31,6 @@ const Inner = styled.div`
 `;
 const TitBox = styled.div`
     padding: 150px 0 200px;
-    
-    h2{
-        font-family: 'Playfair Display', serif;
-    }
 
     ${({theme}) => theme.small`
         padding-top: ${vw(150)};
@@ -279,7 +275,7 @@ function About(){
         const largeTxt = largeTxtRef.current;
         const storyCon = storyRef.current;
 
-        const tit = section.querySelector('h2');
+        const pageTit = section.querySelector('[name="tit1"] span');
         const infoTxt = info.querySelectorAll('p');
         const featureTitCon = feature.querySelectorAll('.tit');
         const featureTit = feature.querySelectorAll('.tit h3');
@@ -293,7 +289,6 @@ function About(){
         let txtDescList = '';
         txtDesc.map((txt) => txtDescList += `<span>${txt}</span>`);
         largeTxtList.innerHTML = txtDescList;
-
 
         let ctx = gsap.context(() => {
             let aniTxt = gsap.to(largeTxt.querySelectorAll("span"), {
@@ -319,7 +314,7 @@ function About(){
                     .to(storyConTxt, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"});
 
             ScrollTrigger.matchMedia({
-                "(min-width: 980px)": function() {
+                "(min-width: 981px)": function() {
                     ScrollTrigger.create({
                         animation: aniTxt,
                             trigger: largeTxt,
@@ -328,7 +323,7 @@ function About(){
                             scrub: 1
                     });
                 },
-                "(max-width: 979px)": function() {
+                "(max-width: 980px)": function() {
                     ScrollTrigger.create({
                         animation: aniTxt,
                         trigger: largeTxt,
@@ -338,14 +333,17 @@ function About(){
                     });
                 },
                 "all": function(){
-                    gsap.set(tit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                    // gsap.set(tit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                    gsap.set(pageTit, {yPercent: 110});
                     gsap.set(infoTxt, {yPercent: 40, opacity: 0});
 
                     const ani = gsap.timeline({
-                        ease: "power3.in",
+                        // ease: "power3.in",
+                        ease: "cubic-bezier(.19,1,.22,1)"
                     });
-                    ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.5})
-                        .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.3, delay: -1});
+                    // ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.5})
+                    ani.to(pageTit, {opacity: 1, yPercent: 0})
+                        .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.3});
 
                     gsap.set(featureTit, {xPercent: -30, opacity: 0});
                     gsap.to(featureTit, {
@@ -381,7 +379,9 @@ function About(){
             <AboutCon ref={sectionRef}>
                 <TitBox>
                     <Inner>
-                        <Text name="tit1">About <span className="outfit">ME</span></Text>
+                        <Text name="tit1" className="mask">
+                            <span>About <em className="outfit">ME</em> </span>
+                        </Text>
                         <InfoTxt ref={infoRef}>
                             <p>안녕하세요!</p>
                             <p>열정적인 프론트엔드 <em>개발자</em></p>

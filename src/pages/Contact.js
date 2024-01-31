@@ -1,6 +1,6 @@
 import Layout from "../components/_inc/Layout";
 import {Link} from "react-router-dom";
-import {contactInfo, infoLink} from "../recoil/atoms";
+import {contactInfo, img, infoLink} from "../recoil/atoms";
 import styled from "styled-components";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -19,7 +19,7 @@ const ContactCon = styled.div`
 `;
 const Inner = styled.div`
     margin: 0 auto;
-    padding: 150px 0 300px;
+    //padding: 150px 0 300px;
     max-width: 1440px;
 
     ${({theme}) => theme.xLarge`
@@ -32,25 +32,23 @@ const Inner = styled.div`
     `};
 `;
 const TitBox = styled.div`
+    position: relative;
+    padding: 100px 0;
+    
     h2{
-        font-family: 'Playfair Display', serif;
+        position: relative;
         text-align: center;
-        
-        .outfit{
-            font-weight: 700;
-        }
-
-        ${({theme}) => theme.sMedium`
-            font-size: 110px;
-        `};
-
-        ${({theme}) => theme.small`
-            font-size: ${vw(110)};
-        `};
+        z-index: 2;
     }
+
+    ${({theme}) => theme.small`
+        padding: ${vw(100)}; 0;
+    `};
 `;
 const TxtList = styled.ul`
+    position: relative;
     margin-top: 50px;
+    z-index: 2;
     
     li{
         font-size: 18px;
@@ -82,8 +80,17 @@ const TxtList = styled.ul`
         }
     `};
 `;
-const Info = styled.div`
-    margin: 200px auto 0;
+const ImgBox = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+`;
+const InfoBox = styled.div`
+    margin: 0 auto;
+    padding: 100px 0;
     width: fit-content;
 
     ${({theme}) => theme.large`
@@ -92,7 +99,7 @@ const Info = styled.div`
     `};
 
     ${({theme}) => theme.small`
-        margin-top: ${vw(200)};
+        padding: ${vw(100)}; 0;
     `};
 `;
 const TxtBox = styled.ul`
@@ -174,59 +181,70 @@ function Contact() {
         const txtBox = txtRef.current;
         const linkBox = linkRef.current;
 
-        const pageTit = section.querySelector('h2[name="tit1"]');
+        const pageTit = section.querySelector('[name="tit1"] span');
+        const imgBox = section.querySelector('.img-box');
         const txtList = txtBox.querySelectorAll('li');
         const txtLine = txtBox.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
-        // let ctx = gsap.context(() => {
-        //     const ani = gsap.timeline();
-        //
-        //     ScrollTrigger.matchMedia({
-        //         "(min-width: 720px)": function() {
-        //             gsap.set(section, {background: theme.color.white});
-        //             gsap.set(txtList, {transform: 'rotate(-10deg)'});
-        //             gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
-        //
-        //             ani.to(section, {background: theme.color.black})
-        //                 .to(pageTit, {color: theme.color.white})
-        //                 .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
-        //                 .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-        //                 .to(linkList, {color: theme.color.white});
-        //
-        //             ScrollTrigger.create({
-        //                 animation: ani,
-        //                 trigger: section,
-        //                 start: "10% 10%",
-        //                 end: "top 10%",
-        //                 endTrigger: pageTit,
-        //                 scrub: 1,
-        //             });
-        //         },
-        //         "(max-width: 719px)": function() {
-        //             gsap.set(section, {background: theme.color.black});
-        //
-        //             ani.to(pageTit, {color: theme.color.white})
-        //                 .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
-        //                 .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
-        //                 .to(linkList, {color: theme.color.white});
-        //         },
-        //         "all": function() {
-        //
-        //         }
-        //     });
-        // }, sectionRef);
-        //
-        // return () => ctx.revert();
+        let ctx = gsap.context(() => {
+            const ani = gsap.timeline();
+
+            ScrollTrigger.matchMedia({
+                "(min-width: 720px)": function() {
+                    // gsap.set(section, {background: theme.color.white});
+                    // gsap.set(txtList, {transform: 'rotate(-10deg)'});
+                    // gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
+                    //
+                    // ani.to(section, {background: theme.color.black})
+                    //     .to(pageTit, {color: theme.color.white})
+                    //     .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
+                    //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
+                    //     .to(linkList, {color: theme.color.white});
+                    //
+                    // ScrollTrigger.create({
+                    //     animation: ani,
+                    //     trigger: section,
+                    //     start: "10% 10%",
+                    //     end: "top 10%",
+                    //     endTrigger: pageTit,
+                    //     scrub: 1,
+                    // });
+                },
+                "(max-width: 719px)": function() {
+                    // gsap.set(section, {background: theme.color.black});
+                    //
+                    // ani.to(pageTit, {color: theme.color.white})
+                    //     .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
+                    //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
+                    //     .to(linkList, {color: theme.color.white});
+                },
+                "all": function() {
+                    gsap.set(pageTit, {yPercent: 110});
+                    gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+                    // gsap.set(imgBox, {})
+
+                    const ani = gsap.timeline({
+                        ease: "cubic-bezier(.19,1,.22,1)"
+                    });
+                    ani.to(imgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
+                        .to(pageTit, {opacity: 1, yPercent: 0})
+                }
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
 
     }, []);
 
     return (
         <Layout header={{active: 2}}>
             <ContactCon ref={sectionRef}>
-                <Inner>
-                    <TitBox>
-                        <Text name="tit1" fontWeight="500">Contact <span className="outfit">ME</span></Text>
+                <TitBox>
+                    <Inner>
+                        <Text name="tit1" className="mask">
+                            <span>Contact <em className="outfit">ME</em></span>
+                        </Text>
                         <TxtList>
                             <li>안녕하세요! 저는 ‘퍼블리셔 최승연’입니다.</li>
                             <li>저는 긍정적이고 활발하며 맡은 일에 최선을 다하는 성실한 성격입니다.</li>
@@ -234,8 +252,13 @@ function Contact() {
                             <li>함께 일할 동료와 회사를 찾고 있습니다.</li>
                             <li>언제든지 연락주세요!</li>
                         </TxtList>
-                    </TitBox>
-                    <Info>
+                        <ImgBox className="img-box">
+                            <img src={`${img}/contact_bg.jpg`}  alt=""/>
+                        </ImgBox>
+                    </Inner>
+                </TitBox>
+                <InfoBox>
+                    <Inner>
                         <TxtBox ref={txtRef}>
                             {contactInfo && contactInfo.map(({phone, email}, idx) => (
                                 <li key={idx}>
@@ -263,8 +286,8 @@ function Contact() {
                             ))}
                             <li><Link to="">Resume</Link></li>
                         </LinkList>
-                    </Info>
-                </Inner>
+                    </Inner>
+                </InfoBox>
             </ContactCon>
         </Layout>
     )
