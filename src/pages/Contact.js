@@ -51,6 +51,7 @@ const TxtList = styled.ul`
     z-index: 2;
     
     li{
+        overflow: hidden;
         font-size: 18px;
         line-height: 2;
         color: ${theme.color.gray2};
@@ -62,6 +63,10 @@ const TxtList = styled.ul`
         }
         &:last-of-type{
             margin-top: 20px;
+        }
+        
+        span{
+            display: inline-block;
         }
     }
     
@@ -102,7 +107,7 @@ const InfoBox = styled.div`
         padding: ${vw(100)}; 0;
     `};
 `;
-const TxtBox = styled.ul`
+const ContactTxt = styled.ul`
     li {
         position: relative;
         margin-bottom: 20px;
@@ -140,7 +145,7 @@ const TxtBox = styled.ul`
         `};
     }
 `;
-const LinkList = styled.ul`
+const LinkTxt = styled.ul`
     display: flex;
     justify-content: center;
     margin-top: 150px;
@@ -171,27 +176,32 @@ const LinkList = styled.ul`
 
 function Contact() {
     const sectionRef = useRef(null);
-    const txtRef = useRef(null);
+    const txtListRef = useRef(null);
+    const contactRef = useRef(null);
     const linkRef = useRef(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const txtBox = txtRef.current;
+        const txtBox = txtListRef.current;
+        const contactBox = contactRef.current;
         const linkBox = linkRef.current;
 
         const pageTit = section.querySelector('[name="tit1"] span');
         const imgBox = section.querySelector('.img-box');
-        const txtList = txtBox.querySelectorAll('li');
-        const txtLine = txtBox.querySelectorAll('.line');
+
+        const txtList = txtBox.querySelectorAll('li span');
+
+        const contactList = contactBox.querySelectorAll('li');
+        const txtLine = contactBox.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline();
 
             ScrollTrigger.matchMedia({
-                "(min-width: 720px)": function() {
+                "(min-width: 721px)": function() {
                     // gsap.set(section, {background: theme.color.white});
                     // gsap.set(txtList, {transform: 'rotate(-10deg)'});
                     // gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
@@ -211,7 +221,7 @@ function Contact() {
                     //     scrub: 1,
                     // });
                 },
-                "(max-width: 719px)": function() {
+                "(max-width: 720px)": function() {
                     // gsap.set(section, {background: theme.color.black});
                     //
                     // ani.to(pageTit, {color: theme.color.white})
@@ -222,13 +232,14 @@ function Contact() {
                 "all": function() {
                     gsap.set(pageTit, {yPercent: 110});
                     gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                    // gsap.set(imgBox, {})
+                    gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"})
 
                     const ani = gsap.timeline({
                         ease: "cubic-bezier(.19,1,.22,1)"
                     });
                     ani.to(imgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
                         .to(pageTit, {opacity: 1, yPercent: 0})
+                        .to(txtList, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", stagger: 0.1})
                 }
             });
         }, sectionRef);
@@ -245,12 +256,12 @@ function Contact() {
                         <Text name="tit1" className="mask">
                             <span>Contact <em className="outfit">ME</em></span>
                         </Text>
-                        <TxtList>
-                            <li>안녕하세요! 저는 ‘퍼블리셔 최승연’입니다.</li>
-                            <li>저는 긍정적이고 활발하며 맡은 일에 최선을 다하는 성실한 성격입니다.</li>
-                            <li>또한 사람들과 잘 지내며 다양한 상황에 유연하게 대처하는 능력을 가졌습니다.</li>
-                            <li>함께 일할 동료와 회사를 찾고 있습니다.</li>
-                            <li>언제든지 연락주세요!</li>
+                        <TxtList ref={txtListRef}>
+                            <li><span>안녕하세요! 저는 ‘퍼블리셔 최승연’입니다.</span></li>
+                            <li><span>저는 긍정적이고 활발하며 맡은 일에 최선을 다하는 성실한 성격입니다.</span></li>
+                            <li><span>또한 사람들과 잘 지내며 다양한 상황에 유연하게 대처하는 능력을 가졌습니다.</span></li>
+                            <li><span>함께 일할 동료와 회사를 찾고 있습니다.</span></li>
+                            <li><span>언제든지 연락주세요!</span></li>
                         </TxtList>
                         <ImgBox className="img-box">
                             <img src={`${img}/contact_bg.jpg`}  alt=""/>
@@ -259,7 +270,7 @@ function Contact() {
                 </TitBox>
                 <InfoBox>
                     <Inner>
-                        <TxtBox ref={txtRef}>
+                        <ContactTxt ref={contactRef}>
                             {contactInfo && contactInfo.map(({phone, email}, idx) => (
                                 <li key={idx}>
                                     {phone &&
@@ -276,8 +287,8 @@ function Contact() {
                                     }
                                 </li>
                             ))}
-                        </TxtBox>
-                        <LinkList ref={linkRef}>
+                        </ContactTxt>
+                        <LinkTxt ref={linkRef}>
                             {infoLink && infoLink.map(({notion, github}, idx) => (
                                 <li key={idx}>
                                     {notion && <Link to={notion}>Notion</Link>}
@@ -285,7 +296,7 @@ function Contact() {
                                 </li>
                             ))}
                             <li><Link to="">Resume</Link></li>
-                        </LinkList>
+                        </LinkTxt>
                     </Inner>
                 </InfoBox>
             </ContactCon>

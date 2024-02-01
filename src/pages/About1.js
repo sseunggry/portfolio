@@ -37,46 +37,37 @@ const TitBox = styled.div`
         padding-bottom: ${vw(200)};
     `};
 `;
-const InfoTxt = styled.ul`
-    //padding-top: 100px;
-    //padding-left: 30%;
-    margin: 100px 0 0 auto;
-    width: 40%;
-    font-size: 20px;
-    //font-size: 60px;
-    //font-weight: 200;
-    line-height: 2;
+const InfoTxt = styled.div`
+    padding-top: 100px;
+    padding-left: 30%;
+    font-size: 60px;
+    font-weight: 200;
+    line-height: 1.6;
     word-break: keep-all;
     
-    li{
-        overflow: hidden;
-        margin-bottom: 20px;
-        
-        &:last-of-type{
-            margin-bottom: 0;
-        }
-        
-        span{
-            display: inline-block;
-        }
-    }
+    //br{
+    //    display: none;
+    //}
 
     ${({theme}) => theme.large`
-        // padding-left: 20%;
+        padding-left: 20%;
     `};
 
     ${({theme}) => theme.medium`
-        // padding-left: 0;
-        // font-size: 52px;
+        padding-left: 0;
+        font-size: 52px;
         
+        em{
+            display: none;
+        }
     `};
 
     ${({theme}) => theme.small`
-        margin-top: ${vw(100)};
-        font-size: ${vw(32)};
-
-        li{
-            margin-bottom: ${vw(30)};
+        padding-top: ${vw(100)};
+        font-size: ${vw(70)};
+        
+        br{
+            display: block;
         }
     `};
 `;
@@ -285,7 +276,7 @@ function About(){
         const storyCon = storyRef.current;
 
         const pageTit = section.querySelector('[name="tit1"] span');
-        const infoTxt = info.querySelectorAll('li');
+        const infoTxt = info.querySelectorAll('p');
         const featureTitCon = feature.querySelectorAll('.tit');
         const featureTit = feature.querySelectorAll('.tit h3');
         const featureTxt = feature.querySelector('.desc');
@@ -342,12 +333,15 @@ function About(){
                     });
                 },
                 "all": function(){
+                    // gsap.set(tit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
                     gsap.set(pageTit, {yPercent: 110});
                     gsap.set(infoTxt, {yPercent: 40, opacity: 0});
 
                     const ani = gsap.timeline({
+                        // ease: "power3.in",
                         ease: "cubic-bezier(.19,1,.22,1)"
                     });
+                    // ani.to(tit, {opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.5})
                     ani.to(pageTit, {opacity: 1, yPercent: 0})
                         .to(infoTxt, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.3});
 
@@ -389,25 +383,9 @@ function About(){
                             <span>About <em className="outfit">ME</em> </span>
                         </Text>
                         <InfoTxt ref={infoRef}>
-                            <li>
-                                {/*<span>*/}
-                                {/*    제가 본 퍼블리셔는 기능적으로 이상이 없는지 등과 같이 객관적인 기준에 의해 평가되어지는 직업이라고*/}
-                                {/*    생각해서 이직을 하게 되었습니다.*/}
-                                {/*</span>*/}
-                                <span>
-                                    어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로
-                                    사용이 가능할지를 고려하며 코딩합니다.
-                                </span>
-                            </li>
-                            <li>
-                                <span>화면에 보여지는 인터랙션과 스크립트 작업에 흥미를 느끼며 재미있게 작업하고 있습니다.</span>
-                            </li>
-                            <li>
-                                <span>앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.</span>
-                            </li>
-                            {/*<p>안녕하세요!</p>*/}
-                            {/*<p>열정적인 프론트엔드 <em>개발자</em></p>*/}
-                            {/*<p>최승연 입니다.</p>*/}
+                            <p>안녕하세요!</p>
+                            <p>열정적인 프론트엔드 <em>개발자</em></p>
+                            <p>최승연 입니다.</p>
                         </InfoTxt>
                     </Inner>
                 </TitBox>
@@ -431,6 +409,8 @@ function About(){
                             <p>
                                 저는 에이젼시를 다니면서 다양한 프로젝트 경험이 있어, 업무 프로세스에 대해
                                 잘 알고 있습니다. 또한 다른 팀과의 협업 및 커뮤니케이션을 잘 합니다!
+                                {/*어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로*/}
+                                {/*사용이 가능할지를 고려하며 코딩합니다.*/}
                             </p>
                         </div>
                     </Inner>
