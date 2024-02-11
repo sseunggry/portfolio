@@ -33,7 +33,7 @@ const Inner = styled.div`
 `;
 const TitBox = styled.div`
     position: relative;
-    padding: 100px 0;
+    padding: 150px 0;
     
     h2{
         position: relative;
@@ -42,7 +42,7 @@ const TitBox = styled.div`
     }
 
     ${({theme}) => theme.small`
-        padding: ${vw(100)}; 0;
+        padding: ${vw(150)} 0;
     `};
 `;
 const TxtList = styled.ul`
@@ -95,7 +95,7 @@ const ImgBox = styled.div`
 `;
 const InfoBox = styled.div`
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 150px 0;
     width: fit-content;
 
     ${({theme}) => theme.large`
@@ -104,11 +104,12 @@ const InfoBox = styled.div`
     `};
 
     ${({theme}) => theme.small`
-        padding: ${vw(100)}; 0;
+        padding: ${vw(150)} 0;
     `};
 `;
 const ContactTxt = styled.ul`
     li {
+        overflow: hidden;
         position: relative;
         margin-bottom: 20px;
         font-size: 80px;
@@ -151,6 +152,7 @@ const LinkTxt = styled.ul`
     margin-top: 150px;
   
     li{
+        overflow: hidden;
         margin-right: 80px;
         font-size: 30px;
         font-weight: 500;
@@ -194,54 +196,40 @@ function Contact() {
         const txtList = txtBox.querySelectorAll('li span');
 
         const contactList = contactBox.querySelectorAll('li');
-        const txtLine = contactBox.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
         let ctx = gsap.context(() => {
-            const ani = gsap.timeline();
+            gsap.set(pageTit, {yPercent: 110});
+            gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"})
 
-            ScrollTrigger.matchMedia({
-                "(min-width: 721px)": function() {
-                    // gsap.set(section, {background: theme.color.white});
-                    // gsap.set(txtList, {transform: 'rotate(-10deg)'});
-                    // gsap.set(txtLine, {width: 0, transform: 'rotate(-1deg)'});
-                    //
-                    // ani.to(section, {background: theme.color.black})
-                    //     .to(pageTit, {color: theme.color.white})
-                    //     .to(txtList, {color: theme.color.white, stagger: 0.2, duration: 0.8, }, 'motion')
-                    //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.8, transform: 'rotate(-1deg)' }, 'motion')
-                    //     .to(linkList, {color: theme.color.white});
-                    //
-                    // ScrollTrigger.create({
-                    //     animation: ani,
-                    //     trigger: section,
-                    //     start: "10% 10%",
-                    //     end: "top 10%",
-                    //     endTrigger: pageTit,
-                    //     scrub: 1,
-                    // });
-                },
-                "(max-width: 720px)": function() {
-                    // gsap.set(section, {background: theme.color.black});
-                    //
-                    // ani.to(pageTit, {color: theme.color.white})
-                    //     .to(txtList, {color: theme.color.white, stagger: 0.1, duration: 0.5}, 'motion')
-                    //     .to(txtLine, {width: '100%', stagger: 0.2, duration: 0.5}, 'motion')
-                    //     .to(linkList, {color: theme.color.white});
-                },
-                "all": function() {
-                    gsap.set(pageTit, {yPercent: 110});
-                    gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-                    gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"})
+            const ani = gsap.timeline({
+                ease: "cubic-bezier(.19,1,.22,1)"
+            });
+            ani.to(imgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
+                .to(pageTit, {opacity: 1, yPercent: 0})
+                .to(txtList, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", stagger: 0.1});
 
-                    const ani = gsap.timeline({
-                        ease: "cubic-bezier(.19,1,.22,1)"
-                    });
-                    ani.to(imgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
-                        .to(pageTit, {opacity: 1, yPercent: 0})
-                        .to(txtList, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", stagger: 0.1})
+            gsap.set(contactList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)",});
+            gsap.to(contactList, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", stagger: 0.1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "center 50%",
+                    end: "center 50%",
+                    scrub: 1,
                 }
             });
+
+            gsap.set(linkList, {opacity: 0, yPercent: 110});
+            gsap.to(linkList, {opacity: 1, yPercent: 0,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "70% 80%",
+                    end: "70% 50%",
+                    scrub: 1,
+                }
+            });
+
         }, sectionRef);
 
         return () => ctx.revert();

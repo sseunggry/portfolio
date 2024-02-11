@@ -38,19 +38,15 @@ const TitBox = styled.div`
     `};
 `;
 const InfoTxt = styled.ul`
-    //padding-top: 100px;
-    //padding-left: 30%;
     margin: 100px 0 0 auto;
     width: 40%;
-    font-size: 20px;
-    //font-size: 60px;
-    //font-weight: 200;
-    line-height: 2;
-    word-break: keep-all;
     
     li{
         overflow: hidden;
         margin-bottom: 20px;
+        font-size: 20px;
+        line-height: 2;
+        word-break: keep-all;
         
         &:last-of-type{
             margin-bottom: 0;
@@ -62,21 +58,20 @@ const InfoTxt = styled.ul`
     }
 
     ${({theme}) => theme.large`
-        // padding-left: 20%;
+        width: 50%;
     `};
 
     ${({theme}) => theme.medium`
-        // padding-left: 0;
-        // font-size: 52px;
-        
+        width: 70%;
     `};
 
     ${({theme}) => theme.small`
         margin-top: ${vw(100)};
-        font-size: ${vw(32)};
-
+        width: 90%;
+        
         li{
             margin-bottom: ${vw(30)};
+            font-size: ${vw(28)};
         }
     `};
 `;
@@ -113,12 +108,12 @@ const Feature = styled.div`
         
         p{
             margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: 100;
+            font-size: 20px;
+            font-weight: 300;
+            color: ${theme.color.gray3};
             letter-spacing: 0;
             line-height: 1.6;
             word-break: keep-all;
-            color: ${theme.color.white};
         }
 
         ${({theme}) => theme.large`
@@ -134,7 +129,7 @@ const Feature = styled.div`
             
             p{
                 margin-bottom: ${vw(40)};
-                font-size: ${vw(32)};
+                font-size: ${vw(28)};
             }
         `};
     }
@@ -156,7 +151,7 @@ const LargeTxt = styled.div`
 
     ${({theme}) => theme.small`
         padding: ${vw(150)} 0;
-        font-size: ${vw(70)};;
+        font-size: ${vw(70)};
     `};
 `;
 const StoryTit = styled.h3`
@@ -221,14 +216,14 @@ const StoryImg = styled.div`
 const StoryTxt = styled.div`
     margin-left: 50px;
     width: 50%;
-    font-size: 24px;
-    color: ${theme.color.gray2};
-    font-weight: 300;
-    line-height: 1.6;
-    word-break: keep-all;
     
     p{
         margin-bottom: 20px;
+        font-size: 20px;
+        color: ${theme.color.gray3};
+        font-weight: 300;
+        line-height: 1.6;
+        word-break: keep-all;
         
         &:last-of-type{
             margin-bottom: 0;
@@ -245,13 +240,13 @@ const StoryTxt = styled.div`
 
     ${({theme}) => theme.small`
         width: 100%;
-        font-size: ${vw(32)};
         br{
             display: none;
         }
         
         p{
             margin-bottom: ${vw(30)};
+            font-size: ${vw(28)};
         }
     `};
 `;
@@ -442,7 +437,6 @@ function About(){
                             저는 인터랙션 및 스크립트에 관심이 많습니다.
                             재사용 가능한 소스를 짜기 위해 생각하며 코딩합니다.
                             저는 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.
-                            {/*저는 솔직함과 진정성을 가지고 있으며 다양한 시도와 경험을 하는 열정을 지닌 퍼블리셔입니다.*/}
                         </p>
                     </Inner>
                 </LargeTxt>

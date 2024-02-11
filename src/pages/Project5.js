@@ -34,7 +34,7 @@ const Inner = styled.div`
 const Tab = styled.ul`
     display: flex;
     margin: 40px 0 60px;
-
+    
     li{
         margin-right: 80px;
         //font-family: 'Playfair Display', serif;
@@ -44,16 +44,16 @@ const Tab = styled.ul`
         letter-spacing: 3px;
         text-transform: uppercase;
         cursor: pointer;
-
+        
         .outfit{
             font-size: 20px;
             font-weight: 300;
         }
-
+      
         &:last-of-type{
             margin-right: 0;
         }
-
+      
         &:hover, &.active{
             color: ${theme.color.white};
         }
@@ -76,14 +76,14 @@ const Tab = styled.ul`
             }
         }
     `};
-
+    
 `;
 const ImgBox = styled.div`
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
     width: 600px;
-
+    
     &::before{
         content: '';
         display: block;
@@ -121,31 +121,24 @@ const TxtBox = styled.div`
     //bottom: 0;
     //left: 0;
     padding-top: 20px;
+    padding-left: 50px;
+    width: 600px;
     color: ${theme.color.white};
-
-    .txt{
-        //position: absolute;
-        //bottom: 40px;
-        //right: 40px;
-        //text-align: right;
-    }
-
+    
     strong{
-        overflow: hidden;
-        position: absolute;
-        top: 40px;
-        left: 0;
-        display: inline-block;
-        font-family: 'Playfair Display', serif;
-        font-size: 40px;
+        font-size: 18px;
         font-weight: 700;
     }
+    
     h3{
-        font-size: 32px;
+        overflow: hidden; 
+        display: -webkit-box;
+        //height: 112px;
+        text-overflow: ellipsis; 
+        font-size: 40px;
         font-weight: 100;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         word-break: keep-all;
     }
     .desc{
@@ -157,11 +150,8 @@ const TxtBox = styled.div`
         margin-top: 10px;
         color: ${theme.color.white};
     }
-
+    
     ${({theme}) => theme.large`        
-        h3{
-            font-size: 40px;
-        }
         .desc{
             width: 80%;
         }
@@ -169,10 +159,9 @@ const TxtBox = styled.div`
 
     ${({theme}) => theme.medium`
         padding: 40px 0;
-        align-self: flex-start;
         
-        strong{
-            left: 40px;
+        h3{
+            height: auto;
         }
         
         .desc{
@@ -185,13 +174,10 @@ const TxtBox = styled.div`
         padding-bottom: ${vw(40)};
         
         strong{
-            top: ${vw(40)};
-            left: ${vw(40)};
-            font-size: ${vw(60)};
+            font-size: ${vw(24)};
         }
         
         h3{
-            // margin-top: ${vw(10)};
             font-size: ${vw(48)};
         }
         
@@ -211,13 +197,13 @@ const ThumbList = styled.ul`
     align-items: center;
     padding-left: 100px;
     height: 100vh;
-
+    
     li{
         overflow: hidden;
         position: relative;
+        display: flex;
         flex-shrink: 0;
-        padding-left: 50px;
-        padding-right: 200px;
+        padding-right: 100px;
         height: fit-content;
         max-height: 80%;
     }
@@ -227,9 +213,11 @@ const ThumbList = styled.ul`
         height: auto;
         
         li{
+            flex-direction: column;
             padding: 0;
             margin-bottom: 60px;
             width: 100%;
+            max-height: fit-content;
 
             &:last-of-type{
                 margin-bottom: 0;
@@ -299,8 +287,8 @@ function Project(){
                     Object.values(thumbImg).forEach((el) => {
 
                         let client = el.nextElementSibling.querySelector('strong');
-                        let tit = el.nextElementSibling.querySelector('.txt h3');
-                        let period = el.nextElementSibling.querySelector('.txt .period');
+                        let tit = el.nextElementSibling.querySelector('h3');
+                        let period = el.nextElementSibling.querySelector('.period');
 
                         gsap.set(client, {clipPath: "inset(100%)"});
                         gsap.set(tit, { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
@@ -319,24 +307,13 @@ function Project(){
                             .to(el, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: 'none', duration: 1}, 0)
                             .to(tit, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 1)
                             .to(period, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1}, 1)
-
-                        // gsap.timeline({
-                        //     scrollTrigger: {
-                        //         trigger: el,
-                        //         containerAnimation: scrollTween,
-                        //         start: 'center center',
-                        //         end: 'center left',
-                        //         scrub: true,
-                        //     }
-                        // })
-                        //     .to(el, {'clip-path': 'inset(30%)', ease: 'none', duration: 1}, 0);
                     });
                 },
                 "(max-width: 980px)": function() {
                     gsap.set(thumbImg, {clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
 
                     Object.values(thumbImg).map((img, idx) => {
-                        let txt = img.nextElementSibling.querySelector('.txt');
+                        let txt = img.nextElementSibling;
 
                         gsap.set(txt, { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
                         gsap.timeline({
@@ -396,13 +373,10 @@ function Project(){
                                     <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
                                 </ImgBox>
                                 <TxtBox className="txt-box">
-                                    <strong>{clientEn}</strong>
-                                    <div className="txt">
-                                        <h3>{name}</h3>
-                                        <Text name="desc2" className="period">{period}</Text>
-                                    </div>
-                                    {/*<Text name="desc3" className="desc">{desc}</Text>*/}
-                                    {/*<h3>[{client}] <br/> {name}</h3>*/}
+                                    <strong>{client}</strong>
+                                    <h3>{name}</h3>
+                                    <Text name="desc3" className="desc">{desc}</Text>
+                                    <Text name="desc2" className="period">{period}</Text>
                                 </TxtBox>
                             </li>
                         ))}
