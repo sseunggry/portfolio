@@ -32,35 +32,44 @@ const Inner = styled.div`
         padding-right: 60px;
     `};
 
+    ${({theme}) => theme.large`
+        padding-top: 100px;
+        padding-bottom: 100px;
+    `};
+
     ${({theme}) => theme.small`
         padding: ${vw(150)} ${vw(40)};
     `};
 `;
-const TitBox = styled.div`
+const TitBox = styled(motion.div)`
     
 `;
 const TxtName = styled(motion.div)`
-    font-family: 'Playfair Display', serif;
-    font-size: 180px;
-    font-weight: 900;
-    //color: ${theme.color.white};
-    color: transparent;
-    letter-spacing: 5px;
-    line-height: 1;
-    -webkit-text-stroke: ${theme.color.white} 2px;
-    
-    
-    display: flex;
-    flex-direction: column;
-    
     svg{
         &:nth-of-type(1){
             width: 400px;
+
+            ${({theme}) => theme.mLarge`
+                width: 32%;
+            `};
+
+            ${({theme}) => theme.medium`
+                width: 40%;
+            `};
         }
         &:nth-of-type(2){
             margin-top: 40px;
             margin-left: 10%;
             width: 980px;
+
+            ${({theme}) => theme.mLarge`
+                width: 80%;
+            `};
+
+            ${({theme}) => theme.medium`
+                margin-left: auto;
+                width: 100%;
+            `};
         }
         path{
             //fill: transparent;
@@ -68,31 +77,14 @@ const TxtName = styled(motion.div)`
             stroke-width: 2;
             stroke-miterlimit: 10;
         }
-        // g{
-        //     fill: none;
-        //     stroke: ${theme.color.white};
-        //     stroke-width: 2;
-        //     stroke-miterlimit: 10;
-        // }
-    }
-    
-    p{
-        opacity: 0;
-        width: fit-content;
-        &:nth-of-type(1){
-            text-align: left;
-        }
-        
-        &:nth-of-type(2){
-            padding-left: 10%;
-        }
     }
 `;
-const TxtJob = styled.div`
-    //display: flex;
-    //flex-direction: column;
-    //align-items: center;
+const TxtJob = styled(motion.div)`
     width: fit-content;
+
+    ${({theme}) => theme.medium`
+        width: 100%;
+    `};
     
     svg{
         display: block;
@@ -111,82 +103,68 @@ const TxtJob = styled.div`
         font-weight: 200;
         color: ${theme.color.white};
         line-height: 1;
+
+        ${({theme}) => theme.mLarge`
+            font-size: 140px;
+        `};
+
+        ${({theme}) => theme.sLarge`
+            font-size: 130px;
+        `};
+
+        ${({theme}) => theme.medium`
+            width: 100%;
+            text-align: center;
+        `};
     }
 `;
 const TxtBox = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-`;
-const TxtSvg = styled.div`
-    svg{
-        text{
-            font-family: 'Playfair Display', serif;
-            font-size: 180px;
-            fill: transparent;
-            stroke: ${theme.color.white};
-            stroke-width: 2;
-            text-anchor: middle;
-        }
-    }
-`;
-const Svg = styled.svg`
-    //width: 800px;
+    width: 50%;
+    text-align: right;
 
-    path{
-        fill: none;
-        stroke: ${theme.color.white};
-        stroke-width: 7;
-        stroke-miterlimit: 10;
-    }
+    ${({theme}) => theme.xLarge`
+        right: 60px;
+    `};
 
-    //@keyframes strokeOffset {
-    //    to {
-    //        stroke-dashoffset: 0;
-    //    }
-    //}
-    //
-    //#mask-s {
-    //    animation: strokeOffset 0.5s linear forwards;
-    //}
-    //#mask-e {
-    //    animation: strokeOffset 0.5s linear forwards 0.5s;
-    //}
-    //#mask-u{
-    //    animation: strokeOffset 0.5s linear forwards 1s;
-    //}
-    //#mask-n{
-    //    animation: strokeOffset 0.5s linear forwards 1.5s;
-    //}
-    //#mask-g {
-    //    animation: strokeOffset 0.5s linear forwards 2s;
-    //}
+    ${({theme}) => theme.large`
+        position: initial;
+        margin-top: 50px;
+        width: 100%;
+    `};
+
+    ${({theme}) => theme.medium`
+        text-align: center;
+    `};
 `;
 const Desc = styled.p`
-    margin-bottom: 70px;
-    font-size: 18px;
-    font-weight: 100;
+    margin-bottom: 50px;
+    font-size: 16px;
+    font-weight: 200;
     line-height: 1.8;
     letter-spacing: 0;
     color: ${theme.color.gray2};
     text-align: right;
     word-break: keep-all;
 
-    // ${({theme}) => theme.large`
-    //     font-size: 18px;
-    // `};
-    //
-    // ${({theme}) => theme.medium`
-    //     font-size: 18px;
-    // `};
+    ${({theme}) => theme.medium`
+        text-align: center;
+    `};
 
     ${({theme}) => theme.small`
         font-size: ${vw(28)};
     `};
 `;
 const Img = styled.img`
-    width: 566px;
+    //width: 566px;
+    width: 80%;
     height: 134px;
+
+    ${({theme}) => theme.xLarge`
+        
+    `};
 `;
 const LoadTxt = styled.div`
     overflow: hidden;
@@ -231,6 +209,18 @@ const LoadTxt = styled.div`
         }
     }
 `;
+
+
+const txtAni = {
+  hide : {opacity: 0},
+  show: {
+      opacity: 1,
+      transition: {
+          // staggerChildren: 0.5,
+          delayChildren: 1
+      }
+  }
+};
 const txtNameAni = {
     hide: {pathLength: 0, opacity: 0, fill: "transparent"},
     show: {
@@ -238,40 +228,33 @@ const txtNameAni = {
         pathLength: [0, 1],
         opacity: [0, 1],
         transition: {
-            // duration: 4,
             pathLength: {duration: 2, bounce: 0},
             opacity: {duration: 0.05},
-            fill: {delay: 3, duration: 1}
-            // repeat: Infinity,
-            // repeatType: "loop",
+            fill: {delay: 3, duration: 2}
         },
-        // strokeDasharray: ["50%", 0]
+        onanimationend: () => {
+
+        }
     },
-    // hide2: {
-    //     pathLength: [1, 0],
-    //     opacity: [1, 0],
-    //     transition: {
-    //         pathLength: {duration: 2, bounce: 0},
-    //         opacity: {duration: 2},
-    //     },
-    // }
-}
-const drawSvgTxt = {
-    hidden: {pathLength: 0, opacity: 0},
-    visible: (i) => {
-        const delay = i * 1;
-        return {
-            pathLength: 1,
-            opacity: 1,
-            // delay: stagger(0.5, { startDelay: 0.5 }),
-            transition: {
-                // duration: 2,
-                pathLength: {delay, duration: 1, bounce: 0},
-                opacity: {delay, duration: 0.01},
-                // repeat: Infinity,
-                // repeatType: "loop",
-            },
-        };
+};
+const item1 = {
+    hide: {pathLength: 0, opacity: 0},
+    show: {
+        pathLength: 1,
+        opacity: 1,
+        transition: {
+            pathLength: {duration: 0.5, bounce: 0},
+            opacity: {duration: 0.05},
+        }
+    }
+};
+const item2 = {
+    hide: {opacity: 0},
+    show: {
+        opacity: 1,
+        transition: {
+            opacity: {duration: 1},
+        }
     }
 };
 
@@ -280,17 +263,25 @@ function MainVisual(){
     const loadTxtRef = useRef(null);
     const [isSvgTxtAni, setSvgTxtAni] = useState(false);
 
+    const desc = document.querySelector('.desc');
+    const img = document.querySelector('.img');
+    gsap.set(desc, {yPercent: 30, opacity: 0});
+    gsap.set(img, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+
     const onAnimationComplete = () => {
-        setSvgTxtAni(false);
-        setTimeout(() => {
-            setSvgTxtAni(true);
-        }, 2000);
+        const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
+        aniTxt
+            .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"})
+            .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                // onComplete: () => {
+                //     lenis.start();
+                // }
+            });
     };
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        const section = sectionRef.current;
         const loadTxt = loadTxtRef.current;
 
         const loadTxtList = loadTxt.querySelectorAll('p');
@@ -302,65 +293,27 @@ function MainVisual(){
         });
         const loadTxtSpan = loadTxt.querySelectorAll('span');
 
-        // const tit1 = section.querySelector(".tit-box p:nth-of-type(1)");
-        // const tit2 = section.querySelector(".tit-box p:nth-of-type(2)");
-        // const tit3 = section.querySelector(".tit-box p:nth-of-type(3)");
-        const desc = section.querySelector(".desc");
-        const scroll = section.querySelector(".txt-scroll");
-
         let ctx = gsap.context(() => {
             gsap.set(loadTxtSpan, {yPercent: 100});
-            // gsap.set(tit1, {yPercent: 20, opacity: 0});
-            // gsap.set(tit3, {yPercent: -20, opacity: 0});
-            // gsap.set(tit2, {opacity: 0});
-            gsap.set(desc, {yPercent: 30, opacity: 0});
-            gsap.set(scroll, {opacity: 0});
 
             gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
                 onStart: () => {
-                    lenis.stop();
+                    // lenis.stop();
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
-
-                    if(window.scrollY !== 0 ){
-                        lenis.start();
-                    }
-
-                    visualAni();
+                    //
+                    // if(window.scrollY !== 0 ){
+                    //     lenis.start();
+                    // }
+                    setSvgTxtAni(true);
                 }
             });
-
-            const visualAni = () => {
-                const aniTxt = gsap.timeline({
-                    onComplete: () => {
-                        lenis.start();
-                    }
-                });
-                setSvgTxtAni(true);
-                aniTxt
-                    // .to(tit2, {opacity: 1, delay: 0.1, ease: "expo.in"})
-                    // .to(tit1, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
-                    // .to(tit3, {yPercent: 0, opacity: 1, ease: "expo.inOut"}, "tit")
-                    .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"});
-                // .to(scroll, {opacity: 1});
-            }
         }, loadTxt);
 
         return () => ctx.revert();
-
     }, []);
-    // useEffect(() => {
-    //     const masks = ['s', 'e', 'u', 'n', 'g'];
-    //
-    //     masks.forEach((txt, index, el) => {
-    //         const id = `#mask-${txt}`
-    //         let path = document.querySelector(id);
-    //         const length = path.getTotalLength();
-    //         path.style.strokeDasharray = length;
-    //         path.style.strokeDashoffset = length;
-    //     })
-    // }, []);
+
     return (
         <>
             <LoadTxt ref={loadTxtRef}>
@@ -368,16 +321,15 @@ function MainVisual(){
             </LoadTxt>
             <Section className="sec-kv" ref={sectionRef}>
                 <Inner>
-                    <TitBox>
-                        {/*onAnimationComplete={onAnimationComplete}*/}
-                        <TxtName initial="hide" animate={isSvgTxtAni ? "show" : null}>
+                    <TitBox initial="hide" animate={isSvgTxtAni ? "show" : "hide"} variants={txtAni} onAnimationComplete={onAnimationComplete}>
+                        <TxtName initial="hide" animate={isSvgTxtAni ? "show" : "hide"} >
                             <svg id="name-first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412.76 145.49">
                                 <motion.path variants={txtNameAni} id="name-c" d="M69.04,12.01c7.92,0,14.43,1.17,19.53,3.51,5.1,2.34,9.63,5.07,13.59,8.19,2.4,1.8,4.23,2.01,5.49.63,1.26-1.38,2.13-4.65,2.61-9.81h4.14c-.24,4.8-.42,10.65-.54,17.55-.12,6.9-.18,16.05-.18,27.45h-4.14c-.48-5.76-1.26-10.89-2.34-15.39s-2.7-8.49-4.86-11.97c-2.16-3.48-5.28-6.54-9.36-9.18-2.52-1.68-5.19-3-8.01-3.96-2.82-.96-5.73-1.44-8.73-1.44-6.84,0-12.48,1.89-16.92,5.67-4.44,3.78-7.89,8.7-10.35,14.76-2.46,6.06-4.17,12.66-5.13,19.8-.96,7.14-1.44,14.07-1.44,20.79s.48,13.65,1.44,20.79c.96,7.14,2.67,13.74,5.13,19.8,2.46,6.06,5.91,10.98,10.35,14.76,4.44,3.78,10.08,5.67,16.92,5.67,3,0,5.91-.51,8.73-1.53,2.82-1.02,5.49-2.31,8.01-3.87,6-3.72,10.05-8.7,12.15-14.94,2.1-6.24,3.57-14.28,4.41-24.12h4.14c0,11.76.06,21.27.18,28.53.12,7.26.3,13.35.54,18.27h-4.14c-.48-5.16-1.29-8.4-2.43-9.72-1.14-1.32-3.03-1.14-5.67.54-4.44,3.12-9.15,5.85-14.13,8.19-4.98,2.34-11.37,3.51-19.17,3.51-13.56,0-25.44-2.58-35.64-7.74-10.2-5.16-18.12-12.6-23.76-22.32C3.82,104.71,1,93.01,1,79.33s2.91-25.2,8.73-35.28c5.82-10.08,13.83-17.94,24.03-23.58,10.2-5.64,21.96-8.46,35.28-8.46Z" />
                                 <motion.path variants={txtNameAni} id="name-h" d="M174.7,1.21v58.32c2.88-4.8,6.75-8.25,11.61-10.35,4.86-2.1,10.53-3.15,17.01-3.15,5.52,0,9.87.69,13.05,2.07,3.18,1.38,5.61,3.09,7.29,5.13,1.8,2.16,3.12,5.04,3.96,8.64.84,3.6,1.26,8.46,1.26,14.58v48.78c0,5.04.75,8.46,2.25,10.26,1.5,1.8,4.11,2.7,7.83,2.7v3.78c-2.4-.12-6.03-.27-10.89-.45-4.86-.18-9.63-.27-14.31-.27-5.04,0-9.96.09-14.76.27-4.8.18-8.4.33-10.8.45v-3.78c3.12,0,5.28-.9,6.48-2.7,1.2-1.8,1.8-5.22,1.8-10.26v-58.5c0-2.52-.3-4.62-.9-6.3-.6-1.68-1.53-2.94-2.79-3.78-1.26-.84-2.97-1.26-5.13-1.26s-4.23.54-6.21,1.62c-1.98,1.08-3.6,2.61-4.86,4.59-1.26,1.98-1.89,4.23-1.89,6.75v56.88c0,5.04.63,8.46,1.89,10.26,1.26,1.8,3.39,2.7,6.39,2.7v3.78c-2.28-.12-5.64-.27-10.08-.45-4.44-.18-9-.27-13.68-.27-5.04,0-10.14.09-15.3.27-5.16.18-9.06.33-11.7.45v-3.78c3.72,0,6.33-.9,7.83-2.7,1.5-1.8,2.25-5.22,2.25-10.26V22.81c0-5.4-.72-9.39-2.16-11.97-1.44-2.58-4.08-3.87-7.92-3.87v-3.78c3.84.36,7.56.54,11.16.54,6,0,11.61-.21,16.83-.63,5.22-.42,10.05-1.05,14.49-1.89Z"/>
                                 <motion.path variants={txtNameAni} id="name-o" d="M298.18,46.03c9.36,0,17.49,1.59,24.39,4.77,6.9,3.18,12.27,8.37,16.11,15.57,3.84,7.2,5.76,16.86,5.76,28.98s-1.92,21.78-5.76,28.98c-3.84,7.2-9.21,12.36-16.11,15.48-6.9,3.12-15.03,4.68-24.39,4.68s-17.34-1.56-24.3-4.68c-6.96-3.12-12.36-8.28-16.2-15.48-3.84-7.2-5.76-16.86-5.76-28.98s1.92-21.78,5.76-28.98c3.84-7.2,9.24-12.39,16.2-15.57,6.96-3.18,15.06-4.77,24.3-4.77ZM298.18,49.63c-3.6,0-6.6,3.6-9,10.8-2.4,7.2-3.6,18.84-3.6,34.92s1.2,27.69,3.6,34.83c2.4,7.14,5.4,10.71,9,10.71s6.6-3.57,9-10.71c2.4-7.14,3.6-18.75,3.6-34.83s-1.2-27.72-3.6-34.92c-2.4-7.2-5.4-10.8-9-10.8Z" />
                                 <motion.path variants={txtNameAni} id="name-i" d="M401.68,46.57v78.66c0,5.04.75,8.46,2.25,10.26,1.5,1.8,4.11,2.7,7.83,2.7v3.78c-2.4-.12-6-.27-10.8-.45-4.8-.18-9.72-.27-14.76-.27s-10.14.09-15.3.27c-5.16.18-9.06.33-11.7.45v-3.78c3.72,0,6.33-.9,7.83-2.7,1.5-1.8,2.25-5.22,2.25-10.26v-57.06c0-5.4-.72-9.39-2.16-11.97-1.44-2.58-4.08-3.87-7.92-3.87v-3.78c3.84.36,7.56.54,11.16.54,6,0,11.61-.21,16.83-.63,5.22-.42,10.05-1.05,14.49-1.89ZM384.4,1.21c6.24,0,11.07,1.29,14.49,3.87,3.42,2.58,5.13,6.45,5.13,11.61s-1.71,9.03-5.13,11.61c-3.42,2.58-8.25,3.87-14.49,3.87s-11.07-1.29-14.49-3.87c-3.42-2.58-5.13-6.45-5.13-11.61s1.71-9.03,5.13-11.61c3.42-2.58,8.25-3.87,14.49-3.87Z"/>
                             </svg>
-                            <svg id="name-last" xmlns="http://www.w3.org/2000/svg" width="1006.47" height="165.8" viewBox="0 0 1006.47 165.8">
+                            <svg id="name-last" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1006.47 165.8">
                                 <motion.path variants={txtNameAni} id="name-s" d="M46.62,1c7.8,0,13.86.78,18.18,2.34,4.32,1.56,7.98,3.18,10.98,4.86,1.44.84,2.61,1.47,3.51,1.89.9.42,1.77.63,2.61.63,1.2,0,2.07-.66,2.61-1.98.54-1.32.99-3.3,1.35-5.94h4.14c-.12,2.52-.27,5.46-.45,8.82-.18,3.36-.3,7.8-.36,13.32-.06,5.52-.09,12.78-.09,21.78h-4.14c-.48-6.6-2.01-13.02-4.59-19.26-2.58-6.24-6.12-11.4-10.62-15.48-4.5-4.08-9.87-6.12-16.11-6.12-5.28,0-9.66,1.44-13.14,4.32-3.48,2.88-5.22,7.02-5.22,12.42,0,4.44,1.08,8.25,3.24,11.43,2.16,3.18,5.55,6.51,10.17,9.99,4.62,3.48,10.71,7.86,18.27,13.14,5.4,3.72,10.29,7.44,14.67,11.16,4.38,3.72,7.89,7.92,10.53,12.6,2.64,4.68,3.96,10.32,3.96,16.92,0,8.04-2.25,14.7-6.75,19.98-4.5,5.28-10.47,9.21-17.91,11.79-7.44,2.58-15.54,3.87-24.3,3.87-8.16,0-14.67-.72-19.53-2.16-4.86-1.44-8.97-2.94-12.33-4.5-2.64-1.68-4.68-2.52-6.12-2.52-1.2,0-2.07.66-2.61,1.98-.54,1.32-.99,3.3-1.35,5.94H1.08c.24-3.12.39-6.75.45-10.89.06-4.14.12-9.51.18-16.11.06-6.6.09-15,.09-25.2h4.14c.48,8.4,1.83,16.26,4.05,23.58,2.22,7.32,5.64,13.23,10.26,17.73,4.62,4.5,10.77,6.75,18.45,6.75,4.44,0,8.25-.69,11.43-2.07,3.18-1.38,5.67-3.39,7.47-6.03,1.8-2.64,2.7-5.82,2.7-9.54,0-5.04-1.14-9.45-3.42-13.23-2.28-3.78-5.37-7.32-9.27-10.62-3.9-3.3-8.43-6.63-13.59-9.99-5.64-3.84-10.92-7.68-15.84-11.52-4.92-3.84-8.85-8.16-11.79-12.96-2.94-4.8-4.41-10.5-4.41-17.1,0-7.92,2.1-14.37,6.3-19.35,4.2-4.98,9.72-8.67,16.56-11.07,6.84-2.4,14.1-3.6,21.78-3.6Z" />
                                 <motion.path variants={txtNameAni} id="name-e" d="M159.84,35.02c10.56,0,18.87,3.09,24.93,9.27,6.06,6.18,9.09,16.53,9.09,31.05h-56.34l-.36-3.42h30.42c.12-5.88-.12-11.31-.72-16.29-.6-4.98-1.56-8.97-2.88-11.97-1.32-3-3.12-4.5-5.4-4.5-3.24,0-5.88,2.55-7.92,7.65-2.04,5.1-3.36,13.83-3.96,26.19l.72,1.44c-.12,1.2-.18,2.4-.18,3.6v3.78c0,8.4,1.05,14.94,3.15,19.62,2.1,4.68,4.74,7.92,7.92,9.72,3.18,1.8,6.39,2.7,9.63,2.7,1.68,0,3.69-.24,6.03-.72,2.34-.48,4.89-1.59,7.65-3.33,2.76-1.74,5.46-4.41,8.1-8.01l3.06,1.08c-1.44,4.8-3.75,9.57-6.93,14.31-3.18,4.74-7.29,8.64-12.33,11.7-5.04,3.06-11.16,4.59-18.36,4.59-7.68,0-14.67-1.56-20.97-4.68-6.3-3.12-11.31-8.28-15.03-15.48-3.72-7.2-5.58-16.86-5.58-28.98s2.04-20.91,6.12-28.17c4.08-7.26,9.63-12.6,16.65-16.02,7.02-3.42,14.85-5.13,23.49-5.13Z" />
                                 <motion.path variants={txtNameAni} id="name-u" d="M302.58,35.56v75.78c0,5.4.75,9.39,2.25,11.97,1.5,2.58,4.11,3.87,7.83,3.87v3.78c-3.72-.36-7.44-.54-11.16-.54-6,0-11.58.18-16.74.54-5.16.36-10.02,1.02-14.58,1.98v-12.96c-2.88,4.8-6.75,8.25-11.61,10.35-4.86,2.1-10.53,3.15-17.01,3.15-5.52,0-9.87-.69-13.05-2.07-3.18-1.38-5.61-3.09-7.29-5.13-1.8-2.16-3.12-5.04-3.96-8.64-.84-3.6-1.26-8.46-1.26-14.58v-45.9c0-5.4-.72-9.39-2.16-11.97-1.44-2.58-4.08-3.87-7.92-3.87v-3.78c3.84.36,7.56.54,11.16.54,6,0,11.61-.21,16.83-.63,5.22-.42,10.05-1.05,14.49-1.89v77.22c0,2.52.3,4.62.9,6.3.6,1.68,1.56,2.94,2.88,3.78,1.32.84,3,1.26,5.04,1.26,2.28,0,4.38-.54,6.3-1.62,1.92-1.08,3.51-2.61,4.77-4.59,1.26-1.98,1.89-4.23,1.89-6.75v-54c0-5.4-.72-9.39-2.16-11.97-1.44-2.58-4.08-3.87-7.92-3.87v-3.78c3.84.36,7.56.54,11.16.54,6,0,11.61-.21,16.83-.63,5.22-.42,10.05-1.05,14.49-1.89Z" />
@@ -389,16 +341,11 @@ function MainVisual(){
                                 <motion.path variants={txtNameAni} id="name-n-2" d="M969.83,35.02c5.52,0,9.87.69,13.05,2.07,3.18,1.38,5.61,3.09,7.29,5.13,1.8,2.16,3.12,5.04,3.96,8.64.84,3.6,1.26,8.46,1.26,14.58v48.78c0,5.04.75,8.46,2.25,10.26,1.5,1.8,4.11,2.7,7.83,2.7v3.78c-2.4-.12-6.03-.27-10.89-.45-4.86-.18-9.63-.27-14.31-.27-5.04,0-9.96.09-14.76.27-4.8.18-8.4.33-10.8.45v-3.78c3.12,0,5.28-.9,6.48-2.7,1.2-1.8,1.8-5.22,1.8-10.26v-58.5c0-2.52-.3-4.62-.9-6.3-.6-1.68-1.53-2.94-2.79-3.78-1.26-.84-2.97-1.26-5.13-1.26s-4.23.54-6.21,1.62c-1.98,1.08-3.6,2.61-4.86,4.59-1.26,1.98-1.89,4.23-1.89,6.75v56.88c0,5.04.63,8.46,1.89,10.26,1.26,1.8,3.39,2.7,6.39,2.7v3.78c-2.28-.12-5.64-.27-10.08-.45-4.44-.18-9-.27-13.68-.27-5.04,0-10.14.09-15.3.27-5.16.18-9.06.33-11.7.45v-3.78c3.72,0,6.33-.9,7.83-2.7,1.5-1.8,2.25-5.22,2.25-10.26v-57.06c0-5.4-.72-9.39-2.16-11.97-1.44-2.58-4.08-3.87-7.92-3.87v-3.78c3.84.36,7.56.54,11.16.54,6,0,11.61-.21,16.83-.63,5.22-.42,10.05-1.05,14.49-1.89v12.96c2.88-4.8,6.75-8.25,11.61-10.35,4.86-2.1,10.53-3.15,17.01-3.15Z" />
                             </svg>
                         </TxtName>
-                        {/*<TxtName>*/}
-                        {/*    <motion.p initial="hide" animate="show" variants={txtNameAni}>Choi</motion.p>*/}
-                        {/*    <motion.p initial="hide" animate="show" variants={txtNameAni}>Seung Yeon</motion.p>*/}
-                        {/*</TxtName>*/}
                         <TxtJob>
-                            <svg viewBox="0 0 130 130">
-                                <line x1="0" y1="130" x2="130" y2="0" />
+                            <svg viewBox="0 0 130 130" >
+                                <motion.line variants={item1} x1="0" y1="130" x2="130" y2="0" />
                             </svg>
-                            <span className="line"></span>
-                            <p>Publisher</p>
+                            <motion.p variants={item2}>Publisher</motion.p>
                         </TxtJob>
                     </TitBox>
                     <TxtBox>
@@ -407,7 +354,7 @@ function MainVisual(){
                             화면에 보여지는 부분 뿐만 아니라 기능적인 작업에도 흥미를 느끼고 있으며, <br/>
                             프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
                         </Desc>
-                        <Img></Img>
+                        <Img className="img"></Img>
                     </TxtBox>
                 </Inner>
             </Section>

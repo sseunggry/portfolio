@@ -201,7 +201,7 @@ function Contact() {
         let ctx = gsap.context(() => {
             gsap.set(pageTit, {yPercent: 110});
             gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"})
+            gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
