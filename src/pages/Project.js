@@ -7,6 +7,7 @@ import Text from "../styles/Text";
 import {vw} from "../utils/common";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {Link} from "react-router-dom";
 
 const ProjectCon = styled.div`
     position: relative;
@@ -291,7 +292,6 @@ function Project(){
                             scrub: 1,
                             start: "center center",
                             end: "300%",
-                            // markers: true,
                         }
                     });
 
@@ -379,7 +379,7 @@ function Project(){
     }, []);
 
     return (
-        <Layout header={{active: 1, color: theme.color.white, }}>
+        <Layout header={{active: 1}}>
             <ProjectCon ref={sectionRef}>
                 <Inner className="inner">
                     <Text name="tit1" color={theme.color.white} className="mask">
@@ -390,20 +390,22 @@ function Project(){
                         <li>personal <span className="outfit">{projectPersonal.length}</span></li>
                     </Tab>
                     <ThumbList ref={thumbRef}>
-                        {projectData.map(({clientEn, client, name, period, thumbImg, desc}, idx) => (
+                        {projectData.map(({clientEn, client, name, period, thumbImg, desc, id}, idx) => (
                             <li key={idx}>
-                                <ImgBox className="img-box">
-                                    <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
-                                </ImgBox>
-                                <TxtBox className="txt-box">
-                                    <strong>{clientEn}</strong>
-                                    <div className="txt">
-                                        <h3>{name}</h3>
-                                        <Text name="desc2" className="period">{period}</Text>
-                                    </div>
-                                    {/*<Text name="desc3" className="desc">{desc}</Text>*/}
-                                    {/*<h3>[{client}] <br/> {name}</h3>*/}
-                                </TxtBox>
+                                <Link to={`/project/${id}`}>
+                                    <ImgBox className="img-box">
+                                        <img src={`${img}/${thumbImg}`} alt={`${name} 썸네일 이미지`}/>
+                                    </ImgBox>
+                                    <TxtBox className="txt-box">
+                                        <strong>{clientEn}</strong>
+                                        <div className="txt">
+                                            <h3>{name}</h3>
+                                            <Text name="desc2" className="period">{period}</Text>
+                                        </div>
+                                        {/*<Text name="desc3" className="desc">{desc}</Text>*/}
+                                        {/*<h3>[{client}] <br/> {name}</h3>*/}
+                                    </TxtBox>
+                                </Link>
                             </li>
                         ))}
                     </ThumbList>

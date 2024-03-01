@@ -194,7 +194,7 @@ function MainContact(){
                         trigger: section,
                         start: "top top",
                         end: "center 100%",
-                        scrub: 1,
+                        scrub: 1
                     });
                 },
                 "(max-width: 720px)": function() {

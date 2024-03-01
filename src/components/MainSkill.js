@@ -141,23 +141,6 @@ function MainSkill() {
                     });
                 }
             });
-            // let ani1 = gsap.timeline({
-            //     ease: "none",
-            //     scrollTrigger: {
-            //         trigger: section,
-            //         start: "top 50%",
-            //         end: "0 100%",
-            //         scrub: 1,
-            //     },
-            // });
-            // ani1.to('body', {backgroundColor: theme.color.black, duration: 2})
-            // .to(txt, { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", color: theme.color.white, stagger: 0.1,duration: 5}, 'motion1')
-            // .to(txt2, {color: theme.color.white, opacity: 0.1, stagger: 0.1, duration: 5}, 'motion1')
-            // .to(section, {backgroundColor: theme.color.black})
-            // .to('body', {backgroundColor: theme.color.white, duration: 2}, 'motion')
-            // .to(txt, {color: theme.color.black, duration: 2}, 'motion')
-            // .to(txt2, {color: theme.color.black, opacity: 0.5, duration: 2}, 'motion');
-
         });
 
         return () => ctx.revert();

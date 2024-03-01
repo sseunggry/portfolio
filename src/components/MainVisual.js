@@ -4,17 +4,14 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef, useState} from "react";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
-import {lenis} from "../utils/smooth";
 import {motion, useMotionValueEvent, AnimatePresence, stagger} from "framer-motion";
+import {loadingTxt} from "../recoil/atoms";
+import {useRecoilValue} from "recoil";
 
 const Section = styled.section`
-    overflow: hidden;
-    position: relative;
-    //display: flex;
-    //flex-direction: column;
-    //align-items: center;
+    display: flex;
+    align-items: center;
     //justify-content: center;
-    padding-top: 80px;
     background-color: ${theme.color.black};
 
     ${({theme}) => theme.small`
@@ -38,7 +35,7 @@ const Inner = styled.div`
     `};
 
     ${({theme}) => theme.small`
-        padding: ${vw(150)} ${vw(40)};
+        padding: ${vw(100)} ${vw(40)} ${vw(150)};
     `};
 `;
 const TitBox = styled(motion.div)`
@@ -47,7 +44,7 @@ const TitBox = styled(motion.div)`
 const TxtName = styled(motion.div)`
     svg{
         &:nth-of-type(1){
-            width: 400px;
+            width: 360px;
 
             ${({theme}) => theme.mLarge`
                 width: 32%;
@@ -60,7 +57,7 @@ const TxtName = styled(motion.div)`
         &:nth-of-type(2){
             margin-top: 40px;
             margin-left: 10%;
-            width: 980px;
+            width: 940px;
 
             ${({theme}) => theme.mLarge`
                 width: 80%;
@@ -88,18 +85,28 @@ const TxtJob = styled(motion.div)`
     
     svg{
         display: block;
-        margin: 60px auto 40px;
-        width: 130px;
-        height: 130px;
+        margin: 40px auto 40px;
+        width: 80px;
+        height: 80px;
         
         line{
-            stroke-width: 1px;
+            stroke-width: 2px;
             stroke: ${theme.color.white};
+
+            ${({theme}) => theme.small`
+                stroke-width: ${vw(2)};
+            `};
         }
+
+        ${({theme}) => theme.small`
+            margin: ${vw(60)} auto ${vw(40)};
+            width: ${vw(100)};
+            height: ${vw(100)};
+        `};
     }
     p{
         width: fit-content;
-        font-size: 150px;
+        font-size: 130px;
         font-weight: 200;
         color: ${theme.color.white};
         line-height: 1;
@@ -115,6 +122,10 @@ const TxtJob = styled(motion.div)`
         ${({theme}) => theme.medium`
             width: 100%;
             text-align: center;
+        `};
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(120)};
         `};
     }
 `;
@@ -162,54 +173,10 @@ const Img = styled.img`
     width: 80%;
     height: 134px;
 
-    ${({theme}) => theme.xLarge`
-        
+    ${({theme}) => theme.sMedium`
+        width: 100%;
     `};
 `;
-const LoadTxt = styled.div`
-    overflow: hidden;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    color: ${theme.color.black};
-    text-align: center;
-    background-color: ${theme.color.white};
-    transform: translate(0, 0);
-    transition: transform 1.5s cubic-bezier(0.19,1,0.22,1);
-    z-index: 999;
-
-    &.hide{
-        transform: translate(0, -100%);
-    }
-
-    p{
-        overflow: hidden;
-        height: fit-content;
-        //padding: 0 40px;
-        font-size: 240px;
-        font-weight: 800;
-
-        ${({theme}) => theme.large`
-            font-size: 200px;
-        `}
-
-        ${({theme}) => theme.medium`
-            font-size: 140px;
-        `}
-
-        ${({theme}) => theme.small`
-            font-size: ${vw(130)};
-        `}
-
-        span{
-            display: inline-block;
-        }
-    }
-`;
-
 
 const txtAni = {
   hide : {opacity: 0},
@@ -260,7 +227,8 @@ const item2 = {
 
 function MainVisual(){
     const sectionRef = useRef(null);
-    const loadTxtRef = useRef(null);
+    const txtDescRef = useRef(null);
+    const loading = useRecoilValue(loadingTxt);
     const [isSvgTxtAni, setSvgTxtAni] = useState(false);
 
     const desc = document.querySelector('.desc');
@@ -271,8 +239,8 @@ function MainVisual(){
     const onAnimationComplete = () => {
         const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
         aniTxt
-            .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"})
-            .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out", duration: 0.5})
+            .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
                 // onComplete: () => {
                 //     lenis.start();
                 // }
@@ -280,45 +248,27 @@ function MainVisual(){
     };
 
     useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+        if(loading) {
+            setSvgTxtAni(true);
+        }
+    }, [loading]);
 
-        const loadTxt = loadTxtRef.current;
-
-        const loadTxtList = loadTxt.querySelectorAll('p');
-        loadTxtList.forEach((el) => {
-            let txtDesc = el.innerText.split('');
-            let txtDescList = '';
-            txtDesc.map((txt) => txtDescList += `<span>${txt}</span>`);
-            el.innerHTML = txtDescList;
-        });
-        const loadTxtSpan = loadTxt.querySelectorAll('span');
-
-        let ctx = gsap.context(() => {
-            gsap.set(loadTxtSpan, {yPercent: 100});
-
-            gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
-                onStart: () => {
-                    // lenis.stop();
-                },
-                onComplete: () => {
-                    loadTxt.classList.add('hide');
-                    //
-                    // if(window.scrollY !== 0 ){
-                    //     lenis.start();
-                    // }
-                    setSvgTxtAni(true);
-                }
-            });
-        }, loadTxt);
-
-        return () => ctx.revert();
-    }, []);
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
+    //
+    //     const txtDesc = txtDescRef.current;
+    //     const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
+    //     aniTxt
+    //         .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"})
+    //         .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+    //             // onComplete: () => {
+    //             //     lenis.start();
+    //             // }
+    //         });
+    // }, []);
 
     return (
         <>
-            <LoadTxt ref={loadTxtRef}>
-                <p>SSEUNG</p>
-            </LoadTxt>
             <Section className="sec-kv" ref={sectionRef}>
                 <Inner>
                     <TitBox initial="hide" animate={isSvgTxtAni ? "show" : "hide"} variants={txtAni} onAnimationComplete={onAnimationComplete}>
@@ -348,7 +298,7 @@ function MainVisual(){
                             <motion.p variants={item2}>Publisher</motion.p>
                         </TxtJob>
                     </TitBox>
-                    <TxtBox>
+                    <TxtBox ref={txtDescRef}>
                         <Desc className="desc">
                             저는 퍼블리셔 3년차이며, 다양한 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
                             화면에 보여지는 부분 뿐만 아니라 기능적인 작업에도 흥미를 느끼고 있으며, <br/>

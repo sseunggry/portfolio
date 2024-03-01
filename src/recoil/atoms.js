@@ -20,3 +20,8 @@ export const windowWidths = atom({
     key: "windowWidth",
     default: window.innerWidth
 });
+
+export const loadingTxt = atom({
+   key: "loading",
+   default: false
+});

@@ -10,11 +10,11 @@ import theme from "../styles/theme";
 import {vw} from "../utils/common";
 
 const ContactCon = styled.div`
-    padding-top: 80px;
+    //padding-top: 80px;
     min-height: 100vh;
 
     ${({theme}) => theme.small`
-        padding-top: ${vw(120)};
+        // padding-top: ${vw(120)};
     `};
 `;
 const Inner = styled.div`

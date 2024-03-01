@@ -17,6 +17,7 @@ import Project4 from "./pages/Project4";
 import Project3 from "./pages/Project3";
 import Project1 from "./pages/Project1";
 import Project5 from "./pages/Project5";
+import ProjectDetail from "./pages/ProjectDetail";
 
 function App() {
     useEffect(() => {
@@ -32,11 +33,7 @@ function App() {
                         <Route path="/" element={<Home />}/>
                         <Route path="/about" element={<About />}/>
                         <Route path="/project" element={<Project />}/>
-                        <Route path="/project1" element={<Project1 />}/>
-                        <Route path="/project2" element={<Project2 />}/>
-                        <Route path="/project3" element={<Project3 />}/>
-                        <Route path="/project4" element={<Project4 />}/>
-                        <Route path="/project5" element={<Project5 />}/>
+                        <Route path="/project/:id" element={<ProjectDetail />} />
                         <Route path="/contact" element={<Contact />}/>
                     </Routes>
                 </BrowserRouter>

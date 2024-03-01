@@ -49,8 +49,8 @@ const Nav = styled.nav`
     a{
         margin-right: 40px;
         font-size: ${theme.font.display1.size};
-        color: ${theme.color.gray3};
         font-weight: 500;
+        color: ${theme.color.gray3};
         letter-spacing: 1px;
         text-transform: uppercase;
       
@@ -83,31 +83,37 @@ const Logo = styled.h1`
     }
 `;
 const HeaderTag = styled.header`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    mix-blend-mode: difference;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //width: 100%;
     
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
-    background-color: ${({color}) => color ? theme.color.black : theme.color.white};
-    border-bottom: 1px solid ${({color}) => color ? 'transparent' : theme.color.gray5};
     z-index: 10;
 
     ${Nav}{
         a{
+            opacity: 0.3;
+            color: ${theme.color.white};
             &:hover, &.active{
-                color: ${({color}) => color || theme.color.black}
+                opacity: 1;
+                //color: ${({color}) => color || theme.color.black}
             }
         }
     }
 
     ${Menu}{
         span{
-             background-color: ${({color}) => color || theme.color.black};
+             background-color: ${({color}) => color || theme.color.white};
         }
     }
 
@@ -122,6 +128,7 @@ const HeaderTag = styled.header`
         padding-left: ${vw(40)};
         padding-right: ${vw(40)};
         height: ${vw(120)};
+        // mix-blend-mode: initial;
     `};
 `;
 const MoMenu = styled.div`
@@ -149,17 +156,22 @@ const MoMenu = styled.div`
         margin: ${vw(60)} 0 ${vw(80)};
         
         a{
-            margin: 0 0 ${vw(80)};
-            font-size: ${vw(80)};
-            font-weight: 800;
-            letter-spacing: ${vw(3)};
+            margin: 0 0 ${vw(60)};
+            font-family: 'Playfair Display', serif;
+            font-size: ${vw(90)};
+            font-weight: 700;
+            opacity: 0.5;
+            letter-spacing: ${vw(5)};
+            //-webkit-text-stroke: ${vw(2)} ${theme.color.white} ;
             
             &:last-of-type{
                 margin-bottom: 0;
             }
             
             &.active, &:hover{
+                opacity: 1;
                 color: ${theme.color.white};
+                //-webkit-text-stroke-color: transparent;
             }
         }
     }
@@ -254,10 +266,10 @@ function Header({color, active, motion = false}){
 
     return (
         <>
-            <HeaderTag ref={headerRef} color={color}>
+            <HeaderTag ref={headerRef}>
                 <Logo className="logo">
                     <Link to="/">
-                        {color ? <img src={`${img}/logo_w.svg`} alt="logo" /> : <img src={`${img}/logo.svg`} alt="logo" />}
+                        <img src={`${img}/logo_w.svg`} alt="logo" />
                     </Link>
                 </Logo>
                 <Nav className="nav">
@@ -272,51 +284,51 @@ function Header({color, active, motion = false}){
                     <span></span>
                     <span></span>
                 </Menu>
-                <MoMenu ref={moMenuRef}>
-                    <Gnb>
-                        <Logo className="logo">
-                            <Link to="/">
-                                <img src={`${img}/logo_w.svg`} alt="logo" />
-                            </Link>
-                        </Logo>
-                        <BtnClose type="button" onClick={closeClick}>
-                            <span></span>
-                            <span></span>
-                        </BtnClose>
-                    </Gnb>
-                    <Nav className="nav">
-                        {navList.map((el, idx) => (
-                            <Link to={`/${el}`} key={idx} onClick={onClick} className={idx === active ? 'active' : ''}>
-                                {el}
-                            </Link>
-                        ))}
-                    </Nav>
-                    <InfoTxt>
-                        {contactInfo && contactInfo.map(({phone, email}, idx) => (
-                            <li key={idx}>
-                                {phone &&
-                                    <>
-                                        <p>연락처</p>
-                                        <Link to={`tel:${phone}`}>
-                                            +{phone}
-                                            <span className="line"></span>
-                                        </Link>
-                                    </>
-                                }
-                                {email &&
-                                    <>
-                                        <p>이메일</p>
-                                        <Link to={`mailto:${email}`}>
-                                            {email}
-                                            <span className="line"></span>
-                                        </Link>
-                                    </>
-                                }
-                            </li>
-                        ))}
-                    </InfoTxt>
-                </MoMenu>
             </HeaderTag>
+            <MoMenu ref={moMenuRef}>
+                <Gnb>
+                    <Logo className="logo">
+                        <Link to="/">
+                            <img src={`${img}/logo_w.svg`} alt="logo" />
+                        </Link>
+                    </Logo>
+                    <BtnClose type="button" onClick={closeClick}>
+                        <span></span>
+                        <span></span>
+                    </BtnClose>
+                </Gnb>
+                <Nav className="nav">
+                    {navList.map((el, idx) => (
+                        <Link to={`/${el}`} key={idx} onClick={onClick} className={idx === active ? 'active' : ''}>
+                            {el}
+                        </Link>
+                    ))}
+                </Nav>
+                <InfoTxt>
+                    {contactInfo && contactInfo.map(({phone, email}, idx) => (
+                        <li key={idx}>
+                            {phone &&
+                                <>
+                                    <p>연락처</p>
+                                    <Link to={`tel:${phone}`}>
+                                        +{phone}
+                                        <span className="line"></span>
+                                    </Link>
+                                </>
+                            }
+                            {email &&
+                                <>
+                                    <p>이메일</p>
+                                    <Link to={`mailto:${email}`}>
+                                        {email}
+                                        <span className="line"></span>
+                                    </Link>
+                                </>
+                            }
+                        </li>
+                    ))}
+                </InfoTxt>
+            </MoMenu>
         </>
     )
 }

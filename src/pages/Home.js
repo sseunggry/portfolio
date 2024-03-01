@@ -11,17 +11,21 @@ import {useEffect, useLayoutEffect} from "react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import MainProject_ from "../components/MainProject_";
+import LoadMotion from "../components/LoadMotion";
 
 
 function Home(){
     return(
-        <Layout header={{color: theme.color.white, motion: true}}>
-            <MainVisual />
-            <MainProject />
-            <MainSkill />
-            {/*<MainCareer />*/}
-            <MainContact />
-        </Layout>
+        <>
+            <LoadMotion />
+            <Layout header={{motion: true}}>
+                <MainVisual />
+                <MainProject />
+                <MainSkill />
+                {/*<MainCareer />*/}
+                <MainContact />
+            </Layout>
+        </>
     )
 }
 
