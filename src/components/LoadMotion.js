@@ -4,7 +4,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
-import {loadingTxt} from "../recoil/atoms";
+import {loadingTxtState} from "../recoil/atoms";
 import {useRecoilState} from "recoil";
 
 const LoadTxt = styled.div`
@@ -53,7 +53,7 @@ const LoadTxt = styled.div`
 
 function LoadMotion() {
     const loadTxtRef = useRef(null);
-    const [loading, setLoading] = useRecoilState(loadingTxt);
+    const [loading, setLoading] = useRecoilState(loadingTxtState);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);

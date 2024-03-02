@@ -21,7 +21,12 @@ export const windowWidths = atom({
     default: window.innerWidth
 });
 
-export const loadingTxt = atom({
-   key: "loading",
+export const loadingTxtState = atom({
+   key: "loadingState",
    default: false
+});
+
+export const projectTabState = atom({
+    key: "projectTabState",
+    default: "work"
 });

@@ -195,8 +195,6 @@ function MainProject(){
             const list = listRef.current;
             const listLi = list.querySelectorAll('li');
 
-            console.log(sectionInner.offsetWidth, windowWidth, sectionInner.offsetWidth - windowWidth )
-
             if(windowWidth > 980) {
                 gsap.to(section, {
                     x: -( sectionInner.offsetWidth - windowWidth ),

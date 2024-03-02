@@ -1,21 +1,21 @@
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {img, personal, work} from "../recoil/atoms";
+import {img, personal, projectTabState, work} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
 import styled from "styled-components";
 import {vw} from "../utils/common";
+import Text from "../styles/Text";
+import {useRecoilValue} from "recoil";
 
-const Visual = styled.section`
-    //margin: 0 auto;
+const Visual = styled.div`
     padding-top: 80px;
-    //padding: 100px 0;
-    //max-width: 1440px;
+
+    ${({theme}) => theme.small`
+        padding-top: ${vw(120)};
+    `};
 `;
-const LeftTxt = styled.div`
-    //margin-bottom: 100px;
-    //padding-right: 100px;
-    
+const Tit = styled.div`
     small{
         display: block;
         margin-bottom: 10px;
@@ -23,12 +23,21 @@ const LeftTxt = styled.div`
         font-family: 'Playfair Display', serif;
         font-size: 28px;
         font-weight: 700;
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(36)};
+        `};
     }
 
     h2{
         //margin-bottom: 40px;
         font-size: 50px;
         font-weight: 200;
+        word-break: keep-all;
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(60)};
+        `};
 
         strong{
             display: block;
@@ -39,9 +48,13 @@ const LeftTxt = styled.div`
     span{
         font-size: 18px;
         font-weight: 500;
+
+        ${({theme}) => theme.small`
+            font-size: ${vw(28)};
+        `};
     }
 `;
-const RightTxt = styled.div`
+const Desc = styled.div`
     //flex-shrink: 0;
     //width: 46%;
     width: 80%;
@@ -60,7 +73,7 @@ const RightTxt = styled.div`
 
         ${({theme}) => theme.small`
             margin: ${vw(60)} 0;
-            font-size: ${vw(24)};
+            font-size: ${vw(28)};
         `};
     }
     
@@ -71,7 +84,7 @@ const RightTxt = styled.div`
         font-size: 16px;
 
         ${({theme}) => theme.small`
-            font-size: ${vw(24)};
+            font-size: ${vw(28)};
         `};
 
         ${({theme}) => theme.small`
@@ -117,7 +130,7 @@ const RightTxt = styled.div`
 `;
 const TxtBox = styled.div`
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 60px 0 100px;
     max-width: 1440px;
 
     ${({theme}) => theme.xLarge`
@@ -128,23 +141,16 @@ const TxtBox = styled.div`
     ${({theme}) => theme.small`
         padding: ${vw(100)} ${vw(40)};
     `};
-    
-    //display: flex;
-    //justify-content: space-between;
-    //align-items: flex-end;
-    //text-align: center;
-    //min-height: 400px;
 `;
 const ImgBox = styled.div`
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: 600px;
 
     &::before{
         content: '';
         display: block;
-        padding-top: 70%;
+        padding-top: 50%;
         width: 100%;
     }
     
@@ -158,63 +164,181 @@ const ImgBox = styled.div`
         transform: translate(-50%, -50%);
     }
 `;
+const Overview = styled.div`
+    ${TxtBox}{
+        padding-top: 100px;
+
+        ${({theme}) => theme.small`
+            padding-top: ${vw(100)};
+        `};
+        
+        p {
+           margin-top: 12px;
+            width: 60%;
+            word-break: keep-all;
+
+            ${({theme}) => theme.sMedium`
+                width: 80%;
+            `};
+
+            ${({theme}) => theme.small`
+                margin-top: ${vw(20)};
+                width: 100%;
+            `};
+        }
+    }
+    
+    ${ImgBox}{
+        &::before{
+            padding-top: 100%;
+        }
+    }
+    
+`;
+const BtnList = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 100px;
+    height: 150px;
+    border-top: 1px solid ${theme.color.gray5};
+
+    ${({theme}) => theme.sMedium`
+        flex-direction: column;
+        height: auto;
+    `};
+
+    ${({theme}) => theme.small`
+        margin-top: ${vw(100)};
+        border-top-weight: ${vw(1)};
+    `};
+    
+    button{
+        position: relative;
+        flex: 1;
+        font-size: 50px;
+        font-weight: 500;
+        width: 100%;
+        height: 100%;
+        
+        ${({theme}) => theme.medium`
+            font-size: 40px;
+        `};
+
+        ${({theme}) => theme.sMedium`
+            padding: 30px 0;
+            &::after{
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                transform: translateX(-50%);
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: ${theme.color.gray5};
+            }
+            
+            &:last-child::after{
+                display: none;
+            }
+        `};
+
+        ${({theme}) => theme.small`
+            padding: ${vw(30)} 0;
+            font-size: ${vw(60)};
+            height: ${vw(2)};
+        `};
+        
+        span{
+            font-family: 'Playfair Display', serif;
+            font-weight: 200;
+            letter-spacing: 2px;
+
+            ${({theme}) => theme.small`
+                letter-spacing: ${vw(2)};
+            `};
+        }
+        
+        &:hover{
+            background-color: ${theme.color.gray5}
+        }
+    }
+`;
 
 function ProjectDetail() {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [item, setItem] = useState([]);
-    const {clientEn, client, name, period, thumbImg, detailImg, desc} = item;
+    const [prevData, setPrevData] = useState(0);
+    const [nextData, setNextData] = useState(0);
+    const projectTab = useRecoilValue(projectTabState);
+
+    const {clientEn, client, name, period, detailImg, participateRate, useTool, github, overviewTxt, overviewImg, detailDesc, link} = item;
 
     useEffect(() => {
+        // const data = (projectTab === 'work') ? work : (projectTab === 'personal') ? personal : work;
         const data = [...work, ...personal];
         const dataIdx = data.findIndex((item) => item.id === id);
+
         setItem(data[dataIdx]);
-    }, []);
+        setPrevData(data[dataIdx - 1]);
+        setNextData(data[dataIdx + 1]);
+    }, [item]);
+
+    const onClick = (data) => {
+        setItem(data);
+        window.scrollTo(0, 0);
+        navigate(`/project/${data.id}`);
+    }
+    const onClickProjectAll = () => {
+        navigate(`/project`);
+    }
 
     return (
         <Layout header={{active: 1}}>
             <>
                 <Visual>
                     <TxtBox>
-                        <LeftTxt>
+                        <Tit>
                             <small>{clientEn}</small>
                             <h2><strong>{client}</strong> {name}</h2>
-                            {/*<span>{period}</span>*/}
-                        </LeftTxt>
-                        <RightTxt>
-                            <p className="desc">
-                                어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로 사용이 가능할지를 고려하며 코딩합니다.
-                                화면에 보여지는 인터랙션과 스크립트 작업에 흥미를 느끼며 재미있게 작업하고 있습니다.
-                                앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.
-                            </p>
-
+                        </Tit>
+                        <Desc>
+                            {detailDesc && <p className="desc">{detailDesc}</p>}
                             <ul className="list">
-                                <li>참여율: 20%</li>
+                                <li>참여율: {participateRate}%</li>
                                 <li>기간: {period}</li>
-                                <li>사용언어: Html, Scss, Javascript</li>
-                                <li>링크:  <Link to="">Site</Link>,<Link to="">Github</Link></li>
+                                <li>사용언어: {useTool}</li>
+                                {link && github &&
+                                    <li>링크:
+                                        {link && <Link to={link}>Site</Link>}
+                                        {github && <>, <Link to={github}>Github</Link></>}
+                                    </li>
+                                }
                             </ul>
-
-                            {/*<dl>*/}
-                            {/*    <dt>참여율</dt>*/}
-                            {/*    <dd>20%</dd>*/}
-                            {/*</dl>*/}
-                            {/*<dl>*/}
-                            {/*    <dt>사용언어</dt>*/}
-                            {/*    <dd>Html, Scss, Javascript</dd>*/}
-                            {/*</dl>*/}
-                            {/*<dl>*/}
-                            {/*    <dt>URL주소</dt>*/}
-                            {/*    <dd>*/}
-                            {/*        <Link to="">Site</Link>,*/}
-                            {/*        <Link to="">Github</Link>*/}
-                            {/*    </dd>*/}
-                            {/*</dl>*/}
-                        </RightTxt>
+                        </Desc>
                     </TxtBox>
                     <ImgBox>
                         <img src={`${img}/${detailImg}`} alt={`${name} 썸네일 이미지`}/>
                     </ImgBox>
                 </Visual>
+                {overviewTxt && overviewImg &&
+                    <Overview>
+                        <TxtBox>
+                            <Text name="tit5">Overview</Text>
+                            <Text name="desc3">{overviewTxt}</Text>
+                        </TxtBox>
+                        <ImgBox>
+                            <img src={`${img}/${detailImg}`} alt={`${name} 썸네일 이미지`}/>
+                        </ImgBox>
+                    </Overview>
+                }
+                <BtnList>
+                    {prevData && <button onClick={() => onClick(prevData)}>Prev <span>Project</span></button>}
+                    <button onClick={onClickProjectAll}>All <span>Project</span></button>
+                    {nextData && <button onClick={() => onClick(nextData)}>Next <span>Project</span></button>}
+                </BtnList>
             </>
         </Layout>
     )

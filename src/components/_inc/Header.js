@@ -287,7 +287,7 @@ function Header({color, active, motion = false}){
             </HeaderTag>
             <MoMenu ref={moMenuRef}>
                 <Gnb>
-                    <Logo className="logo">
+                    <Logo className="logo" onClick={closeClick}>
                         <Link to="/">
                             <img src={`${img}/logo_w.svg`} alt="logo" />
                         </Link>

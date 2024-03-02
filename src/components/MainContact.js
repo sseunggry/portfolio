@@ -19,8 +19,10 @@ const Section = styled.section`
 const Inner = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     margin: 0 auto;
     max-width: 1440px;
+    min-height: calc(100vh - 350px);
 
     ${({theme}) => theme.xLarge`
         padding-left: 60px; 
@@ -35,6 +37,7 @@ const Inner = styled.div`
     ${({theme}) => theme.small`
         padding-left: ${vw(40)}; 
         padding-right: ${vw(40)}; 
+        min-height: calc(100vh - ${vw(350)});
     `};
 `;
 const TitBox = styled.div`

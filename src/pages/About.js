@@ -310,7 +310,7 @@ function About(){
                     trigger: storyCon,
                     start: "top 30%",
                     end: "center 50%",
-                    scrub: 1,
+                    // scrub: 1,
                 }
             });
             aniStory.to(storyConTit, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0, 100% 100%, 0 100%)"})

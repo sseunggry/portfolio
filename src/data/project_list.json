@@ -16,7 +16,12 @@
             "period": "23.04 ~ 24.02",
             "thumbImg": "main_thumb_01.jpg",
             "detailImg": "main_thumb_01.jpg",
-            "desc": "DB손해보험 보험 상품(자동차, 장기, 일반) 전체 페이지를 리뉴얼 작업을 진행합니다.",
+            "participateRate": "20",
+            "useTool": "Html5, Css, Javascript, Figma, Gulp, Gsap, Ejs",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "DB 손해보험 CM 구축 프로젝트",
             "link": "www",
             "main": true
         },
@@ -27,7 +32,13 @@
             "name": "WTS 고도화 작업",
             "period": "22.11 ~ 23.01",
             "thumbImg": "project_thumb_work_02.jpg",
-            "detailImg": "project_thumb_work_02.jpg"
+            "detailImg": "project_thumb_work_02.jpg",
+            "participateRate": "40",
+            "useTool": "Html5, Css, Javascript",
+            "github": "",
+            "overviewTxt": "해외주식 소수점 거래의 주문 페이지 마크업 작업 및 소수점 거래의 스크립트 작업을 진행했습니다.",
+            "overviewImg": "project_thumb_work_02_3.jpg",
+            "detailDesc": "하나증권  WTS 고도화_해외 소수점 거래 페이지 작업"
         },
         {
             "id": "work_shinhan",
@@ -36,7 +47,13 @@
             "name": "정보보호 업무시스템 구축",
             "period": "22.09 ~ 23.10",
             "thumbImg": "project_thumb_work_03.jpg",
-            "detailImg": "project_thumb_work_03.jpg"
+            "detailImg": "project_thumb_work_03.jpg",
+            "participateRate": "50",
+            "useTool": "Html5, Css, Javascript, Figma, grid solution",
+            "github": "",
+            "overviewTxt": "페이지 내에 테이블을 grid 솔루션을 활용하여 작업 하였으며, 신한카드 정보보호 통합신청 업무시스템 페이지를 구축하였습니다.",
+            "overviewImg": "project_thumb_work_03_3.jpg",
+            "detailDesc": "신한카드 정보보호 통합신청 업무시스템 구축"
         },
         {
             "id": "work_lg",
@@ -45,23 +62,28 @@
             "name": "디지털 카탈로그 구축",
             "period": "22.03 ~ 22.06",
             "thumbImg": "project_thumb_work_04.jpg",
-            "detailImg": "project_thumb_work_04.jpg"
-        },
-        {
-            "id": "work_daishin",
-            "clientEn": "Daishin Securities",
-            "client": "대신증권",
-            "name": "MyData 플랫폼 구축",
-            "period": "21.11 ~ 22.01"
+            "detailImg": "project_thumb_work_04.jpg",
+            "participateRate": "20",
+            "useTool": "Html5, Css, Javascript, Figma",
+            "github": "",
+            "overviewTxt": "가이드 및 스크립트 방식에 맞게 컴포넌트 형식으로 작업하였습니다. 스크립트의 경우에는 플러그인 형식으로 작업하여, 로딩바도 플러그인 형식으로 진행하였습니다.",
+            "overviewImg": "project_thumb_work_04_3.jpg",
+            "detailDesc": "전사 표준 및 카탈로그 페이지 제작"
         },
         {
             "id": "work_shihan_paypays",
             "clientEn": "ShinHan Card",
             "client": "신한카드",
             "name": "PayDays 플랫폼 구축",
-            "period": "21.09 ~ 21.11",
+            "period": "21.09 ~ 21.10",
             "thumbImg": "project_thumb_work_06_1.jpg",
             "detailImg": "project_thumb_work_06_1.jpg",
+            "participateRate": "40",
+            "useTool": "Html5, Css, Javascript, Zeplin",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "가이드에 따른 페이지 작업을 진행하였고, 작업 완료 후에 수정 사항들을 처리하였습니다. 개발 단계에서는 소스 수정 및 대응을 하였습니다.",
             "link": "https://paydays.shinhancard.com/myincome/main",
             "main": true
         }
@@ -75,6 +97,12 @@
             "period": "24.01 ~ 24.02",
             "thumbImg": "project_thumb_person_01_.jpg",
             "detailImg": "project_thumb_person_01_.jpg",
+            "participateRate": "20",
+            "useTool": "",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "",
             "link": "https://sseunggry.github.io/netflix/",
             "main": true
         },
@@ -86,6 +114,12 @@
             "period": "23.11 ~ 24.01",
             "thumbImg": "project_thumb_person_02.jpg",
             "detailImg": "project_thumb_person_02.jpg",
+            "participateRate": "20",
+            "useTool": "",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "",
             "link": "https://sseunggry.github.io/pizzahut/",
             "main": true
         },
@@ -97,6 +131,12 @@
             "period": "22.06 ~ 22.08",
             "thumbImg": "project_thumb_person_03_.jpg",
             "detailImg": "project_thumb_person_03_.jpg",
+            "participateRate": "20",
+            "useTool": "",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "",
             "link": "https://sseunggry.github.io/workwiz/main/index.html",
             "main": true
         },
@@ -108,6 +148,12 @@
             "period": "21.04 ~ 21.07",
             "thumbImg": "project_thumb_person_04.jpg",
             "detailImg": "project_thumb_person_04.jpg",
+            "participateRate": "20",
+            "useTool": "",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "",
             "link": "https://sseunggry.github.io/hanwha/",
             "main": true
         },
@@ -119,6 +165,12 @@
             "period": "21.02 ~ 21.03",
             "thumbImg": "project_thumb_person_05.jpg",
             "detailImg": "project_thumb_person_05.jpg",
+            "participateRate": "20",
+            "useTool": "",
+            "github": "",
+            "overviewTxt": "",
+            "overviewImg": "",
+            "detailDesc": "",
             "link": "https://sseunggry.github.io/sm/"
         }
     ],

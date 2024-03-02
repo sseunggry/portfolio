@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
-import {RecoilRoot, useRecoilState} from "recoil";
+import {RecoilRoot} from "recoil";
 
 import {ThemeProvider} from "styled-components";
 import GlobalStyle from "./styles/global";
@@ -9,14 +9,9 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import smooth from "./utils/smooth";
-import Project2 from "./pages/Project2";
 import media from "./styles/base/media";
 import ScrollToTop from "./utils/ScrollToTop";
 import Project from "./pages/Project";
-import Project4 from "./pages/Project4";
-import Project3 from "./pages/Project3";
-import Project1 from "./pages/Project1";
-import Project5 from "./pages/Project5";
 import ProjectDetail from "./pages/ProjectDetail";
 
 function App() {
