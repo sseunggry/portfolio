@@ -216,6 +216,7 @@ const ThumbList = styled.ul`
     display: flex;
     align-items: center;
     padding-left: 100px;
+    //padding: 0 100px;
     height: 100vh;
 
     li{
@@ -223,9 +224,10 @@ const ThumbList = styled.ul`
         position: relative;
         flex-shrink: 0;
         padding-left: 50px;
-        padding-right: 200px;
+        margin-right: 200px;
         height: fit-content;
         max-height: 80%;
+        cursor: pointer;
     }
     ${({theme}) => theme.medium`
         flex-direction: column;
@@ -234,6 +236,7 @@ const ThumbList = styled.ul`
         
         li{
             padding: 0;
+            margin-right: 0;
             margin-bottom: 60px;
             width: 100%;
 
@@ -252,7 +255,6 @@ const ThumbList = styled.ul`
 
 function Project(){
     const [projectData, setProjectData] = useState(projectWork);
-    // const setProjectTab = useSetRecoilState(projectTabState);
     const [projectTab, setProjectTab] = useRecoilState(projectTabState);
     const sectionRef = useRef(null);
     const tabRef = useRef(null);
@@ -305,7 +307,7 @@ function Project(){
             ScrollTrigger.matchMedia({
                 "(min-width: 981px)": function() {
                     let scrollTween = gsap.to(thumb, {
-                        xPercent: -100 * (thumb.length - 1),
+                        xPercent: -100 * (thumb.length),
                         ease: "none",
                         scrollTrigger: {
                             trigger: thumbList,
@@ -399,9 +401,9 @@ function Project(){
                         <Text name="tit1" color={theme.color.white} className="mask">
                             <span>Project</span>
                         </Text>
-                        <Tab onClick={onClick} ref={tabRef}>
-                            <li className="work">work <span className="outfit">{projectWork.length}</span></li>
-                            <li className="personal">personal <span className="outfit">{projectPersonal.length}</span></li>
+                        <Tab ref={tabRef}>
+                            <li className="work" onClick={onClick}>work <span className="outfit">{projectWork.length}</span></li>
+                            <li className="personal" onClick={onClick}>personal <span className="outfit">{projectPersonal.length}</span></li>
                         </Tab>
                         <ThumbList ref={thumbRef}>
                             {projectData.map(({clientEn, client, name, period, thumbImg, desc, id}, idx) => (

@@ -111,7 +111,7 @@ const RightTxt = styled.div`
             margin-right: 10px;
             //width: 100px;
             //font-weight: 500;
-            color: ${theme.color.gary1};
+            color: ${theme.color.gray1};
         }
         
         dd{

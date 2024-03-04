@@ -113,7 +113,7 @@ const Desc = styled.div`
             margin-right: 10px;
             //width: 100px;
             //font-weight: 500;
-            color: ${theme.color.gary1};
+            color: ${theme.color.gray1};
         }
         
         dd{
@@ -277,8 +277,7 @@ function ProjectDetail() {
     const {clientEn, client, name, period, detailImg, participateRate, useTool, github, overviewTxt, overviewImg, detailDesc, link} = item;
 
     useEffect(() => {
-        // const data = (projectTab === 'work') ? work : (projectTab === 'personal') ? personal : work;
-        const data = [...work, ...personal];
+        const data = (projectTab === 'work') ? work : (projectTab === 'personal') ? personal : [];
         const dataIdx = data.findIndex((item) => item.id === id);
 
         setItem(data[dataIdx]);
@@ -310,12 +309,15 @@ function ProjectDetail() {
                                 <li>참여율: {participateRate}%</li>
                                 <li>기간: {period}</li>
                                 <li>사용언어: {useTool}</li>
-                                {link && github &&
-                                    <li>링크:
-                                        {link && <Link to={link}>Site</Link>}
-                                        {github && <>, <Link to={github}>Github</Link></>}
+                                {link ? github ? (
+                                    <li>
+                                        링크: <Link to={link}>Site</Link>, <Link to={github}>Github</Link>
                                     </li>
-                                }
+                                ) : (
+                                    <li>
+                                        링크: <Link to={link}>Site</Link>
+                                    </li>
+                                ) : ''}
                             </ul>
                         </Desc>
                     </TxtBox>

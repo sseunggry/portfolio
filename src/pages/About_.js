@@ -154,90 +154,75 @@ const LargeTxt = styled.div`
         font-size: ${vw(70)};
     `};
 `;
-const Story = styled.div`
-    padding: 150px 0;
-    background-color: ${theme.color.black};
-
-    ${Inner} {
-        position: relative;
-    }
-    
-    ${({theme}) => theme.small`
-        padding: ${vw(150)} 0;
-    `};
-`;
 const StoryTit = styled.h3`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 100px;
-    font-size: 120px;
+    position: absolute;
+    font-family: 'Over the Rainbow', cursive;
+    font-size: 180px;
     color: ${theme.color.white};
-    
-    span:nth-child(2){
-        font-family: 'Playfair Display', serif;
-    }
+    transform: rotate(-20deg);
+    z-index: 2;
+
+    ${({theme}) => theme.xLarge`
+        font-size: 150px;
+    `};
+
+    ${({theme}) => theme.mLarge`
+        font-size: 130px;
+    `};
 
     ${({theme}) => theme.sMedium`
-        font-size: 110px;
+        font-size: 100px;
+    `};
+    
+    ${({theme}) => theme.medium`
+        em{
+            display: none;
+        }
     `};
 
     ${({theme}) => theme.small`
-        margin-bottom: ${vw(100)};
+        transform: rotate(0);
+        width: 100%;
         font-size: ${vw(120)};
-    `};
-`;
-const StoryBox = styled.div`
-    display: flex;
-
-    ${({theme}) => theme.medium`
-        flex-direction: column; 
     `};
 `;
 const StoryImg = styled.div`
     overflow: hidden;
     margin-left: auto;
     flex-shrink: 0;
-    width: 20%;
+    width: 40%;
     min-width: 400px;
     
     img{
         width: 100%;
+        height: 100%;
         object-fit: cover;
     }
-    span{
-        display: inline-block;
-        margin-top: 16px;
-        font-size: 16px;
-        color: ${theme.color.gray2};
-        font-weight: 300;
-        line-height: 1.8;
-        word-break: keep-all;
-    }
+
+    ${({theme}) => theme.large`
+        margin: 0 0 100px auto;
+    `};
 
     ${({theme}) => theme.medium`
         width: 50%;
     `};
 
     ${({theme}) => theme.small`
+        margin-bottom: ${vw(100)};
         min-width: auto;
-        width: 100%;
-        
-        span{
-            margin-top: ${vw(100)};
-            font-size: ${vw(28)};
-        }
+        width: 80%;
     `};
 `;
 const StoryTxt = styled.div`
-    padding-right: 50px;
-    width: 35%;
+    margin-left: 50px;
+    width: 50%;
     
     p{
         margin-bottom: 20px;
-        font-size: 16px;
-        color: ${theme.color.gray2};
+        font-size: 20px;
+        color: ${theme.color.gray3};
         font-weight: 300;
-        line-height: 1.8;
+        line-height: 1.6;
         word-break: keep-all;
         
         &:last-of-type{
@@ -246,18 +231,15 @@ const StoryTxt = styled.div`
     }
     
     ${({theme}) => theme.large`
-        width: 50%;
-    `};
-
-    ${({theme}) => theme.medium`
-        margin-bottom: 60px;
         width: 80%;
     `};
 
+    ${({theme}) => theme.medium`
+        margin-left: 0;
+    `};
+
     ${({theme}) => theme.small`
-        padding-right: 0;
-        margin-bottom: ${vw(100)};
-        width: 95%;
+        width: 100%;
         br{
             display: none;
         }
@@ -266,6 +248,18 @@ const StoryTxt = styled.div`
             margin-bottom: ${vw(30)};
             font-size: ${vw(28)};
         }
+    `};
+`;
+const Story = styled.div`
+    padding: 200px 0;
+    background-color: ${theme.color.black};
+
+    ${Inner} {
+        position: relative;
+    }
+    
+    ${({theme}) => theme.small`
+        padding: ${vw(150)} 0;
     `};
 `;
 
@@ -307,8 +301,8 @@ function About(){
             });
 
             gsap.set(storyConTit, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            gsap.set(storyConTxt, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
             gsap.set(storyConImg, {opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
+            gsap.set(storyConTxt, {opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
             const aniStory = gsap.timeline({
                 ease: "power3.in",
@@ -320,8 +314,8 @@ function About(){
                 }
             });
             aniStory.to(storyConTit, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0, 100% 100%, 0 100%)"})
-                    .to(storyConTxt, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"})
-                    .to(storyConImg, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"});
+                    .to(storyConImg, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"})
+                    .to(storyConTxt, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"});
 
             ScrollTrigger.matchMedia({
                 "(min-width: 981px)": function() {
@@ -449,28 +443,30 @@ function About(){
                 <Story ref={storyRef}>
                     <Inner>
                         <StoryTit className="tit">
-                            <span>Seung yeon</span>
+                            <span>Seung yeon's</span>
                             <span>Story</span>
                         </StoryTit>
-                        <StoryBox>
-                            <StoryTxt className="txt-box">
-                                <p>
-                                    저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은
-                                    디자인은 주관적인 기준에 의해 평가된다는 것입니다. <br/>
-                                    그래서 저는 주관적인 기준이 아닌 객관적인 기준에 의해 평가되어지는 직업이 하고 싶었습니다.
-                                </p>
-                                <p>
-                                    제가 본 퍼블리셔는 디자인과 동일한지, 기능적으로 이상이 없는지 등과 같이
-                                    객관적인 기준에 의해 평가되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
-                                </p>
-                            </StoryTxt>
-                            <StoryImg className="img-box">
-                                <img src={`${img}/img_about.jpg`} alt="" />
-                                <span>
-                                    지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에 흥미를 느끼며 재미있게 작업하고 있습니다.
-                                </span>
-                            </StoryImg>
-                        </StoryBox>
+                        <StoryImg className="img-box">
+                            <img src={`${img}/img_about.jpg`} alt="" />
+                        </StoryImg>
+                        <StoryTxt className="txt-box">
+                            <p>
+                                저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은
+                                디자인은 주관적인 기준에 의해 평가된다는 것입니다. <br/>
+                                그래서 저는 주관적인 기준이 아닌 객관적인 기준에 의해 평가되어지는 직업이 하고 싶었습니다.
+                            </p>
+                            <p>
+                                제가 본 퍼블리셔는 디자인과 동일한지, 기능적으로 이상이 없는지 등과 같이
+                                객관적인 기준에 의해 평가되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
+                            </p>
+                            <p>
+                                지금은 퍼블리셔로서 화면에 보여지는 인터랙션과 스크립트 작업에
+                                흥미를 느끼며 재미있게 작업하고 있습니다.
+                            </p>
+                            <p>
+                                앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.
+                            </p>
+                        </StoryTxt>
                     </Inner>
                 </Story>
             </AboutCon>

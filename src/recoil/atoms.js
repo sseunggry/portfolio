@@ -1,5 +1,6 @@
 import project from "../data/project_list.json";
 import {atom} from "recoil";
+import {recoilPersist} from "recoil-persist";
 
 //variable
 export const img = `${process.env.PUBLIC_URL}/images`;
@@ -16,6 +17,10 @@ export const design = project.design;
 export const navList = ['About', 'Project', 'Contact'];
 
 //atom
+const {persistAtom} = recoilPersist({
+    key: "projectTab",
+    storage: sessionStorage
+});
 export const windowWidths = atom({
     key: "windowWidth",
     default: window.innerWidth
@@ -28,5 +33,6 @@ export const loadingTxtState = atom({
 
 export const projectTabState = atom({
     key: "projectTabState",
-    default: "work"
+    default: "work",
+    effects_UNSTABLE: [persistAtom]
 });
