@@ -288,7 +288,6 @@ function Project(){
     }, [projectTab]);
 
     const onClickThumb = (id) => {
-        window.scrollTo(0, 0);
         navigate(`/project/${id}`);
     }
 

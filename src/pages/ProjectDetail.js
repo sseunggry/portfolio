@@ -188,11 +188,16 @@ const Overview = styled.div`
         }
     }
     
-    ${ImgBox}{
-        &::before{
-            padding-top: 100%;
-        }
+    img{
+        display: inline-block;
+        width: 100%;
     }
+    
+    // ${ImgBox}{
+    //     &::before{
+    //         padding-top: 100%;
+    //     }
+    // }
     
 `;
 const BtnList = styled.div`
@@ -280,6 +285,7 @@ function ProjectDetail() {
         const data = (projectTab === 'work') ? work : (projectTab === 'personal') ? personal : [];
         const dataIdx = data.findIndex((item) => item.id === id);
 
+        window.scrollTo(0, 0);
         setItem(data[dataIdx]);
         setPrevData(data[dataIdx - 1]);
         setNextData(data[dataIdx + 1]);
@@ -287,7 +293,6 @@ function ProjectDetail() {
 
     const onClick = (data) => {
         setItem(data);
-        window.scrollTo(0, 0);
         navigate(`/project/${data.id}`);
     }
     const onClickProjectAll = () => {
@@ -311,11 +316,11 @@ function ProjectDetail() {
                                 <li>사용언어: {useTool}</li>
                                 {link ? github ? (
                                     <li>
-                                        링크: <Link to={link}>Site</Link>, <Link to={github}>Github</Link>
+                                        링크: <Link to={link} target="_blank">Site</Link>, <Link to={github} target="_blank">Github</Link>
                                     </li>
                                 ) : (
                                     <li>
-                                        링크: <Link to={link}>Site</Link>
+                                        링크: <Link to={link} target="_blank">Site</Link>
                                     </li>
                                 ) : ''}
                             </ul>
@@ -331,9 +336,7 @@ function ProjectDetail() {
                             <Text name="tit5">Overview</Text>
                             <Text name="desc3">{overviewTxt}</Text>
                         </TxtBox>
-                        <ImgBox>
-                            <img src={`${img}/${detailImg}`} alt={`${name} 썸네일 이미지`}/>
-                        </ImgBox>
+                        <img src={`${img}/${overviewImg}`} alt={`${name} 썸네일 이미지`}/>
                     </Overview>
                 }
                 <BtnList>
