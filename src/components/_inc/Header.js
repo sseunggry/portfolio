@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {contactInfo, img, navList} from "../../recoil/atoms";
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import theme from "../../styles/theme";
 import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
@@ -87,26 +87,28 @@ const HeaderTag = styled.header`
     top: 0;
     left: 0;
     width: 100%;
-    mix-blend-mode: difference;
-    //position: absolute;
-    //top: 0;
-    //left: 0;
-    //width: 100%;
+    mix-blend-mode: ${({color}) => color ? 'normal' : 'difference'};
     
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 60px;
     height: 80px;
+    background-color: ${({color}) => color ? color : ''};
     z-index: 10;
+    
+    ${Logo}{
+        mix-blend-mode: ${({color}) => color ? 'difference' : ''};
+    }
 
     ${Nav}{
+        mix-blend-mode: ${({color}) => color ? 'difference' : ''};
         a{
-            opacity: 0.3;
-            color: ${theme.color.white};
+            //opacity: 0.3;
+             color: ${theme.color.gray2};
             &:hover, &.active{
-                opacity: 1;
-                //color: ${({color}) => color || theme.color.black}
+                //opacity: 1;
+                color: ${theme.color.white};
             }
         }
     }
@@ -128,7 +130,8 @@ const HeaderTag = styled.header`
         padding-left: ${vw(40)};
         padding-right: ${vw(40)};
         height: ${vw(120)};
-        // mix-blend-mode: initial;
+        mix-blend-mode: normal;
+        background-color: ${theme.color.black};
     `};
 `;
 const MoMenu = styled.div`
@@ -222,7 +225,7 @@ const BtnClose = styled.button`
     `};
 `;
 
-function Header({color, active, motion = false}){
+function Header({bgColor, active, motion = false}){
     const headerRef = useRef(null);
     const moMenuRef = useRef(null);
 
@@ -262,11 +265,11 @@ function Header({color, active, motion = false}){
 
             return () => ani.revert();
         }
-    }, []);
+    }, [motion]);
 
     return (
         <>
-            <HeaderTag ref={headerRef}>
+            <HeaderTag ref={headerRef} color={bgColor} >
                 <Logo className="logo">
                     <Link to="/">
                         <img src={`${img}/logo_w.svg`} alt="logo" />
