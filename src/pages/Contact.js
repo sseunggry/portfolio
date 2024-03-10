@@ -10,7 +10,6 @@ import theme from "../styles/theme";
 import {vw} from "../utils/common";
 
 const ContactCon = styled.div`
-    //padding-top: 80px;
     min-height: 100vh;
 
     ${({theme}) => theme.small`
@@ -19,7 +18,6 @@ const ContactCon = styled.div`
 `;
 const Inner = styled.div`
     margin: 0 auto;
-    //padding: 150px 0 300px;
     max-width: 1440px;
 
     ${({theme}) => theme.xLarge`
@@ -29,6 +27,25 @@ const Inner = styled.div`
 
     ${({theme}) => theme.small`        
         padding: ${vw(100)} ${vw(40)} ${vw(200)};
+    `};
+`;
+const IconVideo = styled.div`
+    overflow: hidden;
+    display: flex;
+    margin: 0 auto;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background-color: ${theme.color.black};
+    
+    video{
+        width: 100%;
+        height: 100%;
+    }
+    
+    ${({theme}) => theme.small`
+        width: ${vw(360)};
+        height: ${vw(360)};
     `};
 `;
 const TitBox = styled.div`
@@ -91,7 +108,8 @@ const ImgBox = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: #ddd;
+    background: ${theme.color.gray5};
+    z-index: -1;
 `;
 const InfoBox = styled.div`
     margin: 0 auto;
@@ -191,9 +209,9 @@ function Contact() {
         const linkBox = linkRef.current;
 
         const pageTit = section.querySelector('[name="tit1"] span');
-        const imgBox = section.querySelector('.img-box');
-
+        const video = section.querySelector('.video');
         const txtList = txtBox.querySelectorAll('li span');
+        const imgBox = section.querySelector('.img-box');
 
         const contactList = contactBox.querySelectorAll('li');
         const linkList = linkBox.querySelectorAll('li a');
@@ -202,11 +220,13 @@ function Contact() {
             gsap.set(pageTit, {yPercent: 110});
             gsap.set(imgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
             gsap.set(txtList, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            gsap.set(video, {opacity: 0});
 
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
             });
             ani.to(imgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",})
+                .to(video, {opacity: 1})
                 .to(pageTit, {opacity: 1, yPercent: 0})
                 .to(txtList, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", stagger: 0.1});
 
@@ -241,6 +261,11 @@ function Contact() {
             <ContactCon ref={sectionRef}>
                 <TitBox>
                     <Inner>
+                        <IconVideo className="video">
+                            <video autoPlay loop muted playsInline>
+                                <source type="video/mp4"  src={`${img}/contact_icon.mp4`} />
+                            </video>
+                        </IconVideo>
                         <Text name="tit1" className="mask">
                             <span>Contact <em className="outfit">ME</em></span>
                         </Text>

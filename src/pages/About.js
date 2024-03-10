@@ -44,7 +44,7 @@ const InfoTxt = styled.ul`
     li{
         overflow: hidden;
         margin-bottom: 20px;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 2;
         word-break: keep-all;
         
@@ -104,11 +104,11 @@ const Feature = styled.div`
     
     .desc{
         margin: 100px 0 0 auto;
-        width: 50%;
+        width: 40%;
         
         p{
             margin-bottom: 30px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 300;
             color: ${theme.color.gray3};
             letter-spacing: 0;
@@ -197,7 +197,7 @@ const StoryImg = styled.div`
     overflow: hidden;
     margin-left: auto;
     flex-shrink: 0;
-    width: 20%;
+    width: 40%;
     min-width: 400px;
     
     img{
@@ -207,7 +207,7 @@ const StoryImg = styled.div`
     span{
         display: inline-block;
         margin-top: 16px;
-        font-size: 16px;
+        font-size: 18px;
         color: ${theme.color.gray2};
         font-weight: 300;
         line-height: 1.8;
@@ -234,7 +234,7 @@ const StoryTxt = styled.div`
     
     p{
         margin-bottom: 20px;
-        font-size: 16px;
+        font-size: 18px;
         color: ${theme.color.gray2};
         font-weight: 300;
         line-height: 1.8;
@@ -316,7 +316,7 @@ function About(){
                     trigger: storyCon,
                     start: "top 30%",
                     end: "center 50%",
-                    // scrub: 1,
+                    scrub: 1,
                 }
             });
             aniStory.to(storyConTit, { opacity: 1, clipPath: "polygon(0% 0%, 100% 0, 100% 100%, 0 100%)"})
@@ -456,12 +456,12 @@ function About(){
                             <StoryTxt className="txt-box">
                                 <p>
                                     저는 디자이너로 일했었고, 제가 디자이너로 일하면서 느꼈던 것은
-                                    디자인은 주관적인 기준에 의해 평가된다는 것입니다. <br/>
+                                    디자인은 주관적인 기준에 의해 평가된다는 것입니다.
                                     그래서 저는 주관적인 기준이 아닌 객관적인 기준에 의해 평가되어지는 직업이 하고 싶었습니다.
                                 </p>
                                 <p>
                                     제가 본 퍼블리셔는 디자인과 동일한지, 기능적으로 이상이 없는지 등과 같이
-                                    객관적인 기준에 의해 평가되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
+                                    객관적인 기준에 의해 평가 되어지는 직업이라고 생각해서 이직을 하게 되었습니다.
                                 </p>
                             </StoryTxt>
                             <StoryImg className="img-box">

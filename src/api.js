@@ -1,14 +1,14 @@
 import axios from "axios";
 import {useQueries, useQuery} from "@tanstack/react-query";
 
-const BASE_PATH = "http://localhost:4000";
+const BASE_PATH = "https://sseunggry.github.io/dataApi/data/portfolio/";
 
 export function getContact(){
     return fetch(`${BASE_PATH}`).then((res) => res.json());
 }
 
 export const getData = async (dataName) => {
-    const res = await axios.get(`${BASE_PATH}/${dataName}`);
+    const res = await axios.get(`${BASE_PATH}/${dataName}.json`);
     return res.data;
 }
 

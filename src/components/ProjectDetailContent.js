@@ -298,9 +298,8 @@ function ProjectDetail({dataWork, dataPersonal}) {
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
             });
-            ani
-                .to(visualTxtBox, {opacity: 1, yPercent: 0})
-                .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"})
+            ani.to(visualTxtBox, {opacity: 1, yPercent: 0})
+                .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
         }, visualRef);
         return () => ctx.revert();
     }
@@ -329,7 +328,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
                                 <li>사용언어: {useTool}</li>
                                 {link ? github ? (
                                     <li>
-                                        링크: <Link to={link} target="_blank">Site</Link>, <Link to={github} target="_blank">Github</Link>
+                                        링크: <Link to={link} target="_blank">Site</Link>,<Link to={github} target="_blank">Github</Link>
                                     </li>
                                 ) : (
                                     <li>

@@ -1,16 +1,20 @@
 import {useProjectPersonalData, useProjectWorkData} from "../api";
-import LoadMotion from "../components/LoadMotion";
+import Loading from "../components/Loading";
 import ProjectContent from "../components/ProjectContent";
+import ProjectDetailContent from "../components/ProjectDetailContent";
 
 function Project(){
-    const {isPending: workLoading, data: dataWork} = useProjectWorkData();
-    const {isPending: personalLoading, data: dataPersonal} = useProjectPersonalData();
+    const {isPending: workLoading, data: dataWork, isError: workError } = useProjectWorkData();
+    const {isPending: personalLoading, data: dataPersonal, isError: personalError } = useProjectPersonalData();
 
     if(workLoading || personalLoading){
-        return <LoadMotion />;
+        return <Loading />;
+    }
+    if(workError || personalError) {
+        return;
     }
     return (
-        <ProjectContent dataWork={dataWork.data} dataPersonal={dataPersonal.data} />
+        <ProjectDetailContent dataWork={dataWork.data} dataPersonal={dataPersonal.data} />
     )
 
 }

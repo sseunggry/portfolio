@@ -5,7 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import theme from "../styles/theme";
 import {vw} from "../utils/common";
 import {motion, useMotionValueEvent, AnimatePresence, stagger} from "framer-motion";
-import {loadingTxtState} from "../recoil/atoms";
+import {img, loadingTxtState} from "../recoil/atoms";
 import {useRecoilValue} from "recoil";
 
 const Section = styled.section`
@@ -332,12 +332,13 @@ function MainVisual(){
                         </TxtJob>
                     </TitBox>
                     <TxtBox ref={txtDescRef}>
+                        {/*<Img className="img" src={`${img}/contact_icon.png`}  alt="" />*/}
                         <Desc className="desc">
                             저는 퍼블리셔 3년차이며, 다양한 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
                             {/*화면에 보여지는 부분 뿐만 아니라 기능적인 작업에도 흥미를 느끼고 있으며, <br/>*/}
                             프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
                         </Desc>
-                        <Img className="img"></Img>
+                        <Img className="img" />
                     </TxtBox>
                 </Inner>
             </Section>
