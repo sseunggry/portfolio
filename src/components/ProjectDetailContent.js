@@ -1,5 +1,5 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {img, projectTabState} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
@@ -32,7 +32,6 @@ const Tit = styled.div`
     }
 
     h2{
-        //margin-bottom: 40px;
         font-size: 50px;
         font-weight: 200;
         word-break: keep-all;
@@ -57,8 +56,6 @@ const Tit = styled.div`
     }
 `;
 const Desc = styled.div`
-    //flex-shrink: 0;
-    //width: 46%;
     width: 80%;
 
     ${({theme}) => theme.small`
@@ -66,7 +63,6 @@ const Desc = styled.div`
     `};
 
     .desc{
-        //margin-top: 30px;
         margin: 40px 0;
         font-size: 16px;
         color: ${theme.color.gray2};
@@ -81,7 +77,6 @@ const Desc = styled.div`
     
     .list{
         display: grid;
-        //grid-template-columns: 20% auto;
         row-gap: 10px;
         font-size: 16px;
 
@@ -262,28 +257,18 @@ const BtnList = styled.div`
 function ProjectDetail({dataWork, dataPersonal}) {
     const navigate = useNavigate();
     const {id} = useParams();
-    const [item, setItem] = useState([]);
-    const [prevData, setPrevData] = useState([]);
-    const [nextData, setNextData] = useState([]);
-    const [currentData, setCurrentData] = useState([]);
     const projectTab = useRecoilValue(projectTabState);
 
     const visualRef = useRef(null);
     const overViewRef = useRef(null);
 
-    const {clientEn, client, name, period, detailImg, participateRate, useTool, github, overviewTxt, overviewImg, detailDesc, link} = currentData;
+    const dataItem = (projectTab === 'work') ? dataWork : (projectTab === 'personal') ? dataPersonal : [];
+    const dataIdx = dataItem.findIndex((item) => item.id === id);
+    const {clientEn, client, name, period, detailImg, participateRate, useTool, github, overviewTxt, overviewImg, detailDesc, link, notion} = dataItem[dataIdx];
+    const prevData = dataItem[dataIdx - 1];
+    const nextData = dataItem[dataIdx + 1];
 
     useEffect(() => {
-        const dataItem = (projectTab === 'work') ? dataWork : (projectTab === 'personal') ? dataPersonal : [];
-        const dataIdx = dataItem.findIndex((item) => item.id === id);
-
-        setCurrentData(dataItem[dataIdx]);
-        setPrevData(dataItem[dataIdx - 1]);
-        setNextData(dataItem[dataIdx + 1]);
-
-        gsapMotion();
-    }, [item]);
-    const gsapMotion = () => {
         gsap.registerPlugin(ScrollTrigger);
 
         const visual = visualRef.current;
@@ -302,15 +287,13 @@ function ProjectDetail({dataWork, dataPersonal}) {
                 .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
         }, visualRef);
         return () => ctx.revert();
-    }
+    }, [id]);
     const onClick = (data) => {
-        setItem(data);
         navigate(`/project/${data.id}`);
     }
     const onClickProjectAll = () => {
         navigate(`/project`);
     }
-
     return (
         <>
             <Layout header={{active: 1, bgColor: theme.color.white}}>
@@ -326,15 +309,11 @@ function ProjectDetail({dataWork, dataPersonal}) {
                                 <li>참여율: {participateRate}%</li>
                                 <li>기간: {period}</li>
                                 <li>사용언어: {useTool}</li>
-                                {link ? github ? (
+                                {link || github || notion ? (
                                     <li>
-                                        링크: <Link to={link} target="_blank">Site</Link>,<Link to={github} target="_blank">Github</Link>
+                                        링크: {link && <Link to={link} target="_blank">Site</Link>} {github && <Link to={github} target="_blank">Github</Link>} {notion && <Link to={notion} target="_blank">Notion</Link>}
                                     </li>
-                                ) : (
-                                    <li>
-                                        링크: <Link to={link} target="_blank">Site</Link>
-                                    </li>
-                                ) : ''}
+                                ): ''}
                             </ul>
                         </Desc>
                     </TxtBox>

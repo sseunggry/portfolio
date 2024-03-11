@@ -1,7 +1,6 @@
 import {useProjectPersonalData, useProjectWorkData} from "../api";
 import Loading from "../components/Loading";
 import ProjectContent from "../components/ProjectContent";
-import ProjectDetailContent from "../components/ProjectDetailContent";
 
 function Project(){
     const {isPending: workLoading, data: dataWork, isError: workError } = useProjectWorkData();
@@ -14,7 +13,7 @@ function Project(){
         return;
     }
     return (
-        <ProjectDetailContent dataWork={dataWork.data} dataPersonal={dataPersonal.data} />
+        <ProjectContent dataWork={dataWork.data} dataPersonal={dataPersonal.data} />
     )
 
 }

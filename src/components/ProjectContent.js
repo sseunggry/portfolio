@@ -22,7 +22,6 @@ const ProjectCon = styled.div`
 const Inner = styled.div`
     margin: 0 auto;
     padding: 120px 150px 0;
-    //max-width: 1440px;
 
     ${({theme}) => theme.xLarge`
         padding-left: 60px;
@@ -59,10 +58,6 @@ const Tab = styled.ul`
             color: ${theme.color.white};
         }
     }
-    ${({theme}) => theme.medium`
-        // margin-top: 40px;
-        // margin-bottom: 60px;
-    `};
     ${({theme}) => theme.small`
         margin-top: ${vw(60)};
         margin-bottom: ${vw(100)};
