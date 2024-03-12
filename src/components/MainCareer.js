@@ -1,13 +1,12 @@
-import {design, windowWidths, work} from "../recoil/atoms";
 import styled from "styled-components";
 import theme from "../styles/theme";
-import {Link} from "react-router-dom";
 import Text from "../styles/Text";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import {vw} from "../utils/common";
-import {useRecoilValue} from "recoil";
+import {useProjectDesignData, useProjectWorkData} from "../api";
+import Loading from "./Loading";
 
 const Section = styled.section`
     overflow: hidden;
@@ -167,8 +166,8 @@ function MainCareer(){
     const sectionRef = useRef(null);
     const leftRef = useRef(null);
     const rightRef = useRef(null);
-
-    const windowWidth = useRecoilValue(windowWidths);
+    const {isPending: workLoading, data: dataWork, isError: workError } = useProjectWorkData();
+    const {isPending: designLoading, data: dataDesign, isError: designError } = useProjectDesignData();
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -264,11 +263,15 @@ function MainCareer(){
                 }
             });
         }, sectionRef);
-
         return () => ctx.revert();
+    }, []);
 
-    }, [windowWidth]);
-
+    if(workLoading || designLoading){
+        return <Loading />;
+    }
+    if(workError || designError) {
+        return;
+    }
     return (
         <Section className="sec-02" ref={sectionRef}>
             <LeftCon ref={leftRef}>
@@ -286,7 +289,7 @@ function MainCareer(){
                 <dl>
                     <dt>Publishing</dt>
                     <dd>
-                        {work.map(({client, name, period, link}, idx) => (
+                        {dataWork.map(({client, name, period, link}, idx) => (
                             <p key={idx}>
                                 <span className="period">{period}</span>
                                 <span><strong>[{client}]</strong> {name}</span>
@@ -298,7 +301,7 @@ function MainCareer(){
                 <dl>
                     <dt>Design</dt>
                     <dd>
-                        {design.map(({client, name, period, link}, idx) => (
+                        {dataDesign.map(({client, name, period, link}, idx) => (
                             <p key={idx}>
                                 <span className="period">{period}</span>
                                 <span><strong>[{client}]</strong> {name}</span>

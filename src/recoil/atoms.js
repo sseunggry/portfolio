@@ -7,10 +7,6 @@ export const img = `${process.env.PUBLIC_URL}/images`;
 
 export const contactInfo = project.contact;
 export const infoLink = project.infoLink;
-export const work = project.work;
-export const personal = project.personal;
-export const design = project.design;
-
 export const navList = ['About', 'Project', 'Contact'];
 
 //atom

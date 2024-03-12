@@ -1,5 +1,5 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {img, projectTabState} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
@@ -258,9 +258,12 @@ function ProjectDetail({dataWork, dataPersonal}) {
     const navigate = useNavigate();
     const {id} = useParams();
     const projectTab = useRecoilValue(projectTabState);
+    const [isImgLoad, setIsImgLoad] = useState(false);
 
     const visualRef = useRef(null);
     const overViewRef = useRef(null);
+    const imgRef1 = useRef(null);
+    const imgRef2 = useRef(null);
 
     const dataItem = (projectTab === 'work') ? dataWork : (projectTab === 'personal') ? dataPersonal : [];
     const dataIdx = dataItem.findIndex((item) => item.id === id);
@@ -283,11 +286,27 @@ function ProjectDetail({dataWork, dataPersonal}) {
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
             });
-            ani.to(visualTxtBox, {opacity: 1, yPercent: 0})
-                .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
+            ani.to(visualTxtBox, {opacity: 1, yPercent: 0}, 0)
+                .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"}, 0.5);
         }, visualRef);
         return () => ctx.revert();
     }, [id]);
+    useEffect(() => {
+        let img1 = imgRef1.current;
+        let img2 = imgRef2.current;
+
+        if(!img1 || !img2) return;
+
+        const updateStatus = (img) => {
+            const isLoad = img.complete && img.naturalHeight !== 0;
+            setIsImgLoad(isLoad);
+        }
+
+        img1.addEventListener(
+            "load", () => updateStatus(img1), {once: true}
+        )
+
+    }, [detailImg, overviewImg]);
     const onClick = (data) => {
         navigate(`/project/${data.id}`);
     }
@@ -317,8 +336,8 @@ function ProjectDetail({dataWork, dataPersonal}) {
                             </ul>
                         </Desc>
                     </TxtBox>
-                    <ImgBox className="img-box">
-                        <img src={`${img}/${detailImg}`} alt={`${name} 썸네일 이미지`}/>
+                    <ImgBox className="img-box" ref={imgRef1}>
+                        <img src={`${img}/${detailImg}`} alt={`${name} 상세 이미지`}/>
                     </ImgBox>
                 </Visual>
                 {overviewTxt && overviewImg &&
@@ -327,7 +346,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
                             <Text name="tit5">Overview</Text>
                             <Text name="desc3">{overviewTxt}</Text>
                         </TxtBox>
-                        <img src={`${img}/${overviewImg}`} alt={`${name} 썸네일 이미지`}/>
+                        <img src={`${img}/${overviewImg}`} alt={`${name} 이미지`} ref={imgRef2} />
                     </Overview>
                 }
                 <BtnList>

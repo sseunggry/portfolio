@@ -12,7 +12,7 @@ export const getData = async (dataName) => {
     return res.data;
 }
 
-const dataNames = ['work', 'personal'];
+const dataNames = ['work', 'personal', 'design'];
 export const useProjectAll = () => {
     return useQueries({
         queries: dataNames.map(dataName => (
@@ -48,5 +48,11 @@ export const useProjectPersonalData = () => {
                 dataFilter: data.filter(el => el.main)
             })
         }
+    });
+}
+
+export const useProjectDesignData = () => {
+    return useQuery({
+       queryKey: ['projectDesignData', dataNames[2]], queryFn: () => getData(dataNames[2])
     });
 }
