@@ -1,5 +1,5 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {img, projectTabState} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
@@ -82,22 +82,40 @@ const Desc = styled.div`
 
         ${({theme}) => theme.small`
             font-size: ${vw(28)};
-        `};
-
-        ${({theme}) => theme.small`
-            row-gap: ${vw(10)};
+            row-gap: ${vw(20)};
         `};
         
-        a{
-            font-weight: 700;
-            text-decoration: underline;
-            + a{
-                margin-left: 10px;
-
-                ${({theme}) => theme.small`
-                    margin-left: ${vw(10)};
-                `};
+        li{
+            &:last-of-type{
+                display: flex;
+                align-items: center;
             }
+        }
+        
+        a{
+            margin-left: 10px;
+            padding: 3px 14px;
+            font-size: 14px;
+            color: ${theme.color.white};
+            text-align: center;
+            background-color: ${theme.color.black};
+            border-radius: 30px;
+            
+            font-weight: 700;
+            //text-decoration: underline;
+            + a{
+                //margin-left: 10px;
+
+                // ${({theme}) => theme.small`
+                //     margin-left: ${vw(10)};
+                // `};
+            }
+
+            ${({theme}) => theme.small`
+                margin-left: ${vw(20)};
+                padding: ${vw(8)} ${vw(24)};
+                font-size: ${vw(24)};
+            `};
         }
     }
     
@@ -258,7 +276,6 @@ function ProjectDetail({dataWork, dataPersonal}) {
     const navigate = useNavigate();
     const {id} = useParams();
     const projectTab = useRecoilValue(projectTabState);
-    const [isImgLoad, setIsImgLoad] = useState(false);
 
     const visualRef = useRef(null);
     const overViewRef = useRef(null);
@@ -282,31 +299,25 @@ function ProjectDetail({dataWork, dataPersonal}) {
             const visualImgBox = visual.querySelector('.img-box');
             gsap.set(visualTxtBox, {opacity: 0, yPercent: 10});
             gsap.set(visualImgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
+            // gsap.set(overView, {opacity: 0, yPercent: 10});
 
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
             });
             ani.to(visualTxtBox, {opacity: 1, yPercent: 0}, 0)
                 .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"}, 0.5);
+
+            // gsap.to(overView, {opacity: 1, yPercent: 0,
+            //     scrollTrigger: {
+            //         trigger: overView,
+            //         start: "-10% -0",
+            //         end: "top 20%",
+            //         markers: true,
+            //     }
+            // });
         }, visualRef);
         return () => ctx.revert();
     }, [id]);
-    useEffect(() => {
-        let img1 = imgRef1.current;
-        let img2 = imgRef2.current;
-
-        if(!img1 || !img2) return;
-
-        const updateStatus = (img) => {
-            const isLoad = img.complete && img.naturalHeight !== 0;
-            setIsImgLoad(isLoad);
-        }
-
-        img1.addEventListener(
-            "load", () => updateStatus(img1), {once: true}
-        )
-
-    }, [detailImg, overviewImg]);
     const onClick = (data) => {
         navigate(`/project/${data.id}`);
     }
@@ -336,8 +347,8 @@ function ProjectDetail({dataWork, dataPersonal}) {
                             </ul>
                         </Desc>
                     </TxtBox>
-                    <ImgBox className="img-box" ref={imgRef1}>
-                        <img src={`${img}/${detailImg}`} alt={`${name} 상세 이미지`}/>
+                    <ImgBox className="img-box">
+                        <img src={`${img}/${detailImg}`} alt={`${name} 상세 이미지`} ref={imgRef1}/>
                     </ImgBox>
                 </Visual>
                 {overviewTxt && overviewImg &&

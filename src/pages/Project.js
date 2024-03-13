@@ -1,4 +1,4 @@
-import {useProjectPersonalData, useProjectWorkData} from "../api";
+import {useProjectPersonalData, useProjectWorkData} from "../hook/useApiData";
 import Loading from "../components/Loading";
 import ProjectContent from "../components/ProjectContent";
 

@@ -207,7 +207,7 @@ function MainProjectContent({dataWork, dataPersonal}){
         }, sectionRef);
         return () => ctx.revert();
 
-    }, []);
+    }, [data]);
 
     return (
         <Section className="sec-01" ref={sectionRef}>

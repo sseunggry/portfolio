@@ -5,7 +5,7 @@ import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useRef} from "react";
 import {vw} from "../utils/common";
-import {useProjectDesignData, useProjectWorkData} from "../api";
+import {useProjectDesignData, useProjectWorkData} from "../hook/useApiData";
 import Loading from "./Loading";
 
 const Section = styled.section`

@@ -67,7 +67,7 @@ const TxtBox = styled.div`
         white-space: nowrap;
         font-weight: 700;
         color: ${theme.color.gray1};
-        opacity: 0.1;
+        opacity: 0.3;
     }
     h3{
         font-size: 48px;
@@ -195,7 +195,7 @@ function ProjectContentThumb({data}){
                 })
                     .to(img, {ease: "none", opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"}, 0)
                     .to(name, {yPercent: 0, opacity: 1}, 0.2)
-                    .to(client, {opacity: 0.1}, 0.2)
+                    .to(client, {opacity: 0.3}, 0.2)
                     .to(desc, {yPercent: 0, opacity: 1}, 0.5)
             });
         }, thumbRef);
