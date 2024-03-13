@@ -55,13 +55,14 @@ const TxtBox = styled.div`
     display: flex;
     flex-direction: column;
     padding: 50px 0 50px 100px;
+    width: 100%;
 
     strong{
         position: absolute;
         top: 25%;
         left: 100px;
         display: inline-block;
-        margin-bottom: 30px;
+        //margin-bottom: 30px;
         font-family: 'Playfair Display', serif;
         font-size: 90px;
         white-space: nowrap;
@@ -92,6 +93,25 @@ const TxtBox = styled.div`
             }
         }
     }
+    .btn-more{
+        position: absolute;
+        bottom: 0;
+        right: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+        font-size: 16px;
+        color: ${theme.color.black};
+        text-align: center;
+        text-transform: uppercase;
+        background-color: ${theme.color.white};
+        border-radius: 50%;
+        transform-origin: center;
+        opacity: 0.3;
+        transition: all 0.3s;
+    }
     
     ${({theme}) => theme.xLarge`
         padding-left: 50px;
@@ -118,8 +138,13 @@ const TxtBox = styled.div`
         }
         
         .desc{
-            margin-top: 50px;
+            margin-top: 70px;
             width: 90%;
+        }
+        
+        .btn-more{
+            right: 0;
+            opacity: 1;
         }
     `};
 
@@ -136,12 +161,21 @@ const TxtBox = styled.div`
         }
         
         .desc{
-            margin-top: ${vw(60)};
+            margin-top: ${vw(80)};
             
             p{
                 margin-bottom: ${vw(10)};
             }
         }   
+        
+        .btn-more{
+            right: 0;
+            width: ${vw(120)};
+            height: ${vw(120)};
+            font-size: ${vw(24)};
+            opacity: 1;
+        }
+
     `};
 `;
 const ThumbList = styled.ul`
@@ -149,6 +183,14 @@ const ThumbList = styled.ul`
         display: flex;
         margin-bottom: 100px;
         cursor: pointer;
+        
+        &:hover{
+            .btn-more{
+                width: 120px;
+                height: 120px;
+                opacity: 1;
+            }
+        }
 
         ${({theme}) => theme.medium`
             flex-direction: column;
@@ -223,6 +265,7 @@ function ProjectContentThumb({data}){
                             <Text name="desc2">기간 : {period}</Text>
                             <Text name="desc2">참여율 : {participateRate}%</Text>
                         </div>
+                        <p className="btn-more">view <br/> more</p>
                     </TxtBox>
                 </li>
             ))}

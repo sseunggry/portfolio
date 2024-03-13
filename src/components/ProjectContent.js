@@ -22,6 +22,7 @@ const ProjectCon = styled.div`
 const Inner = styled.div`
     margin: 0 auto;
     padding: 120px 150px 0;
+    max-width: 1920px;
 
     ${({theme}) => theme.xLarge`
         padding-left: 60px;

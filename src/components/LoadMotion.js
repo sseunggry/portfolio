@@ -6,6 +6,7 @@ import theme from "../styles/theme";
 import {vw} from "../utils/common";
 import {loadingTxtState} from "../recoil/atoms";
 import {useRecoilState} from "recoil";
+import {lenis} from "../utils/smooth";
 
 const LoadTxt = styled.div`
     overflow: hidden;
@@ -59,7 +60,6 @@ function LoadMotion() {
         gsap.registerPlugin(ScrollTrigger);
 
         const loadTxt = loadTxtRef.current;
-
         const loadTxtList = loadTxt.querySelectorAll('p');
         loadTxtList.forEach((el) => {
             let txtDesc = el.innerText.split('');
@@ -74,12 +74,12 @@ function LoadMotion() {
 
             gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
                 onStart: () => {
-                    // lenis.stop();
+                    lenis.stop();
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
-                    setLoading(true);
-                    //
+                    setLoading(false);
+                    lenis.start();
                     // if(window.scrollY !== 0 ){
                     //     lenis.start();
                     // }

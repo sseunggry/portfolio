@@ -22,7 +22,7 @@ export const windowWidths = atom({
 
 export const loadingTxtState = atom({
    key: "loadingState",
-   default: false
+   default: true
 });
 
 export const projectTabState = atom({

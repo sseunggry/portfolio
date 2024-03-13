@@ -195,9 +195,9 @@ function MainContact(){
                     ScrollTrigger.create({
                         animation: ani,
                         trigger: section,
-                        start: "top top",
+                        start: "top 30%",
                         end: "center 100%",
-                        scrub: 1
+                        scrub: 1,
                     });
                 },
                 "(max-width: 720px)": function() {

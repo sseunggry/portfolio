@@ -173,6 +173,8 @@ const Img = styled.img`
     //width: 566px;
     width: 80%;
     height: 134px;
+    opacity: 0.3;
+    object-fit: cover;
 
     ${({theme}) => theme.sMedium`
         width: 100%;
@@ -252,7 +254,7 @@ function MainVisual(){
     };
 
     useEffect(() => {
-        if(loading) {
+        if(!loading) {
             setSvgTxtAni(true);
         }
     }, [loading]);
@@ -338,7 +340,7 @@ function MainVisual(){
                             {/*화면에 보여지는 부분 뿐만 아니라 기능적인 작업에도 흥미를 느끼고 있으며, <br/>*/}
                             프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
                         </Desc>
-                        <Img className="img" />
+                        <Img className="img" src={`${img}/main_visual_img.jpg`} />
                     </TxtBox>
                 </Inner>
             </Section>
