@@ -1,5 +1,5 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {img, projectTabState} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
@@ -288,18 +288,42 @@ function ProjectDetail({dataWork, dataPersonal}) {
     const prevData = dataItem[dataIdx - 1];
     const nextData = dataItem[dataIdx + 1];
 
+    const [isImgLoad, setIsImgLoad] = useState(false);
+
+    useEffect(() => {
+        imgLoadStatus(imgRef1);
+        // imgLoadStatus(imgRef2);
+    }, [detailImg]);
+
+    const imgLoadStatus = ($img) => {
+        if(!$img.current) return;
+
+        const updateStatus = (img) => {
+            const isLoad = img.complete && img.naturalHeight !== 0;
+            setIsImgLoad(isLoad);
+        }
+
+        $img.current.addEventListener(
+            "load", () => updateStatus($img.current), {once: true}
+        );
+    }
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
+        // imgLoadStatus(imgRef1);
+        // imgLoadStatus(imgRef2);
 
         const visual = visualRef.current;
         const overView = overViewRef.current;
+
+        console.log(overView);
 
         let ctx = gsap.context(() => {
             const visualTxtBox = visual.querySelector('.txt-box');
             const visualImgBox = visual.querySelector('.img-box');
             gsap.set(visualTxtBox, {opacity: 0, yPercent: 10});
             gsap.set(visualImgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            // gsap.set(overView, {opacity: 0, yPercent: 10});
+            gsap.set(overView, {opacity: 0});
 
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
@@ -307,14 +331,14 @@ function ProjectDetail({dataWork, dataPersonal}) {
             ani.to(visualTxtBox, {opacity: 1, yPercent: 0}, 0)
                 .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"}, 0.5);
 
-            // gsap.to(overView, {opacity: 1, yPercent: 0,
-            //     scrollTrigger: {
-            //         trigger: overView,
-            //         start: "-10% -0",
-            //         end: "top 20%",
-            //         markers: true,
-            //     }
-            // });
+            gsap.to(overView, {opacity: 1, yPercent: 0,
+                scrollTrigger: {
+                    trigger: overView,
+                    start: "-10% 50%",
+                    end: "top 50%",
+                    // markers: true,
+                }
+            });
         }, visualRef);
         return () => ctx.revert();
     }, [id]);

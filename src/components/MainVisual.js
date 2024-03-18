@@ -7,6 +7,7 @@ import {vw} from "../utils/common";
 import {motion, useMotionValueEvent, AnimatePresence, stagger} from "framer-motion";
 import {img, loadingTxtState} from "../recoil/atoms";
 import {useRecoilValue} from "recoil";
+import {lenis} from "../utils/smooth";
 
 const Section = styled.section`
     display: flex;
@@ -233,24 +234,8 @@ function MainVisual(){
     const txtDescRef = useRef(null);
     const loading = useRecoilValue(loadingTxtState);
     const [isSvgTxtAni, setSvgTxtAni] = useState(false);
-    const [isAniComplete, setAniComplete] = useState(false);
-
-    // const desc = document.querySelector('.desc');
-    // const img = document.querySelector('.img');
-    // gsap.set(desc, {yPercent: 30, opacity: 0});
-    // gsap.set(img, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
 
     const onAnimationComplete = () => {
-        // const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
-        // aniTxt
-        //     .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out", duration: 0.5})
-        //     .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-        //         // onComplete: () => {
-        //         //     lenis.start();
-        //         // }
-        //     });
-
-        setAniComplete(true);
     };
 
     useEffect(() => {
@@ -271,17 +256,13 @@ function MainVisual(){
 
         let ctx = gsap.context(() => {
             ScrollTrigger.matchMedia({
-                "(min-height: 601px)": function() {
+                "(min-height: 651px)": function() {
                     const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
                     aniTxt
                         .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out", delay: 2.5})
-                        .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                            // onComplete: () => {
-                            //     lenis.start();
-                            // }
-                        });
+                        .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
                 },
-                "(max-height: 600px)": function() {
+                "(max-height: 650px)": function() {
                     let ani = gsap.timeline({
                         ease: "cubic-bezier(.19,1,.22,1)",
                         scrollTrigger: {
@@ -291,12 +272,8 @@ function MainVisual(){
                         }
                     });
                     ani.to(desc, {yPercent: 0, opacity: 1, ease: "expo.out"})
-                        .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                            // onComplete: () => {
-                            //     lenis.start();
-                            // }
-                        });
-                },
+                        .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
+                }
             });
         }, sectionRef);
         return () => ctx.revert();

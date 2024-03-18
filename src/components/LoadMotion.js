@@ -79,7 +79,9 @@ function LoadMotion() {
                 onComplete: () => {
                     loadTxt.classList.add('hide');
                     setLoading(false);
-                    lenis.start();
+                    setTimeout(() => {
+                        lenis.start();
+                    }, 300);
                     // if(window.scrollY !== 0 ){
                     //     lenis.start();
                     // }

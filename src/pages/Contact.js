@@ -127,9 +127,11 @@ const InfoBox = styled.div`
 `;
 const ContactTxt = styled.ul`
     li {
-        overflow: hidden;
+        //overflow: hidden;
         position: relative;
-        margin-bottom: 20px;
+        margin: 0 auto;
+        padding-bottom: 10px;
+        width: fit-content;
         font-size: 80px;
         font-weight: 500;
         text-align: center;
@@ -139,7 +141,7 @@ const ContactTxt = styled.ul`
         `};
         
         ${({theme}) => theme.small`
-            margin-bottom: ${vw(30)};
+            padding-bottom: ${vw(20)};
             font-size: ${vw(60)};
         `};
         
@@ -148,18 +150,24 @@ const ContactTxt = styled.ul`
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            
+            &:hover{
+                .line{
+                    width: 100%;
+                }
+            }
         }
     }
     .line {
         position: absolute;
         left: 0;
-        bottom: -8px;
+        bottom: 0px;
         width: 0;
         height: 4px;
-        background-color: ${theme.color.white};
+        background-color: ${theme.color.black};
+        transition: width 0.5s;
 
         ${({theme}) => theme.small`
-            bottom: ${vw(-4)};
             height: ${vw(4)};
         `};
     }
@@ -170,13 +178,50 @@ const LinkTxt = styled.ul`
     margin-top: 150px;
   
     li{
+        --druation: 0.4s;
+        --font-size: 30px;
+        --m: 0;
+        
         overflow: hidden;
         margin-right: 80px;
-        font-size: 30px;
+        font-size: var(--font-size);
+        line-height: var(--font-size);
         font-weight: 500;
-
+        
         a{
-            display: block;
+            //display: block;
+            overflow: hidden;
+            display: flex;
+            text-shadow: 0 var(--font-size) 0 ${theme.color.black};
+            
+            span{
+                display: block;
+                backface-visibility: hidden;
+                transition: transform var(--druation) ease;
+                transform: translateY(var(--m)) translateZ(0);
+
+                &:nth-child(2){
+                    transition-delay: 0.05s;
+                }
+                &:nth-child(3){
+                    transition-delay: 0.1s;
+                }
+                &:nth-child(4){
+                    transition-delay: 0.15s;
+                }
+                &:nth-child(5){
+                    transition-delay: 0.2s;
+                }
+                &:nth-child(6){
+                    transition-delay: 0.25s;
+                }
+            }
+            
+            &:hover{
+                span{
+                    --m: calc(var(--font-size) * -1);
+                }
+            }
         }
       
         &:last-of-type{
@@ -184,6 +229,7 @@ const LinkTxt = styled.ul`
         }
 
         ${({theme}) => theme.small`
+            --font-size: ${vw(40)};
             margin-right: ${vw(60)};
             font-size: ${vw(40)};
         `};
@@ -215,6 +261,10 @@ function Contact() {
 
         const contactList = contactBox.querySelectorAll('li');
         const linkList = linkBox.querySelectorAll('li a');
+
+        linkList.forEach((el) => {
+            el.innerHTML = '<span>' + el.textContent.trim().split('').join('</span><span>') + '</span>';
+        });
 
         let ctx = gsap.context(() => {
             gsap.set(pageTit, {yPercent: 110});
@@ -251,7 +301,6 @@ function Contact() {
             });
 
         }, sectionRef);
-
         return () => ctx.revert();
 
     }, []);
