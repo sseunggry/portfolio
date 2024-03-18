@@ -310,8 +310,6 @@ function ProjectDetail({dataWork, dataPersonal}) {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-        // imgLoadStatus(imgRef1);
-        // imgLoadStatus(imgRef2);
 
         const visual = visualRef.current;
         const overView = overViewRef.current;
@@ -323,7 +321,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
             const visualImgBox = visual.querySelector('.img-box');
             gsap.set(visualTxtBox, {opacity: 0, yPercent: 10});
             gsap.set(visualImgBox, {clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)"});
-            gsap.set(overView, {opacity: 0});
+            gsap.set(overView, {opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)"});
 
             const ani = gsap.timeline({
                 ease: "cubic-bezier(.19,1,.22,1)"
@@ -331,7 +329,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
             ani.to(visualTxtBox, {opacity: 1, yPercent: 0}, 0)
                 .to(visualImgBox, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"}, 0.5);
 
-            gsap.to(overView, {opacity: 1, yPercent: 0,
+            gsap.to(overView, {opacity: 1, yPercent: 0, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 0.5,
                 scrollTrigger: {
                     trigger: overView,
                     start: "-10% 50%",
