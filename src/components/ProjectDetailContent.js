@@ -1,5 +1,5 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {img, projectTabState} from "../recoil/atoms";
 import theme from "../styles/theme";
 import Layout from "../components/_inc/Layout";
@@ -279,8 +279,6 @@ function ProjectDetail({dataWork, dataPersonal}) {
 
     const visualRef = useRef(null);
     const overViewRef = useRef(null);
-    const imgRef1 = useRef(null);
-    const imgRef2 = useRef(null);
 
     const dataItem = (projectTab === 'work') ? dataWork : (projectTab === 'personal') ? dataPersonal : [];
     const dataIdx = dataItem.findIndex((item) => item.id === id);
@@ -288,33 +286,11 @@ function ProjectDetail({dataWork, dataPersonal}) {
     const prevData = dataItem[dataIdx - 1];
     const nextData = dataItem[dataIdx + 1];
 
-    const [isImgLoad, setIsImgLoad] = useState(false);
-
-    useEffect(() => {
-        imgLoadStatus(imgRef1);
-        // imgLoadStatus(imgRef2);
-    }, [detailImg]);
-
-    const imgLoadStatus = ($img) => {
-        if(!$img.current) return;
-
-        const updateStatus = (img) => {
-            const isLoad = img.complete && img.naturalHeight !== 0;
-            setIsImgLoad(isLoad);
-        }
-
-        $img.current.addEventListener(
-            "load", () => updateStatus($img.current), {once: true}
-        );
-    }
-
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const visual = visualRef.current;
         const overView = overViewRef.current;
-
-        console.log(overView);
 
         let ctx = gsap.context(() => {
             const visualTxtBox = visual.querySelector('.txt-box');
@@ -370,7 +346,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
                         </Desc>
                     </TxtBox>
                     <ImgBox className="img-box">
-                        <img src={`${img}/${detailImg}`} alt={`${name} 상세 이미지`} ref={imgRef1}/>
+                        <img src={`${img}/${detailImg}`} alt={`${name} 상세 이미지`} />
                     </ImgBox>
                 </Visual>
                 {overviewTxt && overviewImg &&
@@ -379,7 +355,7 @@ function ProjectDetail({dataWork, dataPersonal}) {
                             <Text name="tit5">Overview</Text>
                             <Text name="desc3">{overviewTxt}</Text>
                         </TxtBox>
-                        <img src={`${img}/${overviewImg}`} alt={`${name} 이미지`} ref={imgRef2} />
+                        <img src={`${img}/${overviewImg}`} alt={`${name} 이미지`} />
                     </Overview>
                 }
                 <BtnList>
