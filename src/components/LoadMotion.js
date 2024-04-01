@@ -68,17 +68,20 @@ function LoadMotion() {
             el.innerHTML = txtDescList;
         });
         const loadTxtSpan = loadTxt.querySelectorAll('span');
+        const body = document.body;
 
         let ctx = gsap.context(() => {
-            gsap.set(loadTxtSpan, {yPercent: 100});
+            body.style.overflow = 'hidden';
+            gsap.set(loadTxtSpan, {opacity: 0, yPercent: 100});
 
-            gsap.to(loadTxtSpan, {yPercent: 0, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
+            gsap.to(loadTxtSpan, {yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "expo.inOut",
                 onStart: () => {
                     lenis.stop();
                 },
                 onComplete: () => {
                     loadTxt.classList.add('hide');
                     setLoading(false);
+                    body.style.overflow = '';
                     setTimeout(() => {
                         lenis.start();
                     }, 300);

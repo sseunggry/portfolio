@@ -1,4 +1,4 @@
-import {img} from "../recoil/atoms";
+import {img, mainDataLoadState} from "../recoil/atoms";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import Text from "../styles/Text";
@@ -7,6 +7,7 @@ import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {vw} from "../utils/common";
 import {Link} from "react-router-dom";
+import {useRecoilState} from "recoil";
 
 const Section = styled.section`
     padding: 200px 0;
@@ -179,12 +180,17 @@ const TxtBox = styled.div`
 `;
 
 function MainProjectContent({dataWork, dataPersonal}){
+    const [mainDataLoad, setMainDataLoad] = useRecoilState(mainDataLoadState);
     let data = [...dataWork, ...dataPersonal];
     const sectionRef = useRef(null);
     const listRef = useRef(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
+
+        if(data){
+            setMainDataLoad(true);
+        }
 
         let ctx = gsap.context(() => {
             const list = listRef.current;

@@ -146,7 +146,50 @@ const LinkTxt = styled.ul`
     font-weight: 500;
 
     li{
-        margin-right: 40px;
+        --druation: 0.4s;
+        --font-size: 30px;
+        --m: 0;
+
+        overflow: hidden;
+        margin-right: 60px;
+        font-size: var(--font-size);
+        line-height: var(--font-size);
+        font-weight: 500;
+
+        a{
+            overflow: hidden;
+            display: flex;
+            text-shadow: 0 var(--font-size) 0 ${theme.color.black};
+
+            span{
+                display: block;
+                backface-visibility: hidden;
+                transition: transform var(--druation) ease;
+                transform: translateY(var(--m)) translateZ(0);
+
+                &:nth-child(2){
+                    transition-delay: 0.05s;
+                }
+                &:nth-child(3){
+                    transition-delay: 0.1s;
+                }
+                &:nth-child(4){
+                    transition-delay: 0.15s;
+                }
+                &:nth-child(5){
+                    transition-delay: 0.2s;
+                }
+                &:nth-child(6){
+                    transition-delay: 0.25s;
+                }
+            }
+
+            &:hover{
+                span{
+                    --m: calc(var(--font-size) * -1);
+                }
+            }
+        }
 
         &:last-of-type{
             margin-right: 0;
@@ -162,7 +205,7 @@ const LinkTxt = styled.ul`
         font-size: ${vw(40)};
         
         li{
-            margin-right: ${vw(40)};
+            margin-right: ${vw(60)};
         }
     `};
 `;
@@ -171,18 +214,21 @@ function MainContact(){
     const sectionRef = useRef(null);
     const infoRef = useRef(null);
     const titRef = useRef(null);
+    const linkRef = useRef(null);
 
     useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
         const info = infoRef.current;
-        const tit = titRef.current;
-
-        const infoList = info.querySelectorAll('ul li');
-        const contactTxt = info.querySelectorAll('.contact-txt');
-        const linkTxt = info.querySelectorAll('.link-txt');
+        const linkBox = linkRef.current;
         const txtLine = info.querySelectorAll('.line');
+        const linkList = linkBox.querySelectorAll('li a');
+
+        linkList.forEach((el) => {
+            el.innerHTML = '<span>' + el.textContent.trim().split('').join('</span><span>') + '</span>';
+        });
+
 
         let ctx = gsap.context(() => {
             const ani = gsap.timeline({ease: "none",});
@@ -211,26 +257,6 @@ function MainContact(){
                 },
             });
 
-            // let ani = gsap.timeline({
-            //     ease: "none",
-            //     scrollTrigger: {
-            //         trigger: section,
-            //         start: "10% 50%",
-            //         end: "center 100%",
-            //         scrub: 1,
-            //     }
-            // });
-
-            // ani
-                // .to(section, {backgroundColor: theme.color.white, duration: 5, delay: 5})
-                // .to(contactTxt, {ease: "none", stagger: 0.2, duration: 10, opacity: 1, xPercent: 0,})
-                // .to(txtLine, {width: "100%"} )
-                // .to(contactTxt, {stagger: 0.2, duration: 5, opacity: 1, xPercent: 0, color: theme.color.white})
-                // .to(txtLine, {width: "100%", backgroundColor: theme.color.white})
-                // .to(contactTxt, {stagger: 0.2, duration: 5, opacity: 1, xPercent: 0, color: theme.color.black})
-                // .to(txtLine, {width: "100%", backgroundColor: theme.color.white});
-                // .to(linkTxt, {color: theme.color.white})
-
         }, sectionRef);
         return () => ctx.revert();
 
@@ -244,7 +270,7 @@ function MainContact(){
                     <p>안녕하세요. 프론트엔드 개발자 최승연입니다. 좋은 동료들과 재미있게 일하고 싶습니다!</p>
                 </TitBox>
                 <InfoCon ref={infoRef}>
-                    <ContactTxt className="contact-txt">
+                    <ContactTxt>
                         {contactInfo && contactInfo.map(({phone, email}, idx) => (
                             <li key={idx}>
                                 {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span> </Link>}
@@ -252,11 +278,11 @@ function MainContact(){
                             </li>
                         ))}
                     </ContactTxt>
-                    <LinkTxt className="link-txt">
+                    <LinkTxt ref={linkRef}>
                         {infoLink && infoLink.map(({notion, github}, idx) => (
                             <li key={idx}>
-                                {notion && <Link to={notion}>Notion</Link>}
-                                {github && <Link to={github}>Github</Link>}
+                                {notion && <Link to={notion} target="_blank">Notion</Link>}
+                                {github && <Link to={github} target="_blank">Github</Link>}
                             </li>
                         ))}
                         <li><Link to="">Resume</Link></li>

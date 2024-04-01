@@ -15,9 +15,10 @@ const {persistAtom:projectTabAtom} = recoilPersist({
     storage: sessionStorage
 });
 
-export const windowWidths = atom({
-    key: "windowWidth",
-    default: window.innerWidth
+export const projectTabState = atom({
+    key: "projectTabState",
+    default: "work",
+    effects_UNSTABLE: [projectTabAtom]
 });
 
 export const loadingTxtState = atom({
@@ -25,8 +26,8 @@ export const loadingTxtState = atom({
    default: true
 });
 
-export const projectTabState = atom({
-    key: "projectTabState",
-    default: "work",
-    effects_UNSTABLE: [projectTabAtom]
+export const mainDataLoadState = atom({
+   key: "mainDataLoadState",
+   default: false
 });
+

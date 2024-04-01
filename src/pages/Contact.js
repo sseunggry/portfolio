@@ -127,7 +127,6 @@ const InfoBox = styled.div`
 `;
 const ContactTxt = styled.ul`
     li {
-        //overflow: hidden;
         position: relative;
         margin: 0 auto;
         padding-bottom: 10px;
@@ -189,7 +188,6 @@ const LinkTxt = styled.ul`
         font-weight: 500;
         
         a{
-            //display: block;
             overflow: hidden;
             display: flex;
             text-shadow: 0 var(--font-size) 0 ${theme.color.black};
@@ -335,26 +333,16 @@ function Contact() {
                         <ContactTxt ref={contactRef}>
                             {contactInfo && contactInfo.map(({phone, email}, idx) => (
                                 <li key={idx}>
-                                    {phone &&
-                                        <Link to={`tel:${phone}`}>
-                                            +{phone}
-                                            <span className="line"></span>
-                                        </Link>
-                                    }
-                                    {email &&
-                                        <Link to={`mailto:${email}`}>
-                                            {email}
-                                            <span className="line"></span>
-                                        </Link>
-                                    }
+                                    {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span></Link>}
+                                    {email && <Link to={`mailto:${email}`}>{email}<span className="line"></span></Link>}
                                 </li>
                             ))}
                         </ContactTxt>
                         <LinkTxt ref={linkRef}>
                             {infoLink && infoLink.map(({notion, github}, idx) => (
                                 <li key={idx}>
-                                    {notion && <Link to={notion}>Notion</Link>}
-                                    {github && <Link to={github}>Github</Link>}
+                                    {notion && <Link to={notion} target="_blank">Notion</Link>}
+                                    {github && <Link to={github} target="_blank">Github</Link>}
                                 </li>
                             ))}
                             <li><Link to="">Resume</Link></li>

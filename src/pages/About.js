@@ -302,7 +302,7 @@ function About(){
 
         let ctx = gsap.context(() => {
             let aniTxt = gsap.to(largeTxt.querySelectorAll("span"), {
-                color: theme.color.black, stagger: 0.5, duration: 5,
+                color: theme.color.black, stagger: 0.5, duration: 8,
                 ease: "none",
             });
 
@@ -329,7 +329,7 @@ function About(){
                         animation: aniTxt,
                             trigger: largeTxt,
                             start: "top top",
-                            end: "bottom 70%",
+                            end: "bottom 80%",
                             scrub: 1
                     });
                 },
@@ -391,10 +391,6 @@ function About(){
                         </Text>
                         <InfoTxt ref={infoRef}>
                             <li>
-                                {/*<span>*/}
-                                {/*    제가 본 퍼블리셔는 기능적으로 이상이 없는지 등과 같이 객관적인 기준에 의해 평가되어지는 직업이라고*/}
-                                {/*    생각해서 이직을 하게 되었습니다.*/}
-                                {/*</span>*/}
                                 <span>
                                     어떻게 하면 재사용이 가능하며 다양한 경우에 맞게 공통으로
                                     사용이 가능할지를 고려하며 코딩합니다.
@@ -406,9 +402,6 @@ function About(){
                             <li>
                                 <span>앞으로는 퍼블리셔에서 더 나아가 프론트엔드 개발자로 성장하고 싶습니다.</span>
                             </li>
-                            {/*<p>안녕하세요!</p>*/}
-                            {/*<p>열정적인 프론트엔드 <em>개발자</em></p>*/}
-                            {/*<p>최승연 입니다.</p>*/}
                         </InfoTxt>
                     </Inner>
                 </TitBox>
