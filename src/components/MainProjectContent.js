@@ -97,6 +97,7 @@ const List = styled.ul`
     li{
         position: relative;
         max-width: 640px;
+        transition: transform 0.3s;
         &:nth-child(2n){
             transform: translateY(-100px);
         }
@@ -108,9 +109,13 @@ const List = styled.ul`
             }
         `};
         
-        // ${({theme}) => theme.small`
-        //     margin-bottom: ${vw(40)};
-        // `};
+        &:hover{
+            transform: translateY(-30px);
+            
+            &:nth-child(2n){
+                transform: translateY(-130px);
+            }
+        }
     }
 `;
 const ImgBox = styled.div`

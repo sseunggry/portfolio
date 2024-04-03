@@ -1,4 +1,4 @@
-import {contactInfo, img, infoLink} from "../recoil/atoms";
+import {contactInfo, img, infoLink, mainDataLoadState} from "../recoil/atoms";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import theme from "../styles/theme";
@@ -7,6 +7,7 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import Text from "../styles/Text";
 import {vw} from "../utils/common";
+import {useRecoilValue} from "recoil";
 
 const Section = styled.section`
     position: relative;
@@ -211,8 +212,9 @@ const LinkTxt = styled.ul`
 `;
 
 function MainContact(){
+    const mainDataLoad = useRecoilValue(mainDataLoadState);
     const sectionRef = useRef(null);
-    const infoRef = useRef(null);
+    const contactRef = useRef(null);
     const titRef = useRef(null);
     const linkRef = useRef(null);
 
@@ -220,47 +222,61 @@ function MainContact(){
         gsap.registerPlugin(ScrollTrigger);
 
         const section = sectionRef.current;
-        const info = infoRef.current;
+        const contact = contactRef.current;
         const linkBox = linkRef.current;
-        const txtLine = info.querySelectorAll('.line');
+        const infoList = contact.querySelectorAll('li a');
+        const txtLine = contact.querySelectorAll('.line');
         const linkList = linkBox.querySelectorAll('li a');
 
         linkList.forEach((el) => {
             el.innerHTML = '<span>' + el.textContent.trim().split('').join('</span><span>') + '</span>';
         });
 
+        if(mainDataLoad){
+            let ctx = gsap.context(() => {
+                const ani = gsap.timeline({ease: "none",});
 
-        let ctx = gsap.context(() => {
-            const ani = gsap.timeline({ease: "none",});
+                ani.to(section, {backgroundColor: theme.color.white, duration: 5,})
+                    .to(txtLine, {width: "100%", backgroundColor: theme.color.black, delay: 0.1});
 
-            ani.to(section, {backgroundColor: theme.color.white, duration: 5,})
-                .to(txtLine, {width: "100%", backgroundColor: theme.color.black, delay: 0.1});
+                ScrollTrigger.matchMedia({
+                    "(min-width: 721px)": function() {
+                        ScrollTrigger.create({
+                            animation: ani,
+                            trigger: section,
+                            start: "top 30%",
+                            end: "center 100%",
+                            scrub: 1,
+                        });
+                    },
+                    "(max-width: 720px)": function() {
+                        ScrollTrigger.create({
+                            animation: ani,
+                            trigger: section,
+                            start: "top 20%",
+                            end: "center 100%",
+                            scrub: 1,
+                        });
+                    },
+                });
 
-            ScrollTrigger.matchMedia({
-                "(min-width: 721px)": function() {
-                    ScrollTrigger.create({
-                        animation: ani,
-                        trigger: section,
-                        start: "top 30%",
-                        end: "center 100%",
-                        scrub: 1,
-                    });
-                },
-                "(max-width: 720px)": function() {
-                    ScrollTrigger.create({
-                        animation: ani,
-                        trigger: section,
-                        start: "top 20%",
-                        end: "center 100%",
-                        scrub: 1,
-                    });
-                },
-            });
+            }, sectionRef);
 
-        }, sectionRef);
-        return () => ctx.revert();
+            infoList.forEach((el) => {
+                el.addEventListener('mouseenter', (e) => {
+                    let line = e.target.querySelector('.line')
+                    gsap.to(line, {width: 0});
+                });
 
-    }, []);
+                el.addEventListener('mouseout', (e) => {
+                    let line = e.target.querySelector('.line')
+                    gsap.to(line, {width: "100%"});
+                });
+            })
+            return () => ctx.revert();
+        }
+
+    }, [mainDataLoad]);
 
     return (
         <Section className="sec-03" ref={sectionRef}>
@@ -269,8 +285,8 @@ function MainContact(){
                     <h2>Get in <br/> Touch ME</h2>
                     <p>안녕하세요. 프론트엔드 개발자 최승연입니다. 좋은 동료들과 재미있게 일하고 싶습니다!</p>
                 </TitBox>
-                <InfoCon ref={infoRef}>
-                    <ContactTxt>
+                <InfoCon>
+                    <ContactTxt ref={contactRef}>
                         {contactInfo && contactInfo.map(({phone, email}, idx) => (
                             <li key={idx}>
                                 {phone && <Link to={`tel:${phone}`}>+{phone} <span className="line"></span> </Link>}
@@ -288,7 +304,6 @@ function MainContact(){
                         <li><Link to="">Resume</Link></li>
                     </LinkTxt>
                 </InfoCon>
-
             </Inner>
         </Section>
     )
