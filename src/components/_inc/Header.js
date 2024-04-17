@@ -1,11 +1,12 @@
 import {Link} from "react-router-dom";
-import {contactInfo, img, navList} from "../../recoil/atoms";
+import {contactInfo, img, loadingTxtState, navList} from "../../recoil/atoms";
 import styled from "styled-components";
 import theme from "../../styles/theme";
 import {useEffect, useRef} from "react";
 import {gsap} from "gsap";
 import {vw} from "../../utils/common";
 import {lenis} from "../../utils/smooth";
+import {useRecoilState} from "recoil";
 
 const Menu = styled.button`
     display: none;
@@ -228,8 +229,12 @@ const BtnClose = styled.button`
 function Header({bgColor, active, motion = false}){
     const headerRef = useRef(null);
     const moMenuRef = useRef(null);
+    const [loading, setLoading] = useRecoilState(loadingTxtState);
 
-    const onClick = (e) =>{
+    const onClickLogo = () => {
+        setLoading(true);
+    }
+    const onClick = (e) => {
         const $target = e.target;
         const $targetList = $target.parentNode.childNodes;
 
@@ -241,11 +246,11 @@ function Header({bgColor, active, motion = false}){
             lenis.start();
         }
     }
-    const menuOnClick = (e) => {
+    const menuOnClick = () => {
         moMenuRef.current.classList.add('on');
         lenis.stop();
     }
-    const closeClick = (e) => {
+    const closeClick = () => {
         moMenuRef.current.classList.remove('on');
         lenis.start();
     }
@@ -270,8 +275,8 @@ function Header({bgColor, active, motion = false}){
     return (
         <>
             <HeaderTag ref={headerRef} color={bgColor} >
-                <Logo className="logo">
-                    <Link to="/">
+                <Logo className="logo" onClick={onClickLogo}>
+                    <Link to="/" >
                         <img src={`${img}/logo_w.svg`} alt="logo" />
                     </Link>
                 </Logo>

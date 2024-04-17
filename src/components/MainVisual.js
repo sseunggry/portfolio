@@ -41,7 +41,7 @@ const Inner = styled.div`
     `};
 `;
 const TitBox = styled(motion.div)`
-    
+
 `;
 const TxtName = styled(motion.div)`
     svg{
@@ -187,7 +187,6 @@ const txtAni = {
   show: {
       opacity: 1,
       transition: {
-          // staggerChildren: 0.5,
           delayChildren: 1
       }
   }
@@ -195,16 +194,12 @@ const txtAni = {
 const txtNameAni = {
     hide: {pathLength: 0, opacity: 0, fill: "transparent"},
     show: {
-        // fill: ["transparent", "#fff"],
         pathLength: [0, 1],
         opacity: [0, 1],
         transition: {
             pathLength: {duration: 2, bounce: 0},
             opacity: {duration: 0.05},
             fill: {delay: 3, duration: 2}
-        },
-        onanimationend: () => {
-
         }
     },
 };
@@ -236,12 +231,14 @@ function MainVisual(){
     const [isSvgTxtAni, setSvgTxtAni] = useState(false);
 
     const onAnimationComplete = () => {
+        // console.log(123);
     };
 
     useEffect(() => {
         if(!loading) {
             setSvgTxtAni(true);
         }
+        console.log(loading);
     }, [loading]);
 
     useEffect(() => {
@@ -257,7 +254,7 @@ function MainVisual(){
         let ctx = gsap.context(() => {
             ScrollTrigger.matchMedia({
                 "(min-height: 651px)": function() {
-                    const aniTxt = gsap.timeline({ease: "cubic-bezier(.19,1,.22,1)"});
+                    const aniTxt = gsap.timeline({ease: "none"});
                     aniTxt
                         .to(desc, {yPercent: 0, opacity: 1, ease: "expo.out", delay: 2.5})
                         .to(img, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"});
@@ -283,7 +280,7 @@ function MainVisual(){
         <>
             <Section className="sec-kv" ref={sectionRef}>
                 <Inner>
-                    <TitBox initial="hide" animate={isSvgTxtAni ? "show" : "hide"} variants={txtAni} onAnimationComplete={onAnimationComplete}>
+                    <TitBox initial="hide" animate={isSvgTxtAni ? "show" : "hide"} variants={txtAni}>
                         <TxtName initial="hide" animate={isSvgTxtAni ? "show" : "hide"} >
                             <svg id="name-first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412.76 145.49">
                                 <motion.path variants={txtNameAni} id="name-c" d="M69.04,12.01c7.92,0,14.43,1.17,19.53,3.51,5.1,2.34,9.63,5.07,13.59,8.19,2.4,1.8,4.23,2.01,5.49.63,1.26-1.38,2.13-4.65,2.61-9.81h4.14c-.24,4.8-.42,10.65-.54,17.55-.12,6.9-.18,16.05-.18,27.45h-4.14c-.48-5.76-1.26-10.89-2.34-15.39s-2.7-8.49-4.86-11.97c-2.16-3.48-5.28-6.54-9.36-9.18-2.52-1.68-5.19-3-8.01-3.96-2.82-.96-5.73-1.44-8.73-1.44-6.84,0-12.48,1.89-16.92,5.67-4.44,3.78-7.89,8.7-10.35,14.76-2.46,6.06-4.17,12.66-5.13,19.8-.96,7.14-1.44,14.07-1.44,20.79s.48,13.65,1.44,20.79c.96,7.14,2.67,13.74,5.13,19.8,2.46,6.06,5.91,10.98,10.35,14.76,4.44,3.78,10.08,5.67,16.92,5.67,3,0,5.91-.51,8.73-1.53,2.82-1.02,5.49-2.31,8.01-3.87,6-3.72,10.05-8.7,12.15-14.94,2.1-6.24,3.57-14.28,4.41-24.12h4.14c0,11.76.06,21.27.18,28.53.12,7.26.3,13.35.54,18.27h-4.14c-.48-5.16-1.29-8.4-2.43-9.72-1.14-1.32-3.03-1.14-5.67.54-4.44,3.12-9.15,5.85-14.13,8.19-4.98,2.34-11.37,3.51-19.17,3.51-13.56,0-25.44-2.58-35.64-7.74-10.2-5.16-18.12-12.6-23.76-22.32C3.82,104.71,1,93.01,1,79.33s2.91-25.2,8.73-35.28c5.82-10.08,13.83-17.94,24.03-23.58,10.2-5.64,21.96-8.46,35.28-8.46Z" />
@@ -311,10 +308,8 @@ function MainVisual(){
                         </TxtJob>
                     </TitBox>
                     <TxtBox ref={txtDescRef}>
-                        {/*<Img className="img" src={`${img}/contact_icon.png`}  alt="" />*/}
                         <Desc className="desc">
                             저는 퍼블리셔 3년차이며, 다양한 인터랙션 및 스크립트 작업을 좋아합니다. <br/>
-                            {/*화면에 보여지는 부분 뿐만 아니라 기능적인 작업에도 흥미를 느끼고 있으며, <br/>*/}
                             프론트엔드 개발자로 성장하고 싶어서 리액트를 공부하고 있습니다.
                         </Desc>
                         <Img className="img" src={`${img}/main_visual_img.jpg`} />
